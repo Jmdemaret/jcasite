@@ -7,7 +7,7 @@
     "evenements": true,
     "galerie": true,
     "equipe": true,
-    "temoignages": false,
+    "temoignages": true,
     "faq": true,
     "preInscription": true
   },
