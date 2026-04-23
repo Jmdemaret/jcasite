@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0006",
-    "publishedAt": "2026-04-23T20:00:58.331Z",
+    "version": "1.0007",
+    "publishedAt": "2026-04-23T20:41:36.634Z",
     "history": [
+      {
+        "version": "1.0007",
+        "date": "2026-04-23T20:41:36.634Z",
+        "summary": "FAQ réactivé"
+      },
       {
         "version": "1.0006",
         "date": "2026-04-23T20:00:58.331Z",
@@ -49,7 +54,7 @@
     "galerie": false,
     "equipe": false,
     "temoignages": false,
-    "faq": false,
+    "faq": true,
     "preInscription": false
   },
   "forms": {
