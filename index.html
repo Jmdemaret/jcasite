@@ -1433,35 +1433,37 @@ function mailtoFallback(form, subject){
 }
 
 async function submitForm(form, subject){
-  const formspreeId = (CFG.forms?.formspreeId || '').trim();
+  const scriptUrl = (CFG.forms?.scriptUrl || '').trim();
   const btn = form.querySelector('button[type=submit]');
   const origHtml = btn ? btn.innerHTML : '';
   if(btn){ btn.disabled=true; btn.innerHTML='⏳ Envoi…'; }
 
-  // No Formspree configured → fallback to mailto (opens user's email client)
-  if(!formspreeId){
+  // No endpoint configured → fallback to mailto (opens user's email client)
+  if(!scriptUrl){
     mailtoFallback(form, subject);
     if(btn){ btn.disabled=false; btn.innerHTML=origHtml; }
     return;
   }
 
   try{
+    // POST FormData (multipart) so browser doesn't trigger CORS preflight
+    // Google Apps Script reads the fields via e.parameter
     const data = new FormData(form);
     data.append('_subject', subject);
-    const res = await fetch('https://formspree.io/f/'+encodeURIComponent(formspreeId),{
-      method:'POST',
-      body:data,
-      headers:{'Accept':'application/json'}
+    data.append('_source', 'judoclubanderlecht.be');
+    const res = await fetch(scriptUrl, {
+      method: 'POST',
+      body: data,
+      redirect: 'follow'
     });
-    if(res.ok){
+    // Apps Script answers opaque 200 when deployed correctly
+    if(res.ok || res.type === 'opaque'){
       showFormResult(form, true, 'Merci, nous vous répondrons sous 24-48h.');
     } else {
-      const j = await res.json().catch(()=>({}));
-      const m = (j.errors||[]).map(e=>e.message).join(' · ') || 'Veuillez réessayer ou utiliser l\'email du club directement.';
-      showFormResult(form, false, m);
+      showFormResult(form, false, 'Veuillez réessayer dans un moment.');
     }
   } catch(err){
-    showFormResult(form, false, 'Erreur réseau. Vérifiez votre connexion et réessayez.');
+    showFormResult(form, false, 'Erreur réseau : '+err.message);
   } finally {
     if(btn){ btn.disabled=false; btn.innerHTML=origHtml; }
   }

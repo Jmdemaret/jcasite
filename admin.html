@@ -262,21 +262,48 @@
       <div class="mb-4">
         <div class="label">Formulaires</div>
         <h2 class="font-display text-xl mt-1">Envoi direct des formulaires contact &amp; pré-inscription</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">Sans ID Formspree, les formulaires ouvrent le client email du visiteur. Avec un ID configuré, les messages arrivent directement dans la boîte email du club.</p>
+        <p class="text-sm text-[#7a6f64] mt-1">Les messages arrivent directement dans votre boîte Gmail, via votre propre script Google Apps Script (zéro service tiers). Voir le guide ci-dessous.</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-4">
+      <div class="grid gap-4">
         <div>
-          <span class="fl">ID Formspree (<a href="https://formspree.io" target="_blank" rel="noopener" style="color:#C8102E;text-decoration:underline;">obtenir un ID</a>)</span>
-          <input id="form-fs-id" placeholder="ex: xabcdef123" />
-          <div class="hint">Seulement l'ID (8 caractères), pas l'URL complète. Laissez vide pour désactiver.</div>
+          <span class="fl">URL Google Apps Script (endpoint de l'application web)</span>
+          <input id="form-script-url" placeholder="https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec" />
+          <div class="hint">URL complète obtenue après le déploiement. Laissez vide pour désactiver (fallback mailto).</div>
         </div>
         <div>
-          <span class="fl">Email destinataire (pour le fallback mailto)</span>
+          <span class="fl">Email destinataire (fallback si script non configuré)</span>
           <input id="form-email" placeholder="secretariat@exemple.be" />
-          <div class="hint">Utilisé si Formspree n'est pas configuré.</div>
+          <div class="hint">Utilisé si l'URL ci-dessus est vide — ouvre le client email du visiteur.</div>
         </div>
       </div>
       <div class="mt-4 p-3 rounded-lg text-xs" id="form-status" style="background:#FBF6E9;border:1px solid rgba(29,25,22,.08);"></div>
+      <details class="acc mt-4">
+        <summary>📖 Guide — créer le Google Apps Script (10 min)<span class="chev">▼</span></summary>
+        <div class="acc-body">
+          <ol class="list-decimal pl-5 space-y-2 text-sm">
+            <li>Connectez-vous au compte Gmail du club, puis allez sur <a href="https://script.google.com" target="_blank" rel="noopener" style="color:#C8102E;text-decoration:underline;">script.google.com</a></li>
+            <li>Cliquez <strong>Nouveau projet</strong></li>
+            <li>Nommez-le « Judo Club Anderlecht — Emails »</li>
+            <li>Effacez le code existant et collez le script (téléchargeable ci-dessous)</li>
+            <li>Cliquez l'icône <strong>💾 Enregistrer</strong> (ou Ctrl+S)</li>
+            <li>Cliquez <strong>Déployer</strong> → <strong>Nouveau déploiement</strong></li>
+            <li>Icône ⚙️ → choisir <strong>Application web</strong></li>
+            <li>Configuration :
+              <ul class="list-disc pl-5 mt-1">
+                <li>Description : « Endpoint contact site »</li>
+                <li>Exécuter en tant que : <strong>Moi</strong> (secretariat.judoclubanderlecht@gmail.com)</li>
+                <li>Qui a accès : <strong>Tout le monde</strong></li>
+              </ul>
+            </li>
+            <li>Cliquez <strong>Déployer</strong></li>
+            <li>Google demande d'autoriser le script à envoyer des emails → Autoriser (ignorer l'avertissement « non vérifié » → « Paramètres avancés » → « Accéder à… »)</li>
+            <li>Copiez l'<strong>URL de l'application web</strong> (type <code>https://script.google.com/macros/s/…/exec</code>)</li>
+            <li>Collez-la ci-dessus dans le champ « URL Google Apps Script »</li>
+            <li>Publiez l'admin, testez le formulaire sur le site public</li>
+          </ol>
+          <p class="mt-3"><a href="apps-script.js.txt" target="_blank" rel="noopener" class="btn btn-primary btn-sm" download="apps-script.gs">⬇ Télécharger le script</a></p>
+        </div>
+      </details>
     </section>
 
     <!-- Réseaux sociaux -->
@@ -440,7 +467,7 @@
 const DEFAULTS = {
   _meta: {version:'1.0000', publishedAt:null, history:[]},
   sections: {club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
-  forms: {formspreeId:'', recipientEmail:'secretariat.judoclubanderlecht@gmail.com'},
+  forms: {scriptUrl:'', recipientEmail:'secretariat.judoclubanderlecht@gmail.com'},
   socials: {
     facebook:   {url:'', active:true},
     instagram:  {url:'', active:true},
@@ -1223,22 +1250,24 @@ function renderTm(){
 }
 
 function renderForms(){
-  const fid=document.getElementById('form-fs-id');
+  const fsu=document.getElementById('form-script-url');
   const fem=document.getElementById('form-email');
   const fst=document.getElementById('form-status');
-  if(!fid) return;
-  state.forms ||= {formspreeId:'', recipientEmail:''};
-  fid.value = state.forms.formspreeId || '';
+  if(!fsu) return;
+  state.forms ||= {scriptUrl:'', recipientEmail:''};
+  fsu.value = state.forms.scriptUrl || '';
   fem.value = state.forms.recipientEmail || '';
   const updateStatus=()=>{
-    const hasFs = !!(state.forms.formspreeId||'').trim();
+    const hasScript = !!(state.forms.scriptUrl||'').trim();
     const hasEm = !!(state.forms.recipientEmail||'').trim();
-    if(hasFs) fst.innerHTML = '<strong style="color:#2A6B2A;">✓ Envoi direct actif</strong> — Les messages sont envoyés à l\'email configuré dans Formspree.';
-    else if(hasEm) fst.innerHTML = '<strong style="color:#E8832F;">⚠ Fallback mailto</strong> — Les formulaires ouvrent le client email du visiteur vers <code>'+escapeHtml(state.forms.recipientEmail)+'</code>.';
+    const urlLooksOk = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec/.test((state.forms.scriptUrl||'').trim());
+    if(hasScript && urlLooksOk) fst.innerHTML = '<strong style="color:#2A6B2A;">✓ Envoi direct actif via Google Apps Script</strong> — Les messages arriveront dans votre boîte Gmail sans ouvrir de client email chez le visiteur.';
+    else if(hasScript) fst.innerHTML = '<strong style="color:#C8102E;">⚠ URL suspecte</strong> — L\'URL doit commencer par <code>https://script.google.com/macros/s/</code> et finir par <code>/exec</code>.';
+    else if(hasEm) fst.innerHTML = '<strong style="color:#E8832F;">⚠ Mode fallback</strong> — Les formulaires ouvrent le client email du visiteur vers <code>'+escapeHtml(state.forms.recipientEmail)+'</code>. Configurez l\'URL du script pour un envoi direct.';
     else fst.innerHTML = '<strong style="color:#C8102E;">✗ Non configuré</strong> — Ajoutez au moins un email destinataire.';
   };
   updateStatus();
-  fid.addEventListener('input',()=>{state.forms.formspreeId=fid.value.trim();markDirty();updateStatus();});
+  fsu.addEventListener('input',()=>{state.forms.scriptUrl=fsu.value.trim();markDirty();updateStatus();});
   fem.addEventListener('input',()=>{state.forms.recipientEmail=fem.value.trim();markDirty();updateStatus();});
 }
 
