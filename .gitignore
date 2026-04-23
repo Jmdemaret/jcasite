@@ -7,3 +7,7 @@ node_modules/
 # Original source logo (we use the lighter logo2.png)
 JudoClubAnderlecht_logo.png
 logo 2.png
+
+# Admin local — ne doit JAMAIS être déployé sur GitHub Pages
+admin.html
+apps-script.js.txt
