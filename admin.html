@@ -257,6 +257,28 @@
       <div id="gallery-list"></div>
     </section>
 
+    <!-- Formulaires -->
+    <section class="card mb-4">
+      <div class="mb-4">
+        <div class="label">Formulaires</div>
+        <h2 class="font-display text-xl mt-1">Envoi direct des formulaires contact &amp; pré-inscription</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Sans ID Formspree, les formulaires ouvrent le client email du visiteur. Avec un ID configuré, les messages arrivent directement dans la boîte email du club.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <span class="fl">ID Formspree (<a href="https://formspree.io" target="_blank" rel="noopener" style="color:#C8102E;text-decoration:underline;">obtenir un ID</a>)</span>
+          <input id="form-fs-id" placeholder="ex: xabcdef123" />
+          <div class="hint">Seulement l'ID (8 caractères), pas l'URL complète. Laissez vide pour désactiver.</div>
+        </div>
+        <div>
+          <span class="fl">Email destinataire (pour le fallback mailto)</span>
+          <input id="form-email" placeholder="secretariat@exemple.be" />
+          <div class="hint">Utilisé si Formspree n'est pas configuré.</div>
+        </div>
+      </div>
+      <div class="mt-4 p-3 rounded-lg text-xs" id="form-status" style="background:#FBF6E9;border:1px solid rgba(29,25,22,.08);"></div>
+    </section>
+
     <!-- Réseaux sociaux -->
     <section class="card mb-4">
       <div class="mb-4">
@@ -418,6 +440,7 @@
 const DEFAULTS = {
   _meta: {version:'1.0000', publishedAt:null, history:[]},
   sections: {club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
+  forms: {formspreeId:'', recipientEmail:'secretariat.judoclubanderlecht@gmail.com'},
   socials: {
     facebook:   {url:'', active:true},
     instagram:  {url:'', active:true},
@@ -1199,6 +1222,26 @@ function renderTm(){
   });
 }
 
+function renderForms(){
+  const fid=document.getElementById('form-fs-id');
+  const fem=document.getElementById('form-email');
+  const fst=document.getElementById('form-status');
+  if(!fid) return;
+  state.forms ||= {formspreeId:'', recipientEmail:''};
+  fid.value = state.forms.formspreeId || '';
+  fem.value = state.forms.recipientEmail || '';
+  const updateStatus=()=>{
+    const hasFs = !!(state.forms.formspreeId||'').trim();
+    const hasEm = !!(state.forms.recipientEmail||'').trim();
+    if(hasFs) fst.innerHTML = '<strong style="color:#2A6B2A;">✓ Envoi direct actif</strong> — Les messages sont envoyés à l\'email configuré dans Formspree.';
+    else if(hasEm) fst.innerHTML = '<strong style="color:#E8832F;">⚠ Fallback mailto</strong> — Les formulaires ouvrent le client email du visiteur vers <code>'+escapeHtml(state.forms.recipientEmail)+'</code>.';
+    else fst.innerHTML = '<strong style="color:#C8102E;">✗ Non configuré</strong> — Ajoutez au moins un email destinataire.';
+  };
+  updateStatus();
+  fid.addEventListener('input',()=>{state.forms.formspreeId=fid.value.trim();markDirty();updateStatus();});
+  fem.addEventListener('input',()=>{state.forms.recipientEmail=fem.value.trim();markDirty();updateStatus();});
+}
+
 function renderSocials(){
   const list=document.getElementById('socials-list');
   if(!list) return;
@@ -1297,7 +1340,7 @@ function renderTexts(){
 }
 
 function renderAll(){
-  renderBanner();renderNews();renderEvents();renderGallery();renderTm();renderSocials();
+  renderBanner();renderNews();renderEvents();renderGallery();renderTm();renderForms();renderSocials();
   renderSections();renderTexts();
   updateBadges();
   updateDirtyBanner();

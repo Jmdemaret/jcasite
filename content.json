@@ -32,6 +32,10 @@
     "faq": false,
     "preInscription": false
   },
+  "forms": {
+    "formspreeId": "",
+    "recipientEmail": "secretariat.judoclubanderlecht@gmail.com"
+  },
   "socials": {
     "facebook": {
       "url": "https://www.facebook.com/search/top?q=judo%20club%20anderlecht",

@@ -1401,21 +1401,79 @@ document.addEventListener('click',e=>{
 document.getElementById('year').textContent=new Date().getFullYear();
 
 // ============ FORMS ============
-function submitMailto(form, subject){
+function showFormResult(form, success, msg){
+  // Hide the inner content, show a result panel
+  const existing = form.querySelector('.form-result');
+  if(existing) existing.remove();
+  const panel = document.createElement('div');
+  panel.className = 'form-result';
+  panel.style.cssText = `padding:2rem;border-radius:16px;text-align:center;${success
+    ? 'background:rgba(42,107,42,.08);border:1px solid rgba(42,107,42,.3);color:#2A6B2A;'
+    : 'background:rgba(200,16,46,.06);border:1px solid rgba(200,16,46,.3);color:#C8102E;'}`;
+  panel.innerHTML = `
+    <div style="font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:.5rem;">${success?'✓ Message envoyé':'⚠ Un souci est survenu'}</div>
+    <p style="font-size:.95rem;">${msg}</p>`;
+  form.appendChild(panel);
+  if(success){
+    // Clear the form inputs
+    Array.from(form.elements).forEach(el=>{
+      if(el.type!=='submit' && el.type!=='button') el.value='';
+    });
+  }
+}
+
+function mailtoFallback(form, subject){
   const data=new FormData(form);
   const lines=[];
   for(const [k,v] of data.entries()){ if(v) lines.push(`${k}: ${v}`); }
   const body=encodeURIComponent(lines.join('\n'));
   const subj=encodeURIComponent(subject);
-  location.href=`mailto:secretariat.judoclubanderlecht@gmail.com?subject=${subj}&body=${body}`;
+  const recipient = CFG.forms?.recipientEmail || 'secretariat.judoclubanderlecht@gmail.com';
+  location.href=`mailto:${recipient}?subject=${subj}&body=${body}`;
 }
+
+async function submitForm(form, subject){
+  const formspreeId = (CFG.forms?.formspreeId || '').trim();
+  const btn = form.querySelector('button[type=submit]');
+  const origHtml = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled=true; btn.innerHTML='⏳ Envoi…'; }
+
+  // No Formspree configured → fallback to mailto (opens user's email client)
+  if(!formspreeId){
+    mailtoFallback(form, subject);
+    if(btn){ btn.disabled=false; btn.innerHTML=origHtml; }
+    return;
+  }
+
+  try{
+    const data = new FormData(form);
+    data.append('_subject', subject);
+    const res = await fetch('https://formspree.io/f/'+encodeURIComponent(formspreeId),{
+      method:'POST',
+      body:data,
+      headers:{'Accept':'application/json'}
+    });
+    if(res.ok){
+      showFormResult(form, true, 'Merci, nous vous répondrons sous 24-48h.');
+    } else {
+      const j = await res.json().catch(()=>({}));
+      const m = (j.errors||[]).map(e=>e.message).join(' · ') || 'Veuillez réessayer ou utiliser l\'email du club directement.';
+      showFormResult(form, false, m);
+    }
+  } catch(err){
+    showFormResult(form, false, 'Erreur réseau. Vérifiez votre connexion et réessayez.');
+  } finally {
+    if(btn){ btn.disabled=false; btn.innerHTML=origHtml; }
+  }
+}
+
 document.getElementById('contact-form').addEventListener('submit',e=>{
   e.preventDefault();
-  submitMailto(e.target,'[Site] '+e.target.sujet.selectedOptions[0].textContent);
+  submitForm(e.target, '[Site] '+e.target.sujet.selectedOptions[0].textContent);
 });
 document.getElementById('preform').addEventListener('submit',e=>{
   e.preventDefault();
-  submitMailto(e.target,'[Pré-inscription] '+e.target.prenom.value+' '+e.target.nom.value);
+  submitForm(e.target, '[Pré-inscription] '+e.target.prenom.value+' '+e.target.nom.value);
 });
 </script>
 </body>
