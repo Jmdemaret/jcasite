@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Admin · Judo Club Anderlecht</title>
+<title>Espace admin · Judo Club Anderlecht</title>
 <link rel="icon" type="image/png" href="logo2.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -18,206 +18,288 @@
 </script>
 <style>
   html,body{background:#FBF6E9;color:#1D1916;font-family:'Inter',sans-serif;}
-  .card{background:#fff;border:1px solid rgba(29,25,22,.06);border-radius:20px;padding:2rem;box-shadow:0 20px 40px -20px rgba(29,25,22,.1);}
+  .card{background:#fff;border:1px solid rgba(29,25,22,.06);border-radius:20px;padding:1.75rem 2rem;box-shadow:0 20px 40px -25px rgba(29,25,22,.12);}
   .label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#C8102E;}
-  input,textarea,select{width:100%;background:#FBF6E9;border:1px solid rgba(29,25,22,.1);border-radius:10px;padding:.7rem 1rem;font-family:inherit;font-size:.95rem;color:#1D1916;outline:none;transition:border-color .2s;}
+  input:not([type=file]),textarea,select{
+    width:100%;background:#FBF6E9;border:1px solid rgba(29,25,22,.1);border-radius:10px;
+    padding:.7rem .9rem;font-family:inherit;font-size:.95rem;color:#1D1916;outline:none;
+    transition:border-color .2s;
+  }
   input:focus,textarea:focus,select:focus{border-color:#C8102E;}
-  label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#7a6f64;display:block;margin-bottom:.35rem;}
-  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.3rem;border-radius:999px;font-weight:500;font-size:.9rem;border:none;cursor:pointer;transition:all .25s;font-family:inherit;}
+  .fl{font-family:'Inter';font-size:.8rem;color:#7a6f64;display:block;margin-bottom:.4rem;font-weight:500;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.3rem;border-radius:999px;font-weight:500;font-size:.9rem;border:none;cursor:pointer;transition:all .25s;font-family:inherit;text-decoration:none;}
   .btn-primary{background:#1D1916;color:#FBF6E9;}
-  .btn-primary:hover{background:#C8102E;transform:translateY(-2px);}
+  .btn-primary:hover{background:#C8102E;transform:translateY(-1px);}
   .btn-primary[disabled]{opacity:.5;cursor:not-allowed;transform:none;}
+  .btn-cta{background:#C8102E;color:#fff;font-weight:600;box-shadow:0 10px 24px -8px rgba(200,16,46,.4);}
+  .btn-cta:hover{background:#A10D25;transform:translateY(-1px);}
+  .btn-cta[disabled]{opacity:.5;cursor:not-allowed;}
   .btn-ghost{background:transparent;color:#1D1916;border:1px solid rgba(29,25,22,.15);}
   .btn-ghost:hover{border-color:#C8102E;color:#C8102E;}
-  .btn-danger{background:rgba(200,16,46,.1);color:#C8102E;}
-  .btn-danger:hover{background:#C8102E;color:#fff;}
-  .gallery-row{display:grid;grid-template-columns:80px 1fr 1fr auto;gap:1rem;align-items:center;padding:1rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.75rem;}
-  .gallery-row img{width:80px;height:80px;object-fit:cover;border-radius:10px;}
-  .crud-row{padding:1rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.75rem;}
-  .crud-row .row-grid{display:grid;gap:.75rem;}
-  .crud-row.news   .row-grid{grid-template-columns:180px 140px 1fr;}
-  .crud-row.event  .row-grid{grid-template-columns:180px 1fr 150px 160px;}
-  .crud-row.tm     .row-grid{grid-template-columns:1fr 1fr;}
-  .crud-actions{display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;}
-  @media(max-width:900px){.crud-row .row-grid{grid-template-columns:1fr !important;}}
+  .btn-danger{background:rgba(200,16,46,.08);color:#C8102E;border:1px solid rgba(200,16,46,.15);}
+  .btn-danger:hover{background:#C8102E;color:#fff;border-color:#C8102E;}
+  .btn-sm{padding:.45rem .8rem;font-size:.78rem;}
+
   .toggle{position:relative;width:48px;height:26px;background:rgba(29,25,22,.15);border-radius:999px;cursor:pointer;transition:background .25s;flex-shrink:0;}
   .toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:all .25s;}
   .toggle.on{background:#C8102E;}
   .toggle.on::after{left:25px;}
-  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1D1916;color:#FBF6E9;padding:.85rem 1.5rem;border-radius:999px;font-size:.9rem;opacity:0;transition:all .3s;pointer-events:none;z-index:100;max-width:90vw;text-align:center;}
+
+  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1D1916;color:#FBF6E9;padding:.9rem 1.6rem;border-radius:999px;font-size:.9rem;opacity:0;transition:all .35s;pointer-events:none;z-index:200;max-width:90vw;text-align:center;box-shadow:0 12px 40px -8px rgba(0,0,0,.3);}
   .toast.show{opacity:1;bottom:2.5rem;}
-  .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#9a8f83;margin-right:.5rem;}
-  .status-dot.ok{background:#3B7D2E;}
-  .status-dot.err{background:#C8102E;}
-  details.config summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;}
-  details.config summary::-webkit-details-marker{display:none;}
+  .toast.err{background:#C8102E;}
+  .toast.ok{background:#2A6B2A;}
+
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#9a8f83;margin-right:.5rem;vertical-align:middle;}
+  .dot.ok{background:#2A6B2A;}
+  .dot.err{background:#C8102E;}
+  .dot.pulse{animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  /* Items list */
+  .item{padding:1.1rem 1.2rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.75rem;transition:border-color .2s;}
+  .item:hover{border-color:rgba(200,16,46,.25);}
+  .item-row{display:grid;gap:.9rem;align-items:start;}
+  .item-actions{display:flex;gap:.35rem;justify-content:flex-end;margin-top:.7rem;}
+  .item-actions .btn-sm{padding:.35rem .7rem;}
+
+  .g-row{display:grid;grid-template-columns:96px 1fr 1fr auto;gap:1rem;align-items:center;padding:.85rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.6rem;}
+  .g-row img{width:96px;height:72px;object-fit:cover;border-radius:10px;display:block;}
+
+  /* Rich text editor */
+  .rte-wrap{border:1px solid rgba(29,25,22,.1);border-radius:10px;overflow:hidden;background:#FBF6E9;}
+  .rte-wrap:focus-within{border-color:#C8102E;}
+  .rte-tools{display:flex;gap:.15rem;padding:.35rem;border-bottom:1px solid rgba(29,25,22,.08);background:rgba(255,255,255,.5);}
+  .rte-tools button{padding:.35rem .55rem;font-size:.8rem;border-radius:6px;border:none;background:transparent;color:#1D1916;cursor:pointer;transition:background .15s;font-family:inherit;}
+  .rte-tools button:hover{background:rgba(29,25,22,.08);}
+  .rte-tools button.on{background:#1D1916;color:#FBF6E9;}
+  .rte{padding:.7rem .9rem;min-height:68px;outline:none;font-family:inherit;font-size:.95rem;line-height:1.5;}
+  .rte:empty::before{content:attr(data-placeholder);color:#9a8f83;}
+
+  /* Setup banner */
+  .setup-banner{
+    background:linear-gradient(135deg,#1D1916 0%,#432C5F 100%);color:#FBF6E9;
+    padding:1.5rem;border-radius:16px;margin-bottom:1.5rem;
+  }
+  .setup-banner a{color:#F76676;text-decoration:underline;}
+
+  /* Help */
+  details.help summary{cursor:pointer;list-style:none;font-size:.82rem;color:#7a6f64;display:inline-flex;align-items:center;gap:.3rem;}
+  details.help summary::-webkit-details-marker{display:none;}
+  details.help summary::before{content:'?';width:18px;height:18px;border-radius:50%;background:rgba(29,25,22,.08);display:inline-grid;place-items:center;font-size:.7rem;font-weight:600;color:#1D1916;}
+  details.help[open] summary::before{background:#C8102E;color:#fff;}
+  details.help .body{margin-top:.7rem;padding:.9rem;background:#FBF6E9;border-radius:10px;font-size:.85rem;color:#4a423b;line-height:1.55;}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(15,13,11,.6);display:none;align-items:center;justify-content:center;z-index:300;padding:1rem;}
+  .modal.show{display:flex;}
+  .modal-box{background:#fff;border-radius:18px;max-width:440px;padding:1.8rem;box-shadow:0 30px 80px -20px rgba(0,0,0,.4);}
+
+  /* Preview */
+  .preview-note{font-size:.8rem;color:#7a6f64;padding:.65rem .85rem;background:#FBF6E9;border-radius:10px;border:1px dashed rgba(29,25,22,.15);}
+
+  @media(max-width:720px){
+    main{padding:1rem !important;}
+    .card{padding:1.2rem;}
+    .g-row{grid-template-columns:72px 1fr;gap:.6rem;}
+    .g-row img{width:72px;height:72px;}
+    .g-row > div:last-child{grid-column:1/-1;display:flex;gap:.3rem;}
+  }
 </style>
 </head>
 <body class="min-h-screen">
 
-<!-- Header -->
+<!-- ============ HEADER ============ -->
 <header class="border-b border-sumi-900/5 bg-white sticky top-0 z-40">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
     <div class="flex items-center gap-3">
       <img src="logo2.png" class="w-12 h-12 object-contain" alt="Logo" />
       <div>
-        <div class="font-display text-lg">Admin · Judo Club Anderlecht</div>
-        <div class="font-mono text-[10px] tracking-[.18em] uppercase text-[#7a6f64]" id="admin-status"><span class="status-dot"></span>Non connecté à GitHub</div>
+        <div class="font-display text-lg leading-tight">Espace admin · Judo Club Anderlecht</div>
+        <div class="text-[11px] text-[#7a6f64]" id="status"><span class="dot"></span>Bienvenue — merci de vous connecter ci-dessous</div>
       </div>
     </div>
-    <div class="flex gap-2">
-      <a href="index.html" class="btn btn-ghost">← Voir le site</a>
-      <button id="btn-save" class="btn btn-primary" disabled>
-        Publier sur GitHub
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+    <div class="flex gap-2 flex-wrap">
+      <a href="index.html" target="_blank" class="btn btn-ghost">👁 Voir le site</a>
+      <button id="btn-publish" class="btn btn-cta" disabled>
+        ✓ Enregistrer &amp; publier
       </button>
     </div>
   </div>
 </header>
 
-<main class="max-w-6xl mx-auto px-6 py-10 space-y-8">
+<main class="max-w-5xl mx-auto px-4 md:px-6 py-8 space-y-6">
 
-  <!-- ========== GITHUB CONFIG ========== -->
-  <section class="card" id="gh-card">
-    <details class="config" id="gh-details" open>
-      <summary>
-        <div>
-          <div class="label">Connexion GitHub</div>
-          <h2 class="font-display text-2xl mt-2">Clé d'accès</h2>
-          <p class="text-sm text-[#7a6f64] mt-1" id="gh-sub">Nécessaire pour publier les changements sur le site.</p>
-        </div>
-        <svg class="w-5 h-5 transition-transform" id="gh-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-      </summary>
-      <div class="mt-6 grid md:grid-cols-3 gap-4">
-        <div><label>Utilisateur (owner)</label><input id="gh-owner" placeholder="Jmdemaret" value="Jmdemaret"/></div>
-        <div><label>Dépôt (repo)</label><input id="gh-repo" placeholder="jcasite" value="jcasite"/></div>
-        <div><label>Branche</label><input id="gh-branch" placeholder="main" value="main"/></div>
+  <!-- ============ ONBOARDING ============ -->
+  <div class="setup-banner" id="onboarding">
+    <div class="label" style="color:#F76676;">Première utilisation</div>
+    <h2 class="font-display text-2xl mt-2 mb-3">Connectez-vous pour modifier le site</h2>
+    <p class="text-sm opacity-90 mb-4 max-w-xl">
+      Cette interface permet de modifier le contenu du site (messages, photos, actualités, avis…)
+      <strong>sans toucher au design</strong>. Une seule connexion initiale est nécessaire.
+    </p>
+    <details class="help">
+      <summary>Comment obtenir ma clé d'accès ?</summary>
+      <div class="body" style="color:#FBF6E9;background:rgba(255,255,255,.08);">
+        <ol class="list-decimal pl-5 space-y-2">
+          <li>Cliquez sur <a href="https://github.com/settings/tokens/new?description=Admin%20Judo%20Club%20Anderlecht&scopes=public_repo" target="_blank" rel="noopener">ce lien pour créer une clé</a> (ouverture sur GitHub, page pré-remplie).</li>
+          <li>Si demandé, connectez-vous avec le compte GitHub du club.</li>
+          <li>Durée : choisissez <strong>1 an</strong> (ou « No expiration » si disponible).</li>
+          <li>Scope déjà coché : <code>public_repo</code> — ne modifiez rien.</li>
+          <li>Cliquez <strong>« Generate token »</strong> tout en bas.</li>
+          <li>Copiez la clé qui s'affiche (elle commence par <code>ghp_…</code>).</li>
+          <li>Revenez ici, collez-la dans le champ ci-dessous et cliquez <strong>Se connecter</strong>.</li>
+        </ol>
+        <p class="mt-3 opacity-75 text-xs">La clé reste dans ce navigateur uniquement — elle n'est jamais envoyée ailleurs que vers GitHub.</p>
       </div>
-      <div class="mt-4">
-        <label>Token d'accès (Personal Access Token)</label>
-        <input type="password" id="gh-token" placeholder="ghp_XXXXXXXXXXXXXXXXXXXX"/>
+    </details>
+  </div>
+
+  <!-- ============ CONNEXION ============ -->
+  <section class="card" id="conn-card">
+    <div class="label">Connexion</div>
+    <h2 class="font-display text-2xl mt-2 mb-5">Clé d'accès</h2>
+    <div class="grid md:grid-cols-[1fr_auto] gap-3 items-end">
+      <div>
+        <span class="fl">Collez votre clé ici (commence par <code>ghp_</code>)</span>
+        <input type="password" id="gh-token" placeholder="ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off"/>
       </div>
-      <div class="flex flex-wrap items-center gap-3 mt-4">
-        <button class="btn btn-primary" id="gh-connect">Se connecter & charger</button>
-        <button class="btn btn-ghost" id="gh-forget">Oublier le token</button>
-        <a href="https://github.com/settings/tokens/new?description=Judo%20Club%20Anderlecht%20Admin&scopes=repo" target="_blank" rel="noopener" class="btn btn-ghost">Créer un token ↗</a>
-      </div>
-      <div class="mt-4 text-xs text-[#7a6f64] leading-relaxed">
-        <strong>Comment créer le token :</strong> Cliquez sur « Créer un token », connectez-vous à GitHub, donnez un nom (ex: « Admin JCA »),
-        choisissez la durée (90 jours ou plus), cochez uniquement la scope <code>repo</code> (ou <code>public_repo</code> pour un dépôt public), générez et copiez-le ici.
-        Le token reste stocké uniquement dans ce navigateur.
+      <button id="btn-connect" class="btn btn-primary">Se connecter</button>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-4 text-xs text-[#7a6f64]">
+      <button id="btn-forget" class="btn btn-ghost btn-sm">Oublier la clé</button>
+      <a href="https://github.com/settings/tokens/new?description=Admin%20Judo%20Club%20Anderlecht&scopes=public_repo" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Créer une nouvelle clé ↗</a>
+    </div>
+    <!-- Advanced: hidden unless needed -->
+    <details class="mt-4" id="adv">
+      <summary class="text-xs text-[#9a8f83] cursor-pointer">Options avancées</summary>
+      <div class="grid md:grid-cols-3 gap-3 mt-3">
+        <div><span class="fl">Compte GitHub</span><input id="gh-owner" value="Jmdemaret"/></div>
+        <div><span class="fl">Nom du dépôt</span><input id="gh-repo" value="jcasite"/></div>
+        <div><span class="fl">Branche</span><input id="gh-branch" value="main"/></div>
       </div>
     </details>
   </section>
 
-  <!-- ========== BANNER ========== -->
+  <!-- ============ BANDEAU HAUT DE PAGE ============ -->
   <section class="card">
-    <div class="flex items-center justify-between mb-6 gap-4 flex-wrap">
+    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
       <div>
-        <div class="label">Bannière d'information</div>
-        <h2 class="font-display text-2xl mt-2">Message en haut du site</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">HTML autorisé (&lt;strong&gt;, &lt;em&gt;, &lt;a&gt;).</p>
+        <div class="label">Bandeau en haut du site</div>
+        <h2 class="font-display text-2xl mt-2">Message d'information</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Fermeture, événement exceptionnel, info importante. Décochez pour masquer.</p>
       </div>
-      <div class="flex items-center gap-3">
+      <label class="flex items-center gap-2 cursor-pointer">
         <span class="text-xs font-mono text-[#7a6f64]" id="banner-status">ACTIVE</span>
         <div class="toggle on" id="banner-toggle" role="switch"></div>
-      </div>
+      </label>
     </div>
-    <div class="mb-4"><label>Message</label><textarea id="banner-text" rows="3"></textarea></div>
-    <div class="bg-sumi-900 text-paper-50 rounded-xl p-3 flex items-center justify-center gap-2 text-sm">
-      <span class="inline-block w-1.5 h-1.5 rounded-full bg-hinomaru-600"></span>
-      <span id="banner-preview">Aperçu…</span>
+
+    <span class="fl">Texte du message</span>
+    <div class="rte-wrap">
+      <div class="rte-tools">
+        <button type="button" data-cmd="bold" title="Gras"><strong>B</strong></button>
+        <button type="button" data-cmd="italic" title="Italique"><em>I</em></button>
+        <button type="button" data-cmd="createLink" title="Lien">🔗</button>
+        <button type="button" data-cmd="removeFormat" title="Effacer la mise en forme">✕</button>
+      </div>
+      <div id="banner-rte" class="rte" contenteditable="true" data-placeholder="Ex : Fermeture du dojo du 20 au 28 juillet"></div>
+    </div>
+
+    <div class="mt-4 preview-note">
+      <div class="text-[11px] uppercase tracking-widest text-[#7a6f64] mb-1">Aperçu</div>
+      <div class="bg-sumi-900 text-paper-50 rounded px-3 py-2 inline-flex items-center gap-2 text-sm">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-hinomaru-600"></span>
+        <span id="banner-preview">—</span>
+      </div>
     </div>
   </section>
 
-  <!-- ========== GALLERY ========== -->
+  <!-- ============ ACTUALITÉS ============ -->
   <section class="card">
-    <div class="flex items-center justify-between mb-6 gap-4 flex-wrap">
-      <div>
-        <div class="label">Galerie</div>
-        <h2 class="font-display text-2xl mt-2">Photos du site</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">Images uploadées sont stockées dans content.json en base64.</p>
-      </div>
-      <button id="btn-add-image" class="btn btn-primary">+ Ajouter</button>
-    </div>
-    <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
-    <div id="gallery-list"></div>
-  </section>
-
-  <!-- ========== NEWS ========== -->
-  <section class="card">
-    <div class="flex items-center justify-between mb-6 gap-4 flex-wrap">
+    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
       <div>
         <div class="label">Actualités</div>
-        <h2 class="font-display text-2xl mt-2">News du club</h2>
+        <h2 class="font-display text-2xl mt-2">Les news du club</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Affichées dans la section « Quoi de neuf ? »</p>
       </div>
-      <button id="btn-add-news" class="btn btn-primary">+ Nouvelle actu</button>
+      <button id="btn-add-news" class="btn btn-primary">+ Ajouter une actu</button>
     </div>
     <div id="news-list"></div>
   </section>
 
-  <!-- ========== EVENTS ========== -->
+  <!-- ============ ÉVÉNEMENTS ============ -->
   <section class="card">
-    <div class="flex items-center justify-between mb-6 gap-4 flex-wrap">
+    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
       <div>
         <div class="label">Calendrier</div>
-        <h2 class="font-display text-2xl mt-2">Événements & stages</h2>
+        <h2 class="font-display text-2xl mt-2">Événements à venir</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Stages, passages de grade, compétitions, cours d'essai.</p>
       </div>
       <button id="btn-add-event" class="btn btn-primary">+ Nouvel événement</button>
     </div>
     <div id="events-list"></div>
   </section>
 
-  <!-- ========== TESTIMONIALS ========== -->
+  <!-- ============ GALERIE ============ -->
   <section class="card">
-    <div class="flex items-center justify-between mb-6 gap-4 flex-wrap">
+    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
       <div>
-        <div class="label">Témoignages</div>
-        <h2 class="font-display text-2xl mt-2">Avis parents & judokas</h2>
+        <div class="label">Galerie photo</div>
+        <h2 class="font-display text-2xl mt-2">Images du site</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Glissez-déposez des images depuis votre ordinateur.</p>
+      </div>
+      <button id="btn-add-image" class="btn btn-primary">+ Ajouter une photo</button>
+    </div>
+    <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+    <div id="gallery-list"></div>
+  </section>
+
+  <!-- ============ TÉMOIGNAGES ============ -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
+      <div>
+        <div class="label">Avis et témoignages</div>
+        <h2 class="font-display text-2xl mt-2">Paroles de parents et judokas</h2>
       </div>
       <button id="btn-add-tm" class="btn btn-primary">+ Nouveau témoignage</button>
     </div>
     <div id="tm-list"></div>
   </section>
 
-  <!-- ========== LOCAL MODE (NO GITHUB NEEDED) ========== -->
-  <section class="card" style="border:1px solid rgba(200,16,46,.15); background:#fff;">
-    <div class="label">Mode local — sans GitHub</div>
-    <h2 class="font-display text-2xl mt-2 mb-2">Édition hors-ligne + export du site complet</h2>
-    <p class="text-sm text-[#6b6158] mb-5 max-w-2xl">
-      Si tu ne veux pas passer par GitHub, tu peux éditer en local et télécharger
-      un <strong>ZIP complet du site</strong> (HTML, images, content.json) à uploader
-      ensuite sur n'importe quel hébergeur (Netlify drag-and-drop, OVH, FTP…).
-    </p>
-    <div class="flex flex-wrap gap-3">
-      <button id="btn-zip" class="btn btn-primary">
-        📦 Télécharger le site complet (.zip)
-      </button>
-      <button id="btn-load-local" class="btn btn-ghost">↑ Ouvrir un content.json local</button>
-      <input type="file" id="load-local-input" accept="application/json" style="display:none"/>
-    </div>
-    <p class="text-xs text-[#9a8f83] mt-4">
-      Le ZIP contient tous les fichiers nécessaires + le <code>content.json</code> avec tes dernières modifs.
-      Décompressez, uploadez l'ensemble sur votre hébergeur, et c'est en ligne.
-    </p>
-  </section>
-
-  <!-- ========== EXPORT JSON ========== -->
+  <!-- ============ BACKUP ============ -->
   <section class="card">
-    <div class="label">Backup rapide</div>
-    <h2 class="font-display text-2xl mt-2 mb-4">Sauvegarder / Restaurer le content.json seul</h2>
-    <p class="text-sm text-[#6b6158] mb-5 max-w-xl">Juste le fichier de données (sans images ni HTML) — pour transférer entre navigateurs.</p>
-    <div class="flex flex-wrap gap-3">
-      <button id="btn-export" class="btn btn-ghost">↓ Exporter content.json</button>
-      <button id="btn-import" class="btn btn-ghost">↑ Importer content.json</button>
+    <div class="label">Sauvegardes</div>
+    <h2 class="font-display text-2xl mt-2 mb-3">Backup / Restauration</h2>
+    <p class="text-sm text-[#6b6158] mb-4 max-w-xl">
+      Toutes les modifications publiées sont automatiquement historisées dans GitHub.
+      Les boutons ci-dessous permettent des sauvegardes manuelles.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      <button id="btn-export" class="btn btn-ghost btn-sm">↓ Exporter les données</button>
+      <button id="btn-import" class="btn btn-ghost btn-sm">↑ Importer des données</button>
       <input type="file" id="import-input" accept="application/json" style="display:none"/>
-      <button id="btn-reload" class="btn btn-ghost">⟲ Recharger depuis GitHub</button>
+      <button id="btn-zip" class="btn btn-ghost btn-sm">📦 Télécharger le site complet</button>
+      <button id="btn-reload" class="btn btn-ghost btn-sm">⟲ Recharger depuis GitHub</button>
     </div>
   </section>
 
+  <p class="text-center text-xs text-[#9a8f83] pt-4 pb-6">Judo Club Anderlecht · Espace admin · Le design et la structure ne peuvent pas être modifiés depuis cette interface.</p>
 </main>
 
-<div id="toast" class="toast">Enregistré ✓</div>
+<!-- ============ CONFIRM MODAL ============ -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 class="font-display text-xl mb-2" id="modal-title">Confirmer</h3>
+    <p class="text-sm text-[#4a423b] mb-5" id="modal-text">Cette action est irréversible.</p>
+    <div class="flex justify-end gap-2">
+      <button id="modal-cancel" class="btn btn-ghost">Annuler</button>
+      <button id="modal-ok" class="btn btn-primary">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast">OK</div>
 
 <script>
 // ============ CONFIG ============
@@ -226,50 +308,52 @@ const TOKEN_KEY='jca_gh_token';
 const CFG_KEY='jca_gh_cfg';
 
 let state = JSON.parse(JSON.stringify(DEFAULTS));
-let fileSha = null;   // current SHA of content.json on GitHub
-let gh = loadGhCfg();
+let fileSha = null;
+let gh = (()=>{try{return JSON.parse(localStorage.getItem(CFG_KEY))||{};}catch(e){return {};}})();
+gh = {owner:gh.owner||'Jmdemaret',repo:gh.repo||'jcasite',branch:gh.branch||'main'};
 
-function loadGhCfg(){
-  try{
-    const s=localStorage.getItem(CFG_KEY);
-    if(s) return JSON.parse(s);
-  }catch(e){}
-  return {owner:'Jmdemaret',repo:'jcasite',branch:'main'};
-}
 function saveGhCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(gh));}
-
 function getToken(){return localStorage.getItem(TOKEN_KEY)||'';}
+function setToken(t){if(t)localStorage.setItem(TOKEN_KEY,t);else localStorage.removeItem(TOKEN_KEY);}
 
 // ============ TOAST ============
-function toast(msg,isErr=false){
+function toast(msg,kind){
   const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=isErr?'#C8102E':'#1D1916';
-  t.classList.add('show');
-  clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2400);
+  t.textContent=msg;t.className='toast show '+(kind||'');
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ============ MODAL ============
+function confirmDialog(title,text,okLabel='Confirmer'){
+  return new Promise(res=>{
+    const m=document.getElementById('modal');
+    document.getElementById('modal-title').textContent=title;
+    document.getElementById('modal-text').textContent=text;
+    document.getElementById('modal-ok').textContent=okLabel;
+    m.classList.add('show');
+    const cleanup=v=>{m.classList.remove('show');res(v);};
+    document.getElementById('modal-ok').onclick=()=>cleanup(true);
+    document.getElementById('modal-cancel').onclick=()=>cleanup(false);
+  });
 }
 
 // ============ GITHUB API ============
 async function ghGetFile(){
   const token=getToken();
   const url=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/content.json?ref=${gh.branch}`;
-  const res=await fetch(url,{headers:{
-    'Accept':'application/vnd.github.v3+json',
-    ...(token?{Authorization:`token ${token}`}:{})
-  }});
+  const res=await fetch(url,{headers:{'Accept':'application/vnd.github.v3+json',...(token?{Authorization:`token ${token}`}:{})}});
   if(res.status===404) return null;
-  if(!res.ok) throw new Error('GET '+res.status);
+  if(res.status===401) throw new Error('Clé invalide ou expirée');
+  if(!res.ok) throw new Error('Erreur GitHub ('+res.status+')');
   const data=await res.json();
-  // Decode UTF-8 base64
   const bin=atob(data.content.replace(/\n/g,''));
   const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
-  const text=new TextDecoder().decode(bytes);
-  return {content:JSON.parse(text), sha:data.sha};
+  return {content:JSON.parse(new TextDecoder().decode(bytes)), sha:data.sha};
 }
 
 async function ghPutFile(json, sha){
   const token=getToken();
-  if(!token) throw new Error('Token GitHub manquant');
+  if(!token) throw new Error('Clé d\'accès manquante');
   const bytes=new TextEncoder().encode(JSON.stringify(json,null,2));
   let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));
   const b64=btoa(bin);
@@ -277,33 +361,73 @@ async function ghPutFile(json, sha){
   const res=await fetch(url,{
     method:'PUT',
     headers:{Authorization:`token ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-    body:JSON.stringify({
-      message:`Update content.json via admin — ${new Date().toISOString().slice(0,19).replace('T',' ')}`,
-      content:b64,
-      sha:sha||undefined,
-      branch:gh.branch
-    })
+    body:JSON.stringify({message:`Mise à jour du contenu — ${new Date().toISOString().slice(0,19).replace('T',' ')}`,content:b64,sha:sha||undefined,branch:gh.branch})
   });
-  if(!res.ok){const j=await res.json().catch(()=>({}));throw new Error(j.message||'PUT '+res.status);}
+  if(!res.ok){const j=await res.json().catch(()=>({}));throw new Error(j.message||'Publication échouée ('+res.status+')');}
   return res.json();
 }
 
-// ============ STATUS UI ============
+// ============ STATUS ============
 function setStatus(kind,msg){
-  const el=document.getElementById('admin-status');
-  el.innerHTML=`<span class="status-dot ${kind}"></span>${msg}`;
-  document.getElementById('btn-save').disabled = (kind!=='ok');
+  document.getElementById('status').innerHTML=`<span class="dot ${kind}"></span>${msg}`;
+  document.getElementById('btn-publish').disabled=(kind!=='ok');
+}
+
+// ============ CONNECT / PUBLISH ============
+async function connect(){
+  const tok=document.getElementById('gh-token').value.trim();
+  if(tok) setToken(tok);
+  gh={
+    owner:document.getElementById('gh-owner').value.trim()||'Jmdemaret',
+    repo:document.getElementById('gh-repo').value.trim()||'jcasite',
+    branch:document.getElementById('gh-branch').value.trim()||'main'
+  };
+  saveGhCfg();
+  setStatus('pulse','Connexion en cours…');
+  try{
+    const r=await ghGetFile();
+    if(r){state={...DEFAULTS,...r.content};fileSha=r.sha;}
+    else{state=JSON.parse(JSON.stringify(DEFAULTS));fileSha=null;}
+    setStatus('ok','Connecté · prêt à éditer');
+    document.getElementById('onboarding').style.display='none';
+    document.getElementById('conn-card').style.display='none';
+    toast('Connecté ✓ Contenu chargé','ok');
+    renderAll();
+  }catch(err){
+    setStatus('err','Problème : '+err.message);
+    toast(err.message,'err');
+  }
+}
+
+async function publish(){
+  const ok=await confirmDialog('Publier les modifications ?','Le site sera mis à jour publiquement dans environ 1 minute.','Publier');
+  if(!ok) return;
+  const btn=document.getElementById('btn-publish');
+  btn.disabled=true;const original=btn.innerHTML;btn.innerHTML='⏳ Publication…';
+  try{
+    const res=await ghPutFile(state,fileSha);
+    fileSha=res.content.sha;
+    setStatus('ok',`Publié à ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`);
+    toast('Publié ✓ Le site est mis à jour','ok');
+  }catch(err){
+    setStatus('err',err.message);
+    toast(err.message,'err');
+  }finally{btn.disabled=false;btn.innerHTML=original;}
 }
 
 // ============ BOOT ============
 async function boot(){
+  // Prefill advanced
   document.getElementById('gh-owner').value=gh.owner;
   document.getElementById('gh-repo').value=gh.repo;
   document.getElementById('gh-branch').value=gh.branch;
+
   const tok=getToken();
-  if(tok){document.getElementById('gh-token').value=tok;await connect();}
-  else{
-    // load from raw content.json (read-only until connected)
+  if(tok){
+    document.getElementById('gh-token').value=tok;
+    await connect();
+  }else{
+    // Read-only preview from raw content.json
     try{
       const r=await fetch('content.json?v='+Date.now(),{cache:'no-store'});
       if(r.ok){state={...DEFAULTS,...await r.json()};}
@@ -312,174 +436,21 @@ async function boot(){
   }
 }
 
-async function connect(){
-  gh={
-    owner:document.getElementById('gh-owner').value.trim()||'Jmdemaret',
-    repo:document.getElementById('gh-repo').value.trim()||'jcasite',
-    branch:document.getElementById('gh-branch').value.trim()||'main'
-  };
-  saveGhCfg();
-  const tok=document.getElementById('gh-token').value.trim();
-  if(tok) localStorage.setItem(TOKEN_KEY,tok);
-  setStatus('','Connexion…');
-  try{
-    const r=await ghGetFile();
-    if(r){state={...DEFAULTS,...r.content};fileSha=r.sha;}
-    else {state=JSON.parse(JSON.stringify(DEFAULTS));fileSha=null;}
-    setStatus('ok',`Connecté · ${gh.owner}/${gh.repo}@${gh.branch}`);
-    document.getElementById('gh-details').open=false;
-    toast('Contenu chargé depuis GitHub');
-    renderAll();
-  }catch(err){
-    console.error(err);
-    setStatus('err','Erreur : '+err.message);
-    toast('Erreur GitHub : '+err.message,true);
-  }
-}
-
-async function publish(){
-  const btn=document.getElementById('btn-save');
-  btn.disabled=true;btn.textContent='Publication…';
-  try{
-    const res=await ghPutFile(state,fileSha);
-    fileSha=res.content.sha;
-    toast('Publié ✓  GitHub Pages redéploie dans ~1 min');
-    setStatus('ok',`Publié · ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`);
-  }catch(err){
-    console.error(err);
-    toast('Erreur : '+err.message,true);
-    setStatus('err','Erreur : '+err.message);
-  }finally{
-    btn.disabled=false;btn.innerHTML=`Publier sur GitHub <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>`;
-  }
-}
-
 // ============ BANNER ============
 function renderBanner(){
-  const bt=document.getElementById('banner-text');
+  const rte=document.getElementById('banner-rte');
   const bp=document.getElementById('banner-preview');
-  const bs=document.getElementById('banner-status');
   const tog=document.getElementById('banner-toggle');
-  bt.value=state.banner?.text||'';
-  bp.innerHTML=state.banner?.text||'<em style="opacity:.5">Bannière vide</em>';
+  const bs=document.getElementById('banner-status');
+  if(document.activeElement!==rte) rte.innerHTML=state.banner?.text||'';
+  bp.innerHTML=state.banner?.text||'<em style="opacity:.5">Aucun message</em>';
   tog.classList.toggle('on',!!state.banner?.active);
-  bs.textContent=state.banner?.active?'ACTIVE':'DÉSACTIVÉE';
+  bs.textContent=state.banner?.active?'AFFICHÉ':'MASQUÉ';
 }
-
-// ============ GALLERY ============
-function renderGallery(){
-  const list=document.getElementById('gallery-list');
-  list.innerHTML='';
-  (state.gallery||[]).forEach((it,i)=>{
-    const r=document.createElement('div');r.className='gallery-row';
-    r.innerHTML=`
-      <img src="${it.img}" alt="${it.title||''}"/>
-      <div><label>Étiquette</label><input data-l="gallery" data-i="${i}" data-k="label" value="${(it.label||'').replace(/"/g,'&quot;')}"/></div>
-      <div><label>Titre</label><input data-l="gallery" data-i="${i}" data-k="title" value="${(it.title||'').replace(/"/g,'&quot;')}"/></div>
-      <div class="flex gap-2">
-        <button class="btn btn-ghost" data-act="move" data-dir="-1" data-l="gallery" data-i="${i}">↑</button>
-        <button class="btn btn-ghost" data-act="move" data-dir="1"  data-l="gallery" data-i="${i}">↓</button>
-        <button class="btn btn-danger" data-act="del" data-l="gallery" data-i="${i}">✕</button>
-      </div>`;
-    list.appendChild(r);
-  });
-  bindInputs(list);
-}
-
-// ============ NEWS ============
-function renderNews(){
-  const list=document.getElementById('news-list');
-  list.innerHTML='';
-  (state.news||[]).forEach((n,i)=>{
-    const r=document.createElement('div');r.className='crud-row news';
-    r.innerHTML=`
-      <div class="row-grid">
-        <div><label>Date</label><input type="date" data-l="news" data-i="${i}" data-k="date" value="${n.date||''}"/></div>
-        <div><label>Tag</label><input data-l="news" data-i="${i}" data-k="tag" value="${(n.tag||'').replace(/"/g,'&quot;')}"/></div>
-        <div><label>Titre</label><input data-l="news" data-i="${i}" data-k="title" value="${(n.title||'').replace(/"/g,'&quot;')}"/></div>
-      </div>
-      <div style="margin-top:.75rem"><label>Contenu (HTML)</label><textarea rows="2" data-l="news" data-i="${i}" data-k="body">${n.body||''}</textarea></div>
-      <div class="crud-actions">
-        <button class="btn btn-ghost" data-act="move" data-dir="-1" data-l="news" data-i="${i}">↑</button>
-        <button class="btn btn-ghost" data-act="move" data-dir="1"  data-l="news" data-i="${i}">↓</button>
-        <button class="btn btn-danger" data-act="del" data-l="news" data-i="${i}">Supprimer</button>
-      </div>`;
-    list.appendChild(r);
-  });
-  bindInputs(list);
-}
-
-// ============ EVENTS ============
-function renderEvents(){
-  const list=document.getElementById('events-list');
-  list.innerHTML='';
-  (state.events||[]).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
-  (state.events||[]).forEach((e,i)=>{
-    const r=document.createElement('div');r.className='crud-row event';
-    r.innerHTML=`
-      <div class="row-grid">
-        <div><label>Date</label><input type="date" data-l="events" data-i="${i}" data-k="date" value="${e.date||''}"/></div>
-        <div><label>Titre</label><input data-l="events" data-i="${i}" data-k="title" value="${(e.title||'').replace(/"/g,'&quot;')}"/></div>
-        <div><label>Type</label>
-          <select data-l="events" data-i="${i}" data-k="type">
-            ${['Cours','Essai','Stage','Examen','Compétition'].map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}
-          </select>
-        </div>
-        <div><label>Lieu</label><input data-l="events" data-i="${i}" data-k="loc" value="${(e.loc||'').replace(/"/g,'&quot;')}"/></div>
-      </div>
-      <div class="crud-actions"><button class="btn btn-danger" data-act="del" data-l="events" data-i="${i}">Supprimer</button></div>`;
-    list.appendChild(r);
-  });
-  bindInputs(list);
-}
-
-// ============ TESTIMONIALS ============
-function renderTm(){
-  const list=document.getElementById('tm-list');
-  list.innerHTML='';
-  (state.testimonials||[]).forEach((t,i)=>{
-    const r=document.createElement('div');r.className='crud-row tm';
-    r.innerHTML=`
-      <div class="row-grid">
-        <div><label>Auteur</label><input data-l="testimonials" data-i="${i}" data-k="author" value="${(t.author||'').replace(/"/g,'&quot;')}"/></div>
-        <div><label>Rôle / Relation</label><input data-l="testimonials" data-i="${i}" data-k="role" value="${(t.role||'').replace(/"/g,'&quot;')}"/></div>
-      </div>
-      <div style="margin-top:.75rem"><label>Témoignage</label><textarea rows="3" data-l="testimonials" data-i="${i}" data-k="text">${t.text||''}</textarea></div>
-      <div class="crud-actions">
-        <button class="btn btn-ghost" data-act="move" data-dir="-1" data-l="testimonials" data-i="${i}">↑</button>
-        <button class="btn btn-ghost" data-act="move" data-dir="1"  data-l="testimonials" data-i="${i}">↓</button>
-        <button class="btn btn-danger" data-act="del" data-l="testimonials" data-i="${i}">Supprimer</button>
-      </div>`;
-    list.appendChild(r);
-  });
-  bindInputs(list);
-}
-
-function renderAll(){renderBanner();renderGallery();renderNews();renderEvents();renderTm();}
-
-// ============ INPUT BINDING ============
-function bindInputs(scope){
-  scope.querySelectorAll('[data-l]').forEach(el=>{
-    el.addEventListener('input',()=>{
-      const L=el.dataset.l,i=+el.dataset.i,k=el.dataset.k;
-      state[L][i][k]=el.value;
-      if(L==='banner') renderBanner();
-    });
-  });
-  scope.querySelectorAll('button[data-act]').forEach(b=>{
-    b.addEventListener('click',()=>{
-      const L=b.dataset.l,i=+b.dataset.i,a=b.dataset.act;
-      if(a==='del'){state[L].splice(i,1);}
-      if(a==='move'){const d=+b.dataset.dir;const j=i+d;if(j<0||j>=state[L].length) return;[state[L][i],state[L][j]]=[state[L][j],state[L][i]];}
-      renderAll();
-    });
-  });
-}
-
-// ============ BANNER BIND ============
-document.getElementById('banner-text').addEventListener('input',e=>{
-  state.banner ||={active:true,text:''}; state.banner.text=e.target.value;
-  document.getElementById('banner-preview').innerHTML=e.target.value||'<em style="opacity:.5">Bannière vide</em>';
+document.getElementById('banner-rte').addEventListener('input',e=>{
+  state.banner ||={active:true,text:''};
+  state.banner.text=e.target.innerHTML.trim();
+  document.getElementById('banner-preview').innerHTML=state.banner.text||'<em style="opacity:.5">Aucun message</em>';
 });
 document.getElementById('banner-toggle').addEventListener('click',()=>{
   state.banner ||={active:true,text:''};
@@ -487,132 +458,209 @@ document.getElementById('banner-toggle').addEventListener('click',()=>{
   renderBanner();
 });
 
-// ============ ADD BUTTONS ============
-const fileInput=document.getElementById('file-input');
-document.getElementById('btn-add-image').addEventListener('click',()=>fileInput.click());
-fileInput.addEventListener('change', async e=>{
-  const files=[...e.target.files];
-  for(const f of files){
-    const dataURL=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);});
-    state.gallery.push({img:dataURL, label:String((state.gallery?.length||0)+1).padStart(2,'0')+' · NOUVEAU', title:f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ')});
-  }
-  fileInput.value='';renderGallery();
-  toast(files.length+' image(s) ajoutée(s) — cliquez « Publier »');
-});
-document.getElementById('btn-add-news').addEventListener('click',()=>{
-  state.news ||=[];state.news.unshift({date:new Date().toISOString().slice(0,10),tag:'Info',title:'Nouveau titre',body:'Contenu de l\'actualité.'});renderNews();
-});
-document.getElementById('btn-add-event').addEventListener('click',()=>{
-  state.events ||=[];state.events.push({date:new Date().toISOString().slice(0,10),title:'Nouvel événement',type:'Stage',loc:'Dojo'});renderEvents();
-});
-document.getElementById('btn-add-tm').addEventListener('click',()=>{
-  state.testimonials ||=[];state.testimonials.push({author:'Prénom N.',role:'Rôle',text:'Témoignage...'});renderTm();
+// Banner RTE toolbar
+document.querySelectorAll('.rte-tools button[data-cmd]').forEach(b=>{
+  b.addEventListener('click',e=>{
+    e.preventDefault();
+    const cmd=b.dataset.cmd;
+    if(cmd==='createLink'){
+      const url=prompt('Adresse du lien (https://…)');
+      if(url) document.execCommand('createLink',false,url);
+    }else{
+      document.execCommand(cmd,false,null);
+    }
+    document.getElementById('banner-rte').focus();
+    // Trigger update
+    const ev=new Event('input');document.getElementById('banner-rte').dispatchEvent(ev);
+  });
 });
 
-// ============ GH BUTTONS ============
-document.getElementById('gh-connect').addEventListener('click',connect);
-document.getElementById('gh-forget').addEventListener('click',()=>{
-  localStorage.removeItem(TOKEN_KEY);
-  document.getElementById('gh-token').value='';
-  setStatus('','Token effacé');
-  toast('Token oublié');
+// ============ NEWS ============
+function renderNews(){
+  const list=document.getElementById('news-list');list.innerHTML='';
+  if(!state.news?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucune actualité. Cliquez sur « + Ajouter une actu ».</p>';return;}
+  state.news.forEach((n,i)=>{
+    const r=document.createElement('div');r.className='item';
+    r.innerHTML=`
+      <div class="item-row" style="grid-template-columns:180px 140px 1fr;">
+        <div><span class="fl">Date</span><input type="date" data-l="news" data-i="${i}" data-k="date" value="${n.date||''}"/></div>
+        <div><span class="fl">Étiquette</span><input data-l="news" data-i="${i}" data-k="tag" value="${escape(n.tag)}" placeholder="Ex: Info"/></div>
+        <div><span class="fl">Titre</span><input data-l="news" data-i="${i}" data-k="title" value="${escape(n.title)}"/></div>
+      </div>
+      <div style="margin-top:.9rem">
+        <span class="fl">Texte</span>
+        <textarea rows="2" data-l="news" data-i="${i}" data-k="body" placeholder="Contenu de l'actualité…">${n.body||''}</textarea>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" data-l="news" data-i="${i}">↑</button>
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  data-l="news" data-i="${i}">↓</button>
+        <button class="btn btn-danger btn-sm" data-act="del" data-l="news" data-i="${i}">Supprimer</button>
+      </div>`;
+    list.appendChild(r);
+  });
+  bind(list);
+}
+
+// ============ EVENTS ============
+function renderEvents(){
+  const list=document.getElementById('events-list');list.innerHTML='';
+  if(!state.events?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucun événement. Cliquez sur « + Nouvel événement ».</p>';return;}
+  [...state.events].sort((a,b)=>(a.date||'').localeCompare(b.date||'')).forEach((e,sortedI)=>{
+    const i=state.events.indexOf(e);
+    const r=document.createElement('div');r.className='item';
+    r.innerHTML=`
+      <div class="item-row" style="grid-template-columns:180px 1fr 160px 160px;">
+        <div><span class="fl">Date</span><input type="date" data-l="events" data-i="${i}" data-k="date" value="${e.date||''}"/></div>
+        <div><span class="fl">Titre</span><input data-l="events" data-i="${i}" data-k="title" value="${escape(e.title)}"/></div>
+        <div><span class="fl">Type</span>
+          <select data-l="events" data-i="${i}" data-k="type">
+            ${['Cours','Essai','Stage','Examen','Compétition'].map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}
+          </select></div>
+        <div><span class="fl">Lieu</span><input data-l="events" data-i="${i}" data-k="loc" value="${escape(e.loc)}" placeholder="Dojo"/></div>
+      </div>
+      <div class="item-actions"><button class="btn btn-danger btn-sm" data-act="del" data-l="events" data-i="${i}">Supprimer</button></div>`;
+    list.appendChild(r);
+  });
+  bind(list);
+}
+
+// ============ GALLERY ============
+function renderGallery(){
+  const list=document.getElementById('gallery-list');list.innerHTML='';
+  if(!state.gallery?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucune photo. Cliquez sur « + Ajouter une photo ».</p>';return;}
+  state.gallery.forEach((it,i)=>{
+    const r=document.createElement('div');r.className='g-row';
+    r.innerHTML=`
+      <img src="${it.img}" alt=""/>
+      <div><span class="fl">Étiquette</span><input data-l="gallery" data-i="${i}" data-k="label" value="${escape(it.label)}"/></div>
+      <div><span class="fl">Titre</span><input data-l="gallery" data-i="${i}" data-k="title" value="${escape(it.title)}"/></div>
+      <div class="flex gap-1">
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" data-l="gallery" data-i="${i}" title="Monter">↑</button>
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  data-l="gallery" data-i="${i}" title="Descendre">↓</button>
+        <button class="btn btn-danger btn-sm" data-act="del" data-l="gallery" data-i="${i}" title="Supprimer">✕</button>
+      </div>`;
+    list.appendChild(r);
+  });
+  bind(list);
+}
+
+// ============ TESTIMONIALS ============
+function renderTm(){
+  const list=document.getElementById('tm-list');list.innerHTML='';
+  if(!state.testimonials?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucun témoignage.</p>';return;}
+  state.testimonials.forEach((t,i)=>{
+    const r=document.createElement('div');r.className='item';
+    r.innerHTML=`
+      <div class="item-row" style="grid-template-columns:1fr 1fr;">
+        <div><span class="fl">Auteur</span><input data-l="testimonials" data-i="${i}" data-k="author" value="${escape(t.author)}" placeholder="Prénom N."/></div>
+        <div><span class="fl">Rôle / Relation</span><input data-l="testimonials" data-i="${i}" data-k="role" value="${escape(t.role)}" placeholder="Ex: Maman de Léo, 8 ans"/></div>
+      </div>
+      <div style="margin-top:.9rem"><span class="fl">Témoignage</span>
+        <textarea rows="3" data-l="testimonials" data-i="${i}" data-k="text" placeholder="Citation du parent ou du judoka…">${t.text||''}</textarea>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" data-l="testimonials" data-i="${i}">↑</button>
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  data-l="testimonials" data-i="${i}">↓</button>
+        <button class="btn btn-danger btn-sm" data-act="del" data-l="testimonials" data-i="${i}">Supprimer</button>
+      </div>`;
+    list.appendChild(r);
+  });
+  bind(list);
+}
+
+function renderAll(){renderBanner();renderNews();renderEvents();renderGallery();renderTm();}
+
+function escape(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
+
+// ============ INPUT BINDING ============
+function bind(scope){
+  scope.querySelectorAll('[data-l]').forEach(el=>{
+    el.addEventListener('input',()=>{
+      const L=el.dataset.l,i=+el.dataset.i,k=el.dataset.k;
+      state[L][i][k]=el.value;
+    });
+  });
+  scope.querySelectorAll('button[data-act]').forEach(b=>{
+    b.addEventListener('click',async ()=>{
+      const L=b.dataset.l,i=+b.dataset.i,a=b.dataset.act;
+      if(a==='del'){
+        const ok=await confirmDialog('Supprimer cet élément ?','Vous pouvez toujours recharger depuis GitHub si erreur.','Supprimer');
+        if(!ok) return;
+        state[L].splice(i,1);
+      }
+      if(a==='move'){const d=+b.dataset.dir;const j=i+d;if(j<0||j>=state[L].length) return;[state[L][i],state[L][j]]=[state[L][j],state[L][i]];}
+      renderAll();
+    });
+  });
+}
+
+// ============ ADD ACTIONS ============
+document.getElementById('btn-add-news').addEventListener('click',()=>{
+  state.news ||=[];state.news.unshift({date:new Date().toISOString().slice(0,10),tag:'Info',title:'',body:''});renderNews();
 });
-document.getElementById('btn-reload').addEventListener('click',connect);
-document.getElementById('btn-save').addEventListener('click',publish);
-addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(!document.getElementById('btn-save').disabled)publish();}});
+document.getElementById('btn-add-event').addEventListener('click',()=>{
+  state.events ||=[];state.events.push({date:new Date().toISOString().slice(0,10),title:'',type:'Stage',loc:'Dojo'});renderEvents();
+});
+document.getElementById('btn-add-tm').addEventListener('click',()=>{
+  state.testimonials ||=[];state.testimonials.push({author:'',role:'',text:''});renderTm();
+});
+const fileInput=document.getElementById('file-input');
+document.getElementById('btn-add-image').addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',async e=>{
+  const files=[...e.target.files];
+  for(const f of files){
+    if(f.size>3*1024*1024){toast(`${f.name} trop lourde (max 3 Mo)`,'err');continue;}
+    const dataURL=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);});
+    state.gallery.push({img:dataURL,label:String((state.gallery?.length||0)+1).padStart(2,'0')+' · '+f.name.replace(/\.[^.]+$/,'').toUpperCase().slice(0,20),title:f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ')});
+  }
+  fileInput.value='';renderGallery();
+  toast(files.length+' photo(s) ajoutée(s) · pensez à publier');
+});
+
+// ============ CONNECT / PUBLISH BUTTONS ============
+document.getElementById('btn-connect').addEventListener('click',connect);
+document.getElementById('btn-publish').addEventListener('click',publish);
+document.getElementById('btn-reload').addEventListener('click',async ()=>{
+  const ok=await confirmDialog('Recharger depuis GitHub ?','Les modifications non publiées seront perdues.','Recharger');
+  if(ok) connect();
+});
+document.getElementById('btn-forget').addEventListener('click',async ()=>{
+  const ok=await confirmDialog('Oublier la clé ?','Vous devrez la recoller pour publier.','Oublier');
+  if(!ok) return;
+  setToken('');document.getElementById('gh-token').value='';
+  setStatus('','Clé oubliée');toast('Clé supprimée');
+});
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(!document.getElementById('btn-publish').disabled)publish();}});
 
 // ============ EXPORT / IMPORT ============
 document.getElementById('btn-export').addEventListener('click',()=>{
   const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=`content-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
-  toast('Exporté');
+  a.download=`jca-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
+  toast('Backup téléchargé');
 });
 document.getElementById('btn-import').addEventListener('click',()=>document.getElementById('import-input').click());
 document.getElementById('import-input').addEventListener('change',async e=>{
   const f=e.target.files[0];if(!f) return;
-  try{state={...DEFAULTS,...JSON.parse(await f.text())};renderAll();toast('Importé — publiez pour envoyer sur GitHub');}
-  catch(err){toast('JSON invalide',true);}
+  try{state={...DEFAULTS,...JSON.parse(await f.text())};renderAll();toast('Données importées · pensez à publier');}
+  catch(err){toast('Fichier invalide','err');}
 });
 
-// ============ LOAD FROM LOCAL FILE ============
-document.getElementById('btn-load-local').addEventListener('click',()=>document.getElementById('load-local-input').click());
-document.getElementById('load-local-input').addEventListener('change',async e=>{
-  const f=e.target.files[0];if(!f) return;
-  try{
-    state={...DEFAULTS,...JSON.parse(await f.text())};
-    fileSha=null; // No GitHub sync in this flow
-    renderAll();
-    toast('Chargé depuis '+f.name);
-  }catch(err){toast('JSON invalide',true);}
-});
-
-// ============ DOWNLOAD COMPLETE SITE ZIP ============
+// ============ ZIP ============
 document.getElementById('btn-zip').addEventListener('click', async ()=>{
-  const btn=document.getElementById('btn-zip');
-  const original=btn.innerHTML;
-  btn.disabled=true;btn.innerHTML='⏳ Préparation du ZIP…';
+  const btn=document.getElementById('btn-zip');const orig=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML='⏳ ZIP…';
   try{
     const zip=new JSZip();
-
-    // List of files to include in the ZIP (relative to site root)
-    const files=[
-      'index.html','admin.html','logo2.png','logo.png','dojo.jpeg',
-      'judoclubanderlecht/dojo-hall.jpg',
-      'judoclubanderlecht/kids-judo.jpg',
-      'judoclubanderlecht/judo-training.jpg',
-      'judoclubanderlecht/favicon.png'
-    ];
-
-    // Fetch each file and add to ZIP
-    for(const path of files){
-      try{
-        const res=await fetch(path+'?v='+Date.now(),{cache:'no-store'});
-        if(!res.ok) continue;
-        const blob=await res.blob();
-        zip.file(path, blob);
-      }catch(e){console.warn('Skip '+path,e);}
-    }
-
-    // Inject current state as content.json
-    zip.file('content.json', JSON.stringify(state, null, 2));
-
-    // README inside the ZIP for upload guidance
-    zip.file('LISEZ-MOI.txt',
-`=== JUDO CLUB ANDERLECHT — SITE ===
-Exporté le ${new Date().toLocaleString('fr-BE')}
-
-Pour mettre en ligne :
-- Décompressez tout le contenu de ce ZIP
-- Uploadez l'intégralité des fichiers à la racine de votre hébergeur
-  (Netlify : glisser-déposer le dossier ; OVH/FTP : tout à la racine
-   du dossier www/public_html ; GitHub Pages : commit + push)
-- index.html doit rester à la racine avec tous les autres fichiers à côté
-
-Pour rééditer plus tard :
-- Ouvrez admin.html via un serveur local :
-    python -m http.server 8000
-- Ou uploadez aussi admin.html sur l'hébergeur
-  puis allez sur votre-domaine/admin.html
-- Bouton « Ouvrir un content.json local » pour charger ce fichier
-- Bouton « Télécharger le site complet » pour régénérer un ZIP
-`);
-
-    const blob=await zip.generateAsync({type:'blob'},(meta)=>{
-      btn.innerHTML=`⏳ ${Math.round(meta.percent)}%`;
-    });
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download=`judoclubanderlecht-${new Date().toISOString().slice(0,10)}.zip`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    toast('ZIP téléchargé ✓');
-  }catch(err){
-    console.error(err);
-    toast('Erreur : '+err.message,true);
-  }finally{
-    btn.disabled=false;btn.innerHTML=original;
-  }
+    const files=['index.html','admin.html','logo2.png','logo.png','dojo.jpeg','judoclubanderlecht/dojo-hall.jpg','judoclubanderlecht/kids-judo.jpg','judoclubanderlecht/judo-training.jpg','judoclubanderlecht/favicon.png'];
+    for(const p of files){try{const r=await fetch(p+'?v='+Date.now(),{cache:'no-store'});if(r.ok) zip.file(p, await r.blob());}catch(e){}}
+    zip.file('content.json', JSON.stringify(state,null,2));
+    const blob=await zip.generateAsync({type:'blob'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`judoclubanderlecht-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
+    toast('ZIP téléchargé ✓','ok');
+  }catch(err){toast('Erreur ZIP','err');}
+  finally{btn.disabled=false;btn.innerHTML=orig;}
 });
 
 // Kick off
