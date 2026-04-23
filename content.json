@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0001",
-    "publishedAt": "2026-04-23T16:59:53.807Z",
+    "version": "1.0002",
+    "publishedAt": "2026-04-23T17:02:07.296Z",
     "history": [
+      {
+        "version": "1.0002",
+        "date": "2026-04-23T17:02:07.296Z",
+        "summary": "Aucun changement détecté"
+      },
       {
         "version": "1.0001",
         "date": "2026-04-23T16:59:53.807Z",
@@ -34,11 +39,11 @@
     },
     "instagram": {
       "url": "https://www.instagram.com/",
-      "active": true
+      "active": false
     },
     "whatsapp": {
       "url": "https://wa.me/32476791029",
-      "active": true
+      "active": false
     },
     "youtube": {
       "url": "",
