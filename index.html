@@ -991,6 +991,10 @@
 <script>
 // ============ CONFIG — loaded from content.json (fallback: defaults) ============
 const DEFAULT_CONFIG = {
+  sections:{
+    club:true,cours:true,tarifs:true,actu:true,evenements:true,
+    galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true
+  },
   banner:{active:true,text:'<strong>Info</strong> — Bienvenue au Judo Club Anderlecht.'},
   gallery:[
     {img:'dojo.jpeg',                             label:'01 · DOJO',   title:'Le tatami'},
@@ -1001,6 +1005,35 @@ const DEFAULT_CONFIG = {
   events:[],
   testimonials:[]
 };
+
+// Map section keys to DOM section IDs + nav link hashes
+const SECTION_MAP = {
+  club:            {id:'club',            nav:['#club']},
+  cours:           {id:'cours',           nav:['#cours']},
+  tarifs:          {id:'tarifs',          nav:['#tarifs']},
+  actu:            {id:'actu',            nav:['#actu']},
+  evenements:      {id:'evenements',      nav:['#evenements']},
+  galerie:         {id:'galerie',         nav:['#galerie']},
+  equipe:          {id:'equipe',          nav:[]},
+  temoignages:     {id:'temoignages',     nav:['#temoignages']},
+  faq:             {id:'faq',             nav:['#faq']},
+  preInscription:  {id:'pre-inscription', nav:['#pre-inscription']}
+};
+
+function applySectionVisibility(){
+  const s = CFG.sections||{};
+  Object.keys(SECTION_MAP).forEach(key=>{
+    const {id,nav}=SECTION_MAP[key];
+    const active = s[key]!==false; // default to true if undefined
+    const el = document.getElementById(id);
+    if(el) el.style.display = active ? '' : 'none';
+    nav.forEach(sel=>{
+      document.querySelectorAll(`.topnav a[href="${sel}"]`).forEach(a=>{
+        a.style.display = active ? '' : 'none';
+      });
+    });
+  });
+}
 
 // Fetched synchronously by blocking render until loaded
 let CFG = DEFAULT_CONFIG;
@@ -1175,6 +1208,7 @@ function initTestimonials(){
 // ============ BOOT — fetch content.json then render everything ============
 (async()=>{
   await Promise.all([loadContent(), loadGoogleReviews()]);
+  applySectionVisibility();
   initBanner();
   initGallery();
   initNews();

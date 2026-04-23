@@ -181,6 +181,18 @@
     </details>
   </section>
 
+  <!-- ============ SECTIONS AFFICHÉES ============ -->
+  <section class="card">
+    <div class="label">Structure du site</div>
+    <h2 class="font-display text-2xl mt-2 mb-2">Sections affichées</h2>
+    <p class="text-sm text-[#7a6f64] mb-5 max-w-2xl">
+      Décochez une rubrique pour la retirer du site (et du menu). Vous pouvez la remettre à tout moment —
+      le contenu reste conservé.
+    </p>
+    <div id="sections-grid" class="grid md:grid-cols-2 gap-3"></div>
+    <p class="text-xs text-[#9a8f83] mt-4 italic">L'accueil, le formulaire de contact et la carte restent toujours affichés.</p>
+  </section>
+
   <!-- ============ BANDEAU HAUT DE PAGE ============ -->
   <section class="card">
     <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
@@ -303,7 +315,23 @@
 
 <script>
 // ============ CONFIG ============
-const DEFAULTS={banner:{active:true,text:''},gallery:[],news:[],events:[],testimonials:[]};
+const DEFAULTS={
+  sections:{club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
+  banner:{active:true,text:''},gallery:[],news:[],events:[],testimonials:[]
+};
+
+const SECTION_LIST = [
+  {k:'club',           name:'Le club — Histoire',            desc:'Présentation, fondation, piliers'},
+  {k:'cours',          name:'Cours — Planning hebdomadaire',  desc:'Tuiles par jour et âge'},
+  {k:'tarifs',         name:'Tarifs',                         desc:'Formules Enfant / Adulte / Famille'},
+  {k:'actu',           name:'Actualités',                     desc:'Section « Quoi de neuf ? »'},
+  {k:'evenements',     name:'Calendrier des événements',      desc:'Stages, passages, compétitions'},
+  {k:'galerie',        name:'Galerie photo',                  desc:'Scroll horizontal « Sur le tatami »'},
+  {k:'equipe',         name:'Équipe / Sensei',                desc:'Portraits des enseignants'},
+  {k:'temoignages',    name:'Avis & témoignages',             desc:'« Ce qu\'ils en disent »'},
+  {k:'faq',            name:'FAQ',                            desc:'Questions fréquentes'},
+  {k:'preInscription', name:'Pré-inscription rentrée',        desc:'Formulaire d\'inscription'}
+];
 const TOKEN_KEY='jca_gh_token';
 const CFG_KEY='jca_gh_cfg';
 
@@ -568,7 +596,34 @@ function renderTm(){
   bind(list);
 }
 
-function renderAll(){renderBanner();renderNews();renderEvents();renderGallery();renderTm();}
+// ============ SECTIONS TOGGLES ============
+function renderSections(){
+  const grid=document.getElementById('sections-grid');
+  if(!grid) return;
+  state.sections ||= {};
+  grid.innerHTML='';
+  SECTION_LIST.forEach(s=>{
+    const on = state.sections[s.k] !== false; // default true
+    const row=document.createElement('div');
+    row.className='flex items-center justify-between gap-3 p-3 border border-sumi-900/8 rounded-xl bg-paper-100';
+    row.innerHTML=`
+      <div class="min-w-0">
+        <div class="font-medium text-sm">${s.name}</div>
+        <div class="text-xs text-[#7a6f64]">${s.desc}</div>
+      </div>
+      <div class="toggle ${on?'on':''}" data-sec="${s.k}" role="switch"></div>`;
+    grid.appendChild(row);
+  });
+  grid.querySelectorAll('.toggle[data-sec]').forEach(t=>{
+    t.addEventListener('click',()=>{
+      const k=t.dataset.sec;
+      state.sections[k] = state.sections[k]===false;
+      t.classList.toggle('on', state.sections[k]!==false);
+    });
+  });
+}
+
+function renderAll(){renderSections();renderBanner();renderNews();renderEvents();renderGallery();renderTm();}
 
 function escape(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
 
