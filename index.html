@@ -318,11 +318,13 @@
     background:transparent;color:inherit;font:inherit;transition:all .2s;
   }
   .stop-link:hover{background:rgba(200,16,46,.05);border-color:rgba(200,16,46,.2);}
+  .stop-link .ln-group{display:inline-flex;gap:.2rem;flex-shrink:0;}
   .stop-link .ln{font-family:'JetBrains Mono';color:#fff;background:var(--hinomaru);
-    padding:.15rem .45rem;border-radius:4px;font-size:.7rem;font-weight:700;flex-shrink:0;letter-spacing:.04em;}
+    padding:.15rem .4rem;border-radius:4px;font-size:.68rem;font-weight:700;letter-spacing:.04em;line-height:1.3;}
   .stop-link .ln.metro{background:#0066B3;}
+  .stop-link .ln.tram{background:#6E4C92;}
   .stop-link .ln.bus{background:#E8832F;}
-  .stop-link .nm{flex:1;}
+  .stop-link .nm{flex:1;font-weight:500;}
   .stop-link::after{content:'📍';opacity:0;transition:opacity .2s;font-size:.85em;}
   .stop-link:hover::after{opacity:.7;}
   .leaflet-popup-content-wrapper{border-radius:10px;}
@@ -981,13 +983,29 @@
         <div class="lg:col-span-5 grid gap-4">
           <div class="t-card">
             <div class="t-icon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16M8 15h.01M16 15h.01"/><path d="m8 19-2 3M16 19l2 3"/></svg></div>
-            <div class="font-display text-xl mb-2">Métro / Bus (STIB)</div>
-            <p class="text-xs text-[#9a8f83] mb-2 italic">Cliquez sur un arrêt pour le localiser sur la carte ↑</p>
+            <div class="font-display text-xl mb-2">STIB — Arrêts proches</div>
+            <p class="text-xs text-[#9a8f83] mb-3 italic">Cliquez sur un arrêt pour le localiser sur la carte ↑</p>
             <ul class="space-y-1">
-              <li><button type="button" class="stop-link" onclick="flyToStop(50.83702,4.30219,'Saint-Guidon')"><span class="ln metro">M5</span><span class="nm">Saint-Guidon</span></button></li>
-              <li><button type="button" class="stop-link" onclick="flyToStop(50.84140,4.31152,'Aumale')"><span class="ln metro">M5</span><span class="nm">Aumale</span></button></li>
-              <li><button type="button" class="stop-link" onclick="flyToStop(50.83649,4.30894,'Vétérinaires')"><span class="ln bus">46&nbsp;·&nbsp;49</span><span class="nm">Vétérinaires</span></button></li>
-              <li><button type="button" class="stop-link" onclick="flyToStop(50.82898,4.29680,'La Roue')"><span class="ln bus">56</span><span class="nm">La Roue</span></button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.83685,4.30150,'Saint-Guidon')">
+                <span class="ln-group"><span class="ln metro">M5</span><span class="ln tram">T81</span><span class="ln bus">46</span><span class="ln bus">49</span></span>
+                <span class="nm">Saint-Guidon</span>
+              </button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.84095,4.31050,'Aumale')">
+                <span class="ln-group"><span class="ln metro">M5</span></span>
+                <span class="nm">Aumale</span>
+              </button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.84050,4.30200,'Résistance')">
+                <span class="ln-group"><span class="ln tram">T81</span><span class="ln bus">46</span></span>
+                <span class="nm">Résistance <em class="text-[#9a8f83] text-xs not-italic">(Verzet)</em></span>
+              </button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.83880,4.30670,'Beauté')">
+                <span class="ln-group"><span class="ln bus">49</span><span class="ln bus">89</span></span>
+                <span class="nm">Beauté <em class="text-[#9a8f83] text-xs not-italic">(Schoonheid)</em></span>
+              </button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.83540,4.30290,'Maison d\'Erasme')">
+                <span class="ln-group"><span class="ln bus">46</span></span>
+                <span class="nm">Maison d'Erasme</span>
+              </button></li>
             </ul>
           </div>
           <div class="t-card">
