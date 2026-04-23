@@ -16,6 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Shippori+Mincho:wght@500;700;800&display=swap" rel="stylesheet" />
 
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   tailwind.config = {
     theme: {
@@ -284,6 +286,32 @@
   .pillar:hover{border-left-color:var(--hinomaru);padding-left:2.5rem;}
   .pillar .n{font-family:'JetBrains Mono';font-size:.7rem;letter-spacing:.2em;color:var(--hinomaru);margin-bottom:.8rem;}
   .pillar h4{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:.4rem;font-weight:400;}
+
+  /* Map (Leaflet) */
+  #dojo-map{z-index:1;}
+  #dojo-map .leaflet-tile-pane{filter:sepia(.15) saturate(.9) brightness(1.02);}
+  #dojo-map .leaflet-control-attribution{background:rgba(251,246,233,.85);font-size:9px;}
+  .dojo-marker-pin{
+    width:44px;height:44px;border-radius:50% 50% 50% 0;background:var(--hinomaru);
+    transform:rotate(-45deg);box-shadow:0 6px 16px -4px rgba(200,16,46,.6);
+    display:grid;place-items:center;border:3px solid #fff;
+  }
+  .dojo-marker-pin span{transform:rotate(45deg);font-family:'Shippori Mincho';color:#fff;font-size:1.3rem;font-weight:700;}
+  .transit-pin{
+    padding:.3rem .55rem;color:#fff;font-family:'JetBrains Mono';font-size:10px;font-weight:700;
+    border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.25);border:2px solid #fff;letter-spacing:.05em;
+    white-space:nowrap;
+  }
+  .leaflet-popup-content-wrapper{border-radius:10px;}
+  .leaflet-popup-content{margin:.7rem 1rem;font-family:'Inter';font-size:.85rem;}
+  .leaflet-popup-content strong{font-family:'Fraunces';font-size:1rem;display:block;margin-bottom:.15rem;}
+  .recenter-btn{
+    width:36px;height:36px;background:#fff;border:1px solid rgba(29,25,22,.15) !important;
+    border-radius:6px !important;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);font-family:inherit;
+    color:var(--hinomaru);font-size:20px;font-weight:600;
+  }
+  .recenter-btn:hover{background:var(--hinomaru);color:#fff;}
 
   /* Transport */
   .t-card{background:#fff;padding:2rem;border-radius:20px;border:1px solid rgba(29,25,22,.06);transition:all .4s cubic-bezier(.2,.8,.2,1);}
@@ -923,12 +951,9 @@
       <div class="label mb-6">道 — Accès</div>
       <div class="grid lg:grid-cols-12 gap-5">
         <div class="lg:col-span-7 rounded-3xl overflow-hidden border border-sumi-900/5 h-80 md:h-[30rem] bg-paper-200 relative">
-          <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=4.30246%2C50.83589%2C4.31046%2C50.84089&amp;layer=mapnik&amp;marker=50.838389%2C4.306456"
-            style="border:0;width:100%;height:100%;filter:sepia(.2) saturate(.9);"
-            loading="lazy" title="Carte Rue du Serment 54"></iframe>
+          <div id="dojo-map" style="height:100%;width:100%;background:#ECE1C8;"></div>
           <a href="https://www.openstreetmap.org/?mlat=50.838389&amp;mlon=4.306456#map=18/50.838389/4.306456" target="_blank" rel="noopener"
-             class="absolute bottom-3 right-3 text-[11px] font-mono px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-sumi-900/10 hover:bg-hinomaru-600 hover:text-white transition">Ouvrir ↗</a>
+             class="absolute bottom-3 right-3 z-[400] text-[11px] font-mono px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-sumi-900/10 hover:bg-hinomaru-600 hover:text-white transition">Ouvrir ↗</a>
         </div>
         <div class="lg:col-span-5 grid gap-4">
           <div class="t-card">
@@ -1273,6 +1298,79 @@ function initTestimonials(){
   }
 }
 
+// ============ MAP (Leaflet) ============
+function initMap(){
+  const el = document.getElementById('dojo-map');
+  if(!el || typeof L === 'undefined') return;
+
+  const DOJO = [50.838389, 4.306456];
+  const map = L.map('dojo-map', {
+    center: DOJO,
+    zoom: 16,
+    scrollWheelZoom: false,
+    zoomControl: true
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Dojo marker (custom pin with kanji)
+  const dojoIcon = L.divIcon({
+    className: '',
+    html: '<div class="dojo-marker-pin"><span>柔</span></div>',
+    iconSize: [44, 44],
+    iconAnchor: [22, 44],
+    popupAnchor: [0, -44]
+  });
+  L.marker(DOJO, {icon: dojoIcon, title: 'Judo Club Anderlecht', zIndexOffset: 1000}).addTo(map)
+    .bindPopup('<strong>Judo Club Anderlecht</strong>Rue du Serment 54<br>1070 Anderlecht');
+
+  // Nearby transit stops (approximate — à affiner si besoin)
+  const STIB_M = '#0066B3';   // Métro
+  const STIB_B = '#E8832F';   // Bus / Tram
+  const stops = [
+    {pos:[50.83702, 4.30219], name:'Saint-Guidon', line:'M5',     color:STIB_M, type:'Métro'},
+    {pos:[50.84140, 4.31152], name:'Aumale',        line:'M5',     color:STIB_M, type:'Métro'},
+    {pos:[50.83649, 4.30894], name:'Vétérinaires',  line:'46 / 49',color:STIB_B, type:'Bus'},
+    {pos:[50.82898, 4.29680], name:'La Roue',        line:'56',     color:STIB_B, type:'Bus'}
+  ];
+  stops.forEach(s => {
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="transit-pin" style="background:${s.color};">${s.line}</div>`,
+      iconSize: [50, 22],
+      iconAnchor: [25, 11],
+      popupAnchor: [0, -16]
+    });
+    L.marker(s.pos, {icon, title: s.name}).addTo(map)
+      .bindPopup(`<strong>${s.name}</strong>${s.type} ${s.line}`);
+  });
+
+  // Custom recenter control
+  const RecenterControl = L.Control.extend({
+    options: {position: 'topright'},
+    onAdd: function() {
+      const btn = L.DomUtil.create('button', 'recenter-btn leaflet-bar');
+      btn.innerHTML = '⌖';
+      btn.title = 'Recentrer sur le dojo';
+      btn.setAttribute('aria-label', 'Recentrer sur le dojo');
+      L.DomEvent.disableClickPropagation(btn);
+      L.DomEvent.on(btn, 'click', e => {
+        L.DomEvent.stop(e);
+        map.flyTo(DOJO, 16, {duration: 0.6});
+      });
+      return btn;
+    }
+  });
+  map.addControl(new RecenterControl());
+
+  // Click anywhere to enable scroll-zoom (avoids hijacking page scroll on land)
+  map.on('click', () => map.scrollWheelZoom.enable());
+  map.on('mouseout', () => map.scrollWheelZoom.disable());
+}
+
 // ============ BOOT — fetch content.json then render everything ============
 (async()=>{
   await Promise.all([loadContent(), loadGoogleReviews()]);
@@ -1284,6 +1382,7 @@ function initTestimonials(){
   initNews();
   initEvents();
   initTestimonials();
+  initMap();
   // Re-observe newly injected .reveal elements
   document.querySelectorAll('.reveal, .reveal-img').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); });
 })();
