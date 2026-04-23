@@ -12,7 +12,7 @@
     "preInscription": true
   },
   "banner": {
-    "active": false,
+    "active": true,
     "text": "<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet."
   },
   "texts": {
