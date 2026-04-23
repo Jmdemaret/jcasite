@@ -15,26 +15,25 @@
     "active": true,
     "text": "<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet."
   },
+  "texts": {
+    "hero": {},
+    "club": {},
+    "cours": {},
+    "tarifs": {},
+    "actu": {},
+    "evenements": {},
+    "galerie": {},
+    "equipe": {},
+    "temoignages": {},
+    "faq": {},
+    "preInscription": {},
+    "contact": {}
+  },
   "gallery": [
     {
       "img": "dojo.jpeg",
       "label": "01 · DOJO",
       "title": "Le tatami"
-    },
-    {
-      "img": "judoclubanderlecht/kids-judo.jpg",
-      "label": "02 · KODOMO",
-      "title": "Les enfants"
-    },
-    {
-      "img": "judoclubanderlecht/judo-training.jpg",
-      "label": "03 · KEIKO",
-      "title": "Entraînement"
-    },
-    {
-      "img": "judoclubanderlecht/dojo-hall.jpg",
-      "label": "04 · 道場",
-      "title": "Le dojo"
     }
   ],
   "news": [
