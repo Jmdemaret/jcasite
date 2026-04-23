@@ -5,9 +5,9 @@
     "tarifs": true,
     "actu": true,
     "evenements": true,
-    "galerie": true,
-    "equipe": true,
-    "temoignages": true,
+    "galerie": false,
+    "equipe": false,
+    "temoignages": false,
     "faq": true,
     "preInscription": true
   },
