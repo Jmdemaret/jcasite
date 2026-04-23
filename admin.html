@@ -193,6 +193,17 @@
     <p class="text-xs text-[#9a8f83] mt-4 italic">L'accueil, le formulaire de contact et la carte restent toujours affichés.</p>
   </section>
 
+  <!-- ============ TEXTES DU SITE ============ -->
+  <section class="card">
+    <div class="label">Textes affichés</div>
+    <h2 class="font-display text-2xl mt-2 mb-2">Tous les textes du site</h2>
+    <p class="text-sm text-[#7a6f64] mb-5 max-w-2xl">
+      Cliquez sur une rubrique pour déplier et modifier ses textes (titres, intros, paragraphes).
+      Laissez un champ vide pour garder le texte par défaut. Les balises autorisées : <code>&lt;em&gt;</code> (italique rouge), <code>&lt;strong&gt;</code> (gras).
+    </p>
+    <div id="texts-accordion" class="space-y-2"></div>
+  </section>
+
   <!-- ============ BANDEAU HAUT DE PAGE ============ -->
   <section class="card">
     <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
@@ -317,8 +328,77 @@
 // ============ CONFIG ============
 const DEFAULTS={
   sections:{club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
-  banner:{active:true,text:''},gallery:[],news:[],events:[],testimonials:[]
+  banner:{active:true,text:''},texts:{},gallery:[],news:[],events:[],testimonials:[]
 };
+
+// Schema describing every editable text block on the site
+const TEXT_SCHEMA = [
+  { key:'hero', title:'Accueil (hero)', fields:[
+    {k:'label',         label:'Étiquette japonaise',  type:'text', placeholder:'道場 — Dojo depuis 1977'},
+    {k:'title1',        label:'Titre — ligne 1',       type:'text', placeholder:"L'art du judo,"},
+    {k:'title2',        label:'Titre — ligne 2 (en rouge italique)', type:'text', placeholder:'réinventé'},
+    {k:'desc',          label:'Description',          type:'textarea', placeholder:"École traditionnelle fondée par…"},
+    {k:'ctaPrimary',    label:'Bouton principal',     type:'text', placeholder:'Pré-inscription rentrée'},
+    {k:'ctaSecondary',  label:'Bouton secondaire',    type:'text', placeholder:'Voir les cours'},
+    {k:'stat1Label',    label:'Stat 1 — libellé',     type:'text', placeholder:'années'},
+    {k:'stat2Label',    label:'Stat 2 — libellé',     type:'text', placeholder:"groupes d'âge"},
+    {k:'stat3Label',    label:'Stat 3 — libellé',     type:'text', placeholder:'cours / semaine'}
+  ]},
+  { key:'club', title:'Le club — Histoire', fields:[
+    {k:'label', label:'Étiquette',  type:'text', placeholder:'Le club'},
+    {k:'title', label:'Titre (HTML autorisé, <em> pour rouge italique)', type:'html', placeholder:'Tradition japonaise, <em>pratique moderne.</em>'},
+    {k:'p1',    label:'Paragraphe 1 (HTML autorisé)', type:'html', placeholder:'Le Judo Club Anderlecht a ouvert ses portes en <strong>1977</strong>…'},
+    {k:'p2',    label:'Paragraphe 2 (HTML autorisé)', type:'html', placeholder:'Nous transmettons un judo fidèle aux codes traditionnels…'}
+  ]},
+  { key:'cours', title:'Cours — Planning', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'稽古 — Programme'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Planning <em>hebdomadaire.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Mercredi au samedi…'}
+  ]},
+  { key:'tarifs', title:'Tarifs', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'月謝 — Tarifs'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Des formules <em>simples.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Cotisation annuelle incluant…'}
+  ]},
+  { key:'actu', title:'Actualités', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'新着 — Actualités'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Quoi de <em>neuf ?</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Les dernières nouvelles du club…'}
+  ]},
+  { key:'evenements', title:'Calendrier', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'行事 — Calendrier'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'À venir au <em>dojo.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Stages, passages de grade…'}
+  ]},
+  { key:'galerie', title:'Galerie', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'武 — Galerie'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Sur le <em>tatami.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Glissez horizontalement…'}
+  ]},
+  { key:'equipe', title:'Équipe / Sensei', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'先生 — Enseignants'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Nos <em>sensei.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Tous formés au sein du club…'}
+  ]},
+  { key:'temoignages', title:'Avis & témoignages', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'感想 — Témoignages'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:"Ce qu'ils <em>en disent.</em>"}
+  ]},
+  { key:'faq', title:'FAQ', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'質問 — FAQ'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Les <em>questions.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Ce que les parents demandent…'}
+  ]},
+  { key:'preInscription', title:'Pré-inscription', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'入会 — Pré-inscription rentrée'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Réservez votre <em>place.</em>'},
+    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Complétez cette pré-inscription…'}
+  ]},
+  { key:'contact', title:'Contact', fields:[
+    {k:'label', label:'Étiquette', type:'text', placeholder:'Contact'},
+    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Une <em>question ?</em>'}
+  ]}
+];
 
 const SECTION_LIST = [
   {k:'club',           name:'Le club — Histoire',            desc:'Présentation, fondation, piliers'},
@@ -596,6 +676,43 @@ function renderTm(){
   bind(list);
 }
 
+// ============ TEXTS (site-wide) ============
+function renderTexts(){
+  const root=document.getElementById('texts-accordion');
+  if(!root) return;
+  state.texts ||= {};
+  root.innerHTML='';
+  TEXT_SCHEMA.forEach(group=>{
+    state.texts[group.key] ||= {};
+    const det=document.createElement('details');
+    det.className='item';det.style.padding='0';
+    const sum=document.createElement('summary');
+    sum.style.cssText='cursor:pointer;list-style:none;padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;font-weight:500;';
+    sum.innerHTML=`<span>${group.title}</span><span style="font-size:.75rem;color:#9a8f83;">▼</span>`;
+    det.appendChild(sum);
+    const body=document.createElement('div');body.style.cssText='padding:0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:.9rem;';
+    group.fields.forEach(f=>{
+      const wrap=document.createElement('div');
+      const lbl=document.createElement('span');lbl.className='fl';lbl.textContent=f.label;
+      let ctrl;
+      if(f.type==='textarea' || f.type==='html'){
+        ctrl=document.createElement('textarea');ctrl.rows=f.type==='html'?2:3;
+      } else {
+        ctrl=document.createElement('input');ctrl.type='text';
+      }
+      ctrl.placeholder=f.placeholder||'';
+      ctrl.value=state.texts[group.key][f.k]||'';
+      ctrl.addEventListener('input',()=>{
+        state.texts[group.key][f.k]=ctrl.value;
+      });
+      wrap.appendChild(lbl);wrap.appendChild(ctrl);
+      body.appendChild(wrap);
+    });
+    det.appendChild(body);
+    root.appendChild(det);
+  });
+}
+
 // ============ SECTIONS TOGGLES ============
 function renderSections(){
   const grid=document.getElementById('sections-grid');
@@ -623,7 +740,7 @@ function renderSections(){
   });
 }
 
-function renderAll(){renderSections();renderBanner();renderNews();renderEvents();renderGallery();renderTm();}
+function renderAll(){renderSections();renderTexts();renderBanner();renderNews();renderEvents();renderGallery();renderTm();}
 
 function escape(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
 
