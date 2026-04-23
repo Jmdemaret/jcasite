@@ -1,11 +1,11 @@
 {
   "sections": {
-    "club": true,
+    "club": false,
     "cours": true,
     "tarifs": true,
     "actu": true,
     "evenements": true,
-    "galerie": false,
+    "galerie": true,
     "equipe": false,
     "temoignages": false,
     "faq": true,
