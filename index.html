@@ -302,6 +302,29 @@
     border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.25);border:2px solid #fff;letter-spacing:.05em;
     white-space:nowrap;
   }
+  .stop-pulse{
+    width:44px;height:44px;border-radius:50%;background:rgba(200,16,46,.25);
+    border:3px solid var(--hinomaru);box-shadow:0 0 0 0 rgba(200,16,46,.6);
+    animation:stopPulse 1.4s ease-out infinite;
+  }
+  @keyframes stopPulse{
+    0%  {transform:scale(.4);opacity:1;box-shadow:0 0 0 0 rgba(200,16,46,.55);}
+    70% {transform:scale(1.4);opacity:.4;box-shadow:0 0 0 22px rgba(200,16,46,0);}
+    100%{transform:scale(1.6);opacity:0;box-shadow:0 0 0 0 rgba(200,16,46,0);}
+  }
+  .stop-link{
+    display:flex;align-items:center;gap:.5rem;padding:.4rem .55rem;border-radius:8px;
+    text-align:left;width:100%;cursor:pointer;border:1px solid transparent;
+    background:transparent;color:inherit;font:inherit;transition:all .2s;
+  }
+  .stop-link:hover{background:rgba(200,16,46,.05);border-color:rgba(200,16,46,.2);}
+  .stop-link .ln{font-family:'JetBrains Mono';color:#fff;background:var(--hinomaru);
+    padding:.15rem .45rem;border-radius:4px;font-size:.7rem;font-weight:700;flex-shrink:0;letter-spacing:.04em;}
+  .stop-link .ln.metro{background:#0066B3;}
+  .stop-link .ln.bus{background:#E8832F;}
+  .stop-link .nm{flex:1;}
+  .stop-link::after{content:'📍';opacity:0;transition:opacity .2s;font-size:.85em;}
+  .stop-link:hover::after{opacity:.7;}
   .leaflet-popup-content-wrapper{border-radius:10px;}
   .leaflet-popup-content{margin:.7rem 1rem;font-family:'Inter';font-size:.85rem;}
   .leaflet-popup-content strong{font-family:'Fraunces';font-size:1rem;display:block;margin-bottom:.15rem;}
@@ -958,11 +981,13 @@
         <div class="lg:col-span-5 grid gap-4">
           <div class="t-card">
             <div class="t-icon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16M8 15h.01M16 15h.01"/><path d="m8 19-2 3M16 19l2 3"/></svg></div>
-            <div class="font-display text-xl mb-1">Métro / Bus (STIB)</div>
-            <ul class="text-sm text-[#4a423b] space-y-1">
-              <li><span class="font-mono text-hinomaru-600">M5</span> · Saint-Guidon ou Aumale</li>
-              <li><span class="font-mono text-hinomaru-600">46 / 49</span> · Vétérinaires</li>
-              <li><span class="font-mono text-hinomaru-600">56</span> · La Roue</li>
+            <div class="font-display text-xl mb-2">Métro / Bus (STIB)</div>
+            <p class="text-xs text-[#9a8f83] mb-2 italic">Cliquez sur un arrêt pour le localiser sur la carte ↑</p>
+            <ul class="space-y-1">
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.83702,4.30219,'Saint-Guidon')"><span class="ln metro">M5</span><span class="nm">Saint-Guidon</span></button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.84140,4.31152,'Aumale')"><span class="ln metro">M5</span><span class="nm">Aumale</span></button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.83649,4.30894,'Vétérinaires')"><span class="ln bus">46&nbsp;·&nbsp;49</span><span class="nm">Vétérinaires</span></button></li>
+              <li><button type="button" class="stop-link" onclick="flyToStop(50.82898,4.29680,'La Roue')"><span class="ln bus">56</span><span class="nm">La Roue</span></button></li>
             </ul>
           </div>
           <div class="t-card">
@@ -1311,12 +1336,14 @@ function initMap(){
     zoomControl: true
   });
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom: 19
+  // ÖPNVKarte = couche OSM dédiée aux transports en commun
+  // Les arrêts apparaissent comme des ronds bleus, les lignes en couleurs vives
+  L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://memomaps.de/">memomaps.de</a> · <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
   }).addTo(map);
 
-  // Dojo marker (custom pin with kanji)
+  // Dojo marker (custom pin with kanji) — gardé car c'est notre point d'intérêt
   const dojoIcon = L.divIcon({
     className: '',
     html: '<div class="dojo-marker-pin"><span>柔</span></div>',
@@ -1327,26 +1354,25 @@ function initMap(){
   L.marker(DOJO, {icon: dojoIcon, title: 'Judo Club Anderlecht', zIndexOffset: 1000}).addTo(map)
     .bindPopup('<strong>Judo Club Anderlecht</strong>Rue du Serment 54<br>1070 Anderlecht');
 
-  // Nearby transit stops (approximate — à affiner si besoin)
-  const STIB_M = '#0066B3';   // Métro
-  const STIB_B = '#E8832F';   // Bus / Tram
-  const stops = [
-    {pos:[50.83702, 4.30219], name:'Saint-Guidon', line:'M5',     color:STIB_M, type:'Métro'},
-    {pos:[50.84140, 4.31152], name:'Aumale',        line:'M5',     color:STIB_M, type:'Métro'},
-    {pos:[50.83649, 4.30894], name:'Vétérinaires',  line:'46 / 49',color:STIB_B, type:'Bus'},
-    {pos:[50.82898, 4.29680], name:'La Roue',        line:'56',     color:STIB_B, type:'Bus'}
-  ];
-  stops.forEach(s => {
-    const icon = L.divIcon({
+  // Pas de marqueurs transports custom : ils sont déjà visibles via ÖPNVKarte
+  // Mais on expose une fonction window.flyToStop() pour que les liens HTML
+  // dans la carte « Métro / Bus » puissent recentrer + highlight pulse
+  let highlightLayer = null;
+  window.flyToStop = function(lat, lng, name) {
+    map.flyTo([+lat, +lng], 17, {duration: 0.7});
+    if (highlightLayer) { map.removeLayer(highlightLayer); }
+    const pulseIcon = L.divIcon({
       className: '',
-      html: `<div class="transit-pin" style="background:${s.color};">${s.line}</div>`,
-      iconSize: [50, 22],
-      iconAnchor: [25, 11],
-      popupAnchor: [0, -16]
+      html: '<div class="stop-pulse"></div>',
+      iconSize: [44, 44],
+      iconAnchor: [22, 22]
     });
-    L.marker(s.pos, {icon, title: s.name}).addTo(map)
-      .bindPopup(`<strong>${s.name}</strong>${s.type} ${s.line}`);
-  });
+    highlightLayer = L.marker([+lat, +lng], {icon: pulseIcon, interactive: false, zIndexOffset: 500}).addTo(map);
+    setTimeout(() => {
+      if (highlightLayer) { map.removeLayer(highlightLayer); highlightLayer = null; }
+    }, 5000);
+    document.getElementById('dojo-map').scrollIntoView({behavior:'smooth', block:'center'});
+  };
 
   // Custom recenter control
   const RecenterControl = L.Control.extend({
