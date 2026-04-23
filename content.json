@@ -1,35 +1,77 @@
 {
   "_meta": {
-    "version": "1.0000",
-    "publishedAt": "2026-04-23T00:00:00Z",
+    "version": "1.0001",
+    "publishedAt": "2026-04-23T16:59:53.807Z",
     "history": [
-      { "version": "1.0000", "date": "2026-04-23T00:00:00Z", "summary": "Initialisation du versioning" }
+      {
+        "version": "1.0001",
+        "date": "2026-04-23T16:59:53.807Z",
+        "summary": "Tarifs masqué, Actu masqué, Calendrier masqué, FAQ masqué, Pré-inscription masqué"
+      },
+      {
+        "version": "1.0000",
+        "date": "2026-04-23T00:00:00Z",
+        "summary": "Initialisation du versioning"
+      }
     ]
   },
   "sections": {
     "club": true,
     "cours": true,
-    "tarifs": true,
-    "actu": true,
-    "evenements": true,
+    "tarifs": false,
+    "actu": false,
+    "evenements": false,
     "galerie": false,
     "equipe": false,
     "temoignages": false,
-    "faq": true,
-    "preInscription": true
+    "faq": false,
+    "preInscription": false
   },
   "socials": {
-    "facebook":   { "url": "https://www.facebook.com/search/top?q=judo%20club%20anderlecht", "active": true },
-    "instagram":  { "url": "https://www.instagram.com/", "active": true },
-    "whatsapp":   { "url": "https://wa.me/32476791029", "active": true },
-    "youtube":    { "url": "", "active": false },
-    "tiktok":     { "url": "", "active": false },
-    "twitter":    { "url": "", "active": false },
-    "linkedin":   { "url": "", "active": false },
-    "telegram":   { "url": "", "active": false },
-    "googleMaps": { "url": "https://maps.google.com/?q=Rue+du+Serment+54+1070+Anderlecht", "active": false },
-    "discord":    { "url": "", "active": false },
-    "strava":     { "url": "", "active": false }
+    "facebook": {
+      "url": "https://www.facebook.com/search/top?q=judo%20club%20anderlecht",
+      "active": true
+    },
+    "instagram": {
+      "url": "https://www.instagram.com/",
+      "active": true
+    },
+    "whatsapp": {
+      "url": "https://wa.me/32476791029",
+      "active": true
+    },
+    "youtube": {
+      "url": "",
+      "active": false
+    },
+    "tiktok": {
+      "url": "",
+      "active": false
+    },
+    "twitter": {
+      "url": "",
+      "active": false
+    },
+    "linkedin": {
+      "url": "",
+      "active": false
+    },
+    "telegram": {
+      "url": "",
+      "active": false
+    },
+    "googleMaps": {
+      "url": "https://maps.google.com/?q=Rue+du+Serment+54+1070+Anderlecht",
+      "active": false
+    },
+    "discord": {
+      "url": "",
+      "active": false
+    },
+    "strava": {
+      "url": "",
+      "active": false
+    }
   },
   "banner": {
     "active": false,
