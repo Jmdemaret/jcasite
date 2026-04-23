@@ -1,0 +1,9 @@
+{
+  "name": "jcasite-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions pour le formulaire du site Judo Club Anderlecht",
+  "private": true,
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}

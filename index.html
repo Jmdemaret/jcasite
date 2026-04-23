@@ -783,6 +783,7 @@
     </div>
 
     <form id="preform" class="bg-white rounded-3xl p-8 md:p-12 border border-sumi-900/5 shadow-[0_40px_80px_-40px_rgba(29,25,22,.2)] reveal">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" />
       <div class="grid md:grid-cols-2 gap-6">
         <div class="field"><input type="text" id="pi-prenom" name="prenom" required placeholder=" "/><label for="pi-prenom">Prénom du judoka</label></div>
         <div class="field"><input type="text" id="pi-nom" name="nom" required placeholder=" "/><label for="pi-nom">Nom</label></div>
@@ -883,6 +884,7 @@
       </div>
 
       <form id="contact-form" class="lg:col-span-7 bg-white rounded-3xl p-8 md:p-10 border border-sumi-900/5 shadow-[0_30px_60px_-30px_rgba(29,25,22,.15)] reveal">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" />
         <div class="grid md:grid-cols-2 gap-6">
           <div class="field"><input type="text" name="nom" id="f-nom" required placeholder=" " /><label for="f-nom">Nom</label></div>
           <div class="field"><input type="email" name="email" id="f-email" required placeholder=" " /><label for="f-email">Email</label></div>
@@ -1446,21 +1448,29 @@ async function submitForm(form, subject){
   }
 
   try{
-    // POST FormData (multipart) so browser doesn't trigger CORS preflight
-    // Google Apps Script reads the fields via e.parameter
-    const data = new FormData(form);
-    data.append('_subject', subject);
-    data.append('_source', 'judoclubanderlecht.be');
+    // Build JSON payload from form fields
+    const data = {};
+    for (const [k, v] of new FormData(form).entries()) data[k] = v;
+    data._subject = subject;
+    data._source  = location.hostname || 'judoclubanderlecht.be';
+    // _gotcha filled by bots = honeypot (hidden input below)
+    const honey = form.querySelector('input[name="_gotcha"]');
+    if (honey) data._gotcha = honey.value;
+
     const res = await fetch(scriptUrl, {
       method: 'POST',
-      body: data,
-      redirect: 'follow'
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
-    // Apps Script answers opaque 200 when deployed correctly
-    if(res.ok || res.type === 'opaque'){
+
+    let json = null;
+    try { json = await res.json(); } catch(_) {}
+
+    if (res.ok && (!json || json.ok !== false)) {
       showFormResult(form, true, 'Merci, nous vous répondrons sous 24-48h.');
     } else {
-      showFormResult(form, false, 'Veuillez réessayer dans un moment.');
+      const msg = json?.error || 'Veuillez réessayer dans un moment.';
+      showFormResult(form, false, msg);
     }
   } catch(err){
     showFormResult(form, false, 'Erreur réseau : '+err.message);

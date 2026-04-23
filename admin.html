@@ -266,9 +266,9 @@
       </div>
       <div class="grid gap-4">
         <div>
-          <span class="fl">URL Google Apps Script (endpoint de l'application web)</span>
-          <input id="form-script-url" placeholder="https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec" />
-          <div class="hint">URL complète obtenue après le déploiement. Laissez vide pour désactiver (fallback mailto).</div>
+          <span class="fl">URL de l'endpoint (Netlify Function ou Google Apps Script)</span>
+          <input id="form-script-url" placeholder="https://xxxxx.netlify.app/api/send  ou  https://script.google.com/macros/s/.../exec" />
+          <div class="hint">URL obtenue après déploiement de la fonction. Laissez vide pour utiliser le fallback mailto.</div>
         </div>
         <div>
           <span class="fl">Email destinataire (fallback si script non configuré)</span>
@@ -278,30 +278,31 @@
       </div>
       <div class="mt-4 p-3 rounded-lg text-xs" id="form-status" style="background:#FBF6E9;border:1px solid rgba(29,25,22,.08);"></div>
       <details class="acc mt-4">
-        <summary>📖 Guide — créer le Google Apps Script (10 min)<span class="chev">▼</span></summary>
-        <div class="acc-body">
-          <ol class="list-decimal pl-5 space-y-2 text-sm">
-            <li>Connectez-vous au compte Gmail du club, puis allez sur <a href="https://script.google.com" target="_blank" rel="noopener" style="color:#C8102E;text-decoration:underline;">script.google.com</a></li>
-            <li>Cliquez <strong>Nouveau projet</strong></li>
-            <li>Nommez-le « Judo Club Anderlecht — Emails »</li>
-            <li>Effacez le code existant et collez le script (téléchargeable ci-dessous)</li>
-            <li>Cliquez l'icône <strong>💾 Enregistrer</strong> (ou Ctrl+S)</li>
-            <li>Cliquez <strong>Déployer</strong> → <strong>Nouveau déploiement</strong></li>
-            <li>Icône ⚙️ → choisir <strong>Application web</strong></li>
-            <li>Configuration :
-              <ul class="list-disc pl-5 mt-1">
-                <li>Description : « Endpoint contact site »</li>
-                <li>Exécuter en tant que : <strong>Moi</strong> (secretariat.judoclubanderlecht@gmail.com)</li>
-                <li>Qui a accès : <strong>Tout le monde</strong></li>
+        <summary>📖 Guide — déployer la Netlify Function (20 min)<span class="chev">▼</span></summary>
+        <div class="acc-body text-sm">
+          <p class="mb-2"><strong>Principe :</strong> une fonction serverless gratuite (Netlify) reçoit le POST du formulaire et envoie via le SMTP de votre email Combell — aucun service tiers ne lit vos messages.</p>
+          <ol class="list-decimal pl-5 space-y-2">
+            <li>Allez sur <a href="https://app.netlify.com/signup" target="_blank" rel="noopener" style="color:#C8102E;text-decoration:underline;">netlify.com/signup</a> → créez un compte gratuit (email + mot de passe, pas de carte bancaire)</li>
+            <li>Dans Netlify : <strong>Add new site</strong> → <strong>Import from Git</strong> → <strong>GitHub</strong> → autorisez Netlify → sélectionnez <code>Jmdemaret/jcasite</code></li>
+            <li>Build settings : laissez par défaut (Netlify détecte <code>netlify.toml</code>) → <strong>Deploy</strong></li>
+            <li>Une fois déployé : <strong>Site settings</strong> → <strong>Environment variables</strong> → ajoutez :
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li><code>SMTP_HOST</code> = <code>smtp.mailprotect.be</code> <em>(à confirmer avec Combell)</em></li>
+                <li><code>SMTP_PORT</code> = <code>587</code></li>
+                <li><code>SMTP_USER</code> = <code>secretariat@judoclubanderlecht.be</code></li>
+                <li><code>SMTP_PASS</code> = <em>mot de passe de votre boîte email</em></li>
+                <li><code>RECIPIENT_EMAIL</code> = <code>secretariat@judoclubanderlecht.be</code></li>
+                <li><code>ALLOWED_ORIGIN</code> = <code>https://judoclubanderlecht.be</code> <em>(facultatif, sécurité CORS)</em></li>
               </ul>
             </li>
-            <li>Cliquez <strong>Déployer</strong></li>
-            <li>Google demande d'autoriser le script à envoyer des emails → Autoriser (ignorer l'avertissement « non vérifié » → « Paramètres avancés » → « Accéder à… »)</li>
-            <li>Copiez l'<strong>URL de l'application web</strong> (type <code>https://script.google.com/macros/s/…/exec</code>)</li>
-            <li>Collez-la ci-dessus dans le champ « URL Google Apps Script »</li>
-            <li>Publiez l'admin, testez le formulaire sur le site public</li>
+            <li><strong>Deploys</strong> → <strong>Trigger deploy</strong> → Clear cache and deploy (pour prendre en compte les variables)</li>
+            <li>L'URL de la fonction est : <code>https://[votre-site].netlify.app/api/send</code></li>
+            <li>Collez cette URL dans le champ ci-dessus → publiez l'admin</li>
+            <li>Testez le formulaire sur le site public</li>
           </ol>
-          <p class="mt-3"><a href="apps-script.js.txt" target="_blank" rel="noopener" class="btn btn-primary btn-sm" download="apps-script.gs">⬇ Télécharger le script</a></p>
+          <p class="mt-3 p-2 rounded bg-paper-100 text-xs">
+            <strong>Si les identifiants SMTP Combell ne fonctionnent pas :</strong> contactez le support Combell via le chat sur my.combell.com et demandez « les paramètres SMTP pour envoyer depuis mon compte MailProtect secretariat@judoclubanderlecht.be ». Ils vous donneront hôte/port/utilisateur exacts.
+          </p>
         </div>
       </details>
     </section>
@@ -1258,12 +1259,18 @@ function renderForms(){
   fsu.value = state.forms.scriptUrl || '';
   fem.value = state.forms.recipientEmail || '';
   const updateStatus=()=>{
-    const hasScript = !!(state.forms.scriptUrl||'').trim();
+    const url = (state.forms.scriptUrl||'').trim();
+    const hasScript = !!url;
     const hasEm = !!(state.forms.recipientEmail||'').trim();
-    const urlLooksOk = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec/.test((state.forms.scriptUrl||'').trim());
-    if(hasScript && urlLooksOk) fst.innerHTML = '<strong style="color:#2A6B2A;">✓ Envoi direct actif via Google Apps Script</strong> — Les messages arriveront dans votre boîte Gmail sans ouvrir de client email chez le visiteur.';
-    else if(hasScript) fst.innerHTML = '<strong style="color:#C8102E;">⚠ URL suspecte</strong> — L\'URL doit commencer par <code>https://script.google.com/macros/s/</code> et finir par <code>/exec</code>.';
-    else if(hasEm) fst.innerHTML = '<strong style="color:#E8832F;">⚠ Mode fallback</strong> — Les formulaires ouvrent le client email du visiteur vers <code>'+escapeHtml(state.forms.recipientEmail)+'</code>. Configurez l\'URL du script pour un envoi direct.';
+    const isNetlify = /^https:\/\/[\w-]+\.netlify\.app\/.*/i.test(url);
+    const isAppsScript = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec/.test(url);
+    const urlLooksOk = isNetlify || isAppsScript;
+    if(hasScript && urlLooksOk){
+      const service = isNetlify ? 'Netlify Function + SMTP' : 'Google Apps Script';
+      fst.innerHTML = `<strong style="color:#2A6B2A;">✓ Envoi direct actif via ${service}</strong> — Les messages arriveront dans votre boîte email sans ouvrir de client email chez le visiteur.`;
+    }
+    else if(hasScript) fst.innerHTML = '<strong style="color:#C8102E;">⚠ URL suspecte</strong> — Doit commencer par <code>https://[nom].netlify.app/</code> (Netlify) ou <code>https://script.google.com/macros/s/</code> (Apps Script).';
+    else if(hasEm) fst.innerHTML = '<strong style="color:#E8832F;">⚠ Mode fallback</strong> — Les formulaires ouvrent le client email du visiteur vers <code>'+escapeHtml(state.forms.recipientEmail)+'</code>. Configurez l\'URL ci-dessus pour un envoi direct.';
     else fst.innerHTML = '<strong style="color:#C8102E;">✗ Non configuré</strong> — Ajoutez au moins un email destinataire.';
   };
   updateStatus();
