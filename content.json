@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0005",
-    "publishedAt": "2026-04-23T19:53:10.074Z",
+    "version": "1.0006",
+    "publishedAt": "2026-04-23T20:00:58.331Z",
     "history": [
+      {
+        "version": "1.0006",
+        "date": "2026-04-23T20:00:58.331Z",
+        "summary": "Formulaires : URL endpoint modifié"
+      },
       {
         "version": "1.0005",
         "date": "2026-04-23T19:53:10.074Z",
@@ -48,7 +53,7 @@
     "preInscription": false
   },
   "forms": {
-    "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/api/send",
+    "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/.netlify/functions/send",
     "recipientEmail": "jmdemaret@gmail.com"
   },
   "socials": {
