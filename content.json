@@ -18,6 +18,19 @@
     "faq": true,
     "preInscription": true
   },
+  "socials": {
+    "facebook":   { "url": "https://www.facebook.com/search/top?q=judo%20club%20anderlecht", "active": true },
+    "instagram":  { "url": "https://www.instagram.com/", "active": true },
+    "whatsapp":   { "url": "https://wa.me/32476791029", "active": true },
+    "youtube":    { "url": "", "active": false },
+    "tiktok":     { "url": "", "active": false },
+    "twitter":    { "url": "", "active": false },
+    "linkedin":   { "url": "", "active": false },
+    "telegram":   { "url": "", "active": false },
+    "googleMaps": { "url": "https://maps.google.com/?q=Rue+du+Serment+54+1070+Anderlecht", "active": false },
+    "discord":    { "url": "", "active": false },
+    "strava":     { "url": "", "active": false }
+  },
   "banner": {
     "active": false,
     "text": "<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet."
