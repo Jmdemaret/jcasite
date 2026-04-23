@@ -1,0 +1,6 @@
+Test depuis l'admin
+Date: 2026-04-23T13:45:05.974Z
+Utilisateur GitHub: (token actif)
+Dépôt: Jmdemaret/jcasite@main
+
+Si vous voyez ce fichier via « Tester la lecture », l'écriture et la lecture sont fonctionnelles.
