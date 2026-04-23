@@ -1,4 +1,11 @@
 {
+  "_meta": {
+    "version": "1.0000",
+    "publishedAt": "2026-04-23T00:00:00Z",
+    "history": [
+      { "version": "1.0000", "date": "2026-04-23T00:00:00Z", "summary": "Initialisation du versioning" }
+    ]
+  },
   "sections": {
     "club": true,
     "cours": true,

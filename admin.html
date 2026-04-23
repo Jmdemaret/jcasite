@@ -144,7 +144,11 @@
         <div class="text-[11px] text-[#7a6f64]" id="status"><span class="dot"></span>Chargement…</div>
       </div>
     </div>
-    <div class="flex gap-2 flex-wrap">
+    <div class="flex gap-2 flex-wrap items-center">
+      <div id="version-badge" class="text-xs font-mono px-3 py-1.5 rounded-full border" style="border-color:rgba(29,25,22,.15);background:#FBF6E9;" title="Version locale · Version en ligne">
+        <span id="v-local">—</span>
+        <span id="v-sync" class="ml-1" title="Statut de synchronisation">·</span>
+      </div>
       <button id="btn-discard" class="btn btn-ghost" style="display:none" title="Annuler toutes les modifs non publiées">↺ Annuler les modifs</button>
       <a href="index.html" target="_blank" class="btn btn-ghost">👁 Voir le site</a>
       <button id="btn-publish" class="btn btn-cta" disabled>
@@ -343,6 +347,25 @@
       <div class="log" id="log"><div class="row info"><span class="ts">—</span><span class="msg">En attente…</span></div></div>
     </section>
 
+    <!-- Versioning & History -->
+    <section class="card mb-4">
+      <div class="label">Versions</div>
+      <h2 class="font-display text-xl mt-1 mb-2">Historique des publications</h2>
+      <p class="text-sm text-[#7a6f64] mb-4 max-w-2xl">
+        Chaque publication incrémente le numéro de version (ex : <code>1.0023</code>). L'historique complet est stocké dans <code>content.json</code> et récupéré à chaque connexion.
+      </p>
+      <div class="kpi">
+        <div class="kpi-box"><div class="n" id="h-local">—</div><div class="l">Version locale</div></div>
+        <div class="kpi-box"><div class="n" id="h-online">—</div><div class="l">Version en ligne</div></div>
+        <div class="kpi-box"><div class="n" id="h-count">—</div><div class="l">Publications</div></div>
+      </div>
+      <div class="flex gap-2 mt-4 mb-4">
+        <button id="btn-recheck" class="btn btn-ghost btn-sm">⟲ Vérifier la version en ligne</button>
+        <button id="btn-export-log" class="btn btn-ghost btn-sm">↓ Exporter l'historique (.json)</button>
+      </div>
+      <div id="history-list" class="space-y-1 max-h-96 overflow-y-auto border border-sumi-900/08 rounded-xl p-2 bg-paper-100"></div>
+    </section>
+
     <!-- Backup -->
     <section class="card">
       <div class="label">Sauvegardes</div>
@@ -383,11 +406,67 @@
 //                               CONFIG & STATE
 // ============================================================================
 const DEFAULTS = {
+  _meta: {version:'1.0000', publishedAt:null, history:[]},
   sections: {club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
   banner: {active:true, text:''},
   texts: {},
   gallery: [], news: [], events: [], testimonials: []
 };
+
+const MAX_HISTORY = 100;
+
+function bumpVersion(v){
+  const m=(v||'1.0000').match(/^(\d+)\.(\d+)$/);
+  if(!m) return '1.0001';
+  const major=m[1], patch=m[2];
+  const next=String(parseInt(patch,10)+1).padStart(patch.length,'0');
+  return `${major}.${next}`;
+}
+
+function describeChanges(before, after){
+  const parts=[];
+  const b=before||{}, a=after||{};
+
+  // Banner
+  const bBannerText=(b.banner?.text||'').trim();
+  const aBannerText=(a.banner?.text||'').trim();
+  const bBannerActive=(b.banner?.active!==false);
+  const aBannerActive=(a.banner?.active!==false);
+  if(bBannerText!==aBannerText) parts.push('Bannière modifiée');
+  else if(bBannerActive!==aBannerActive) parts.push(aBannerActive?'Bannière activée':'Bannière désactivée');
+
+  // Sections toggles
+  const secChanges=[];
+  const SECTION_NAMES={club:'Club',cours:'Cours',tarifs:'Tarifs',actu:'Actu',evenements:'Calendrier',galerie:'Galerie',equipe:'Équipe',temoignages:'Avis',faq:'FAQ',preInscription:'Pré-inscription'};
+  Object.keys(SECTION_NAMES).forEach(k=>{
+    const was=(b.sections?.[k]!==false), is=(a.sections?.[k]!==false);
+    if(was&&!is) secChanges.push(`${SECTION_NAMES[k]} masqué`);
+    if(!was&&is) secChanges.push(`${SECTION_NAMES[k]} réactivé`);
+  });
+  if(secChanges.length) parts.push(secChanges.join(', '));
+
+  // Arrays
+  const LABELS={gallery:['photo','photos'],news:['actu','actus'],events:['événement','événements'],testimonials:['témoignage','témoignages']};
+  Object.keys(LABELS).forEach(key=>{
+    const bn=(b[key]||[]).length, an=(a[key]||[]).length;
+    const [s,p]=LABELS[key];
+    if(an>bn) parts.push(`+${an-bn} ${an-bn>1?p:s}`);
+    else if(an<bn) parts.push(`-${bn-an} ${bn-an>1?p:s}`);
+    else if(JSON.stringify(b[key]||[])!==JSON.stringify(a[key]||[])) parts.push(`${p} modifié${p.endsWith('s')?'s':''}`);
+  });
+
+  // Texts
+  let tc=0;
+  const bt=b.texts||{}, at=a.texts||{};
+  Object.keys(at).forEach(sec=>{
+    Object.keys(at[sec]||{}).forEach(f=>{
+      if((bt[sec]?.[f]||'')!==(at[sec]?.[f]||'')) tc++;
+    });
+  });
+  if(tc) parts.push(`${tc} texte${tc>1?'s':''} modifié${tc>1?'s':''}`);
+
+  return parts.length ? parts.join(' · ') : 'Aucun changement détecté';
+}
 
 const TOKEN_KEY='jca_gh_token';
 const CFG_KEY='jca_gh_cfg';
@@ -682,6 +761,9 @@ async function connect(){
     setStatus('ok','Connecté · prêt à éditer');
     document.querySelector('[data-tab="contenu"]').click();
     toast('Connecté ✓','ok');
+    renderVersion();
+    renderHistory();
+    checkOnlineVersion();
 
     // Check for draft
     const d=hasDraft() && localStorage.getItem(DRAFT_KEY);
@@ -725,20 +807,105 @@ async function publish(){
   const btn=document.getElementById('btn-publish');
   btn.disabled=true;const orig=btn.innerHTML;btn.innerHTML='⏳ Publication…';
   try{
-    const res=await ghPutContent(state, fileSha);
+    // Compute diff summary and bump version
+    const summary = describeChanges(loadedState, state);
+    const currentMeta = state._meta || {version:'1.0000', history:[]};
+    const newVersion = bumpVersion(currentMeta.version);
+    const now = new Date().toISOString();
+    state._meta = {
+      version: newVersion,
+      publishedAt: now,
+      history: [
+        { version: newVersion, date: now, summary: summary },
+        ...(currentMeta.history||[])
+      ].slice(0, MAX_HISTORY)
+    };
+
+    const res = await ghPutContent(state, fileSha, `v${newVersion} · ${summary}`);
     fileSha = res.content.sha;
     loadedState = JSON.parse(JSON.stringify(state));
     markClean();
-    log('Publié avec succès','ok');
-    setStatus('ok',`Publié à ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`);
-    toast('Publié ✓ Le site se met à jour dans ~1 min','ok');
+    renderVersion();
+    renderHistory();
+    log(`Publié en v${newVersion} — ${summary}`,'ok');
+    setStatus('ok',`v${newVersion} publiée à ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`);
+    toast(`Publié v${newVersion} ✓ Le site se met à jour dans ~1 min`,'ok');
   }catch(err){
+    // Rollback _meta on failure
+    if(loadedState?._meta) state._meta = JSON.parse(JSON.stringify(loadedState._meta));
     log('Erreur publication: '+err.message,'err');
     setStatus('err',err.message);
     toast(err.message,'err');
   }finally{
     btn.disabled=false;btn.innerHTML=orig;
   }
+}
+
+// ============================================================================
+//                               VERSION & SYNC
+// ============================================================================
+let onlineVersion = null;
+
+function renderVersion(){
+  const v = state._meta?.version || '—';
+  document.getElementById('v-local').textContent = 'v'+v;
+  document.getElementById('h-local').textContent = 'v'+v;
+  document.getElementById('h-count').textContent = (state._meta?.history||[]).length;
+  updateSyncBadge();
+}
+
+function updateSyncBadge(){
+  const localV = state._meta?.version;
+  const badge = document.getElementById('v-sync');
+  const hOnline = document.getElementById('h-online');
+  if(!localV){badge.textContent='·';hOnline.textContent='—';return;}
+  if(onlineVersion===null){badge.textContent='·';hOnline.textContent='—';return;}
+  hOnline.textContent = 'v'+onlineVersion;
+  if(onlineVersion === localV){
+    badge.textContent = '✓';
+    badge.style.color = '#2A6B2A';
+    badge.title = 'Synchronisé avec le serveur';
+    document.getElementById('version-badge').style.borderColor='rgba(42,107,42,.4)';
+  } else {
+    badge.textContent = '⚠';
+    badge.style.color = '#E8832F';
+    badge.title = `Désynchronisé : en ligne v${onlineVersion} / locale v${localV}`;
+    document.getElementById('version-badge').style.borderColor='rgba(232,131,47,.5)';
+  }
+}
+
+async function checkOnlineVersion(){
+  try{
+    // Hit GitHub Pages for the latest published version
+    const r=await fetch('https://jmdemaret.github.io/jcasite/content.json?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok) return;
+    const j=await r.json();
+    onlineVersion = j._meta?.version || null;
+    updateSyncBadge();
+    if(onlineVersion && state._meta?.version && onlineVersion !== state._meta.version){
+      // Somebody else may have published. Offer to reload.
+      log(`Version en ligne différente : v${onlineVersion} vs locale v${state._meta.version}`,'warn');
+    }
+  }catch(e){/* network issue, ignore */}
+}
+
+function renderHistory(){
+  const root=document.getElementById('history-list');
+  if(!root) return;
+  const hist = state._meta?.history || [];
+  if(!hist.length){root.innerHTML='<p class="text-sm text-[#9a8f83] italic p-3">Aucune publication enregistrée.</p>';return;}
+  root.innerHTML = hist.map(e=>{
+    const d = new Date(e.date);
+    const when = isNaN(d)?e.date:d.toLocaleString('fr-BE',{dateStyle:'short',timeStyle:'short'});
+    const cur = state._meta?.version===e.version ? ' · active' : '';
+    return `<div class="flex gap-3 items-start p-2 hover:bg-white/50 rounded-lg">
+      <span class="font-mono text-xs bg-sumi-900 text-paper-50 px-2 py-1 rounded shrink-0">v${escapeHtml(e.version)}</span>
+      <div class="min-w-0 flex-1">
+        <div class="text-sm">${escapeHtml(e.summary||'—')}</div>
+        <div class="text-xs text-[#7a6f64] font-mono">${escapeHtml(when)}${cur}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 async function discardChanges(){
@@ -1153,6 +1320,22 @@ async function testBoth(){
 document.getElementById('btn-test-read').addEventListener('click',testRead);
 document.getElementById('btn-test-write').addEventListener('click',testWrite);
 document.getElementById('btn-test-both').addEventListener('click',testBoth);
+document.getElementById('btn-recheck').addEventListener('click',async()=>{
+  log('Vérification de la version en ligne…');
+  await checkOnlineVersion();
+  log(`Version en ligne : v${onlineVersion||'?'}${onlineVersion===state._meta?.version?' — synchronisé ✓':' — DÉSYNCHRONISÉ'}`,onlineVersion===state._meta?.version?'ok':'warn');
+});
+document.getElementById('btn-export-log').addEventListener('click',()=>{
+  const h=state._meta?.history||[];
+  const blob=new Blob([JSON.stringify({version:state._meta?.version,history:h},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`jca-history-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
+  toast('Historique exporté','ok');
+});
+
+// Auto-check online version every 2 minutes + on window focus
+setInterval(()=>{if(loadedState) checkOnlineVersion();},120000);
+addEventListener('focus',()=>{if(loadedState) checkOnlineVersion();});
 
 // ============================================================================
 //                                EXPORT / IMPORT / ZIP
