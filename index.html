@@ -1061,16 +1061,24 @@ function applyTexts(){
 let CFG = DEFAULT_CONFIG;
 
 async function loadContent(){
-  try{
-    // Cache-bust so updates show immediately
-    const res = await fetch('content.json?v=' + Date.now(), {cache:'no-store'});
-    if(res.ok){
-      const json = await res.json();
-      CFG = {...DEFAULT_CONFIG, ...json};
-    }
-  }catch(e){
-    console.warn('content.json not found — using defaults', e);
+  // Detect if we're running locally (file://, localhost, or 127.0.0.1)
+  // If yes, fetch content.json from the live GitHub Pages to always get the
+  // latest content (no need for git pull). Otherwise use same-origin.
+  const isLocal = /^(localhost|127\.|0\.0\.0\.0)/.test(location.hostname) || location.protocol==='file:';
+  const sources = isLocal
+    ? ['https://jmdemaret.github.io/jcasite/content.json', 'content.json']
+    : ['content.json'];
+  for(const url of sources){
+    try{
+      const res = await fetch(url + '?v=' + Date.now(), {cache:'no-store'});
+      if(res.ok){
+        const json = await res.json();
+        CFG = {...DEFAULT_CONFIG, ...json};
+        return;
+      }
+    }catch(e){/* try next */}
   }
+  console.warn('content.json unreachable — using defaults');
 }
 
 // ============ BANNER ============
