@@ -16,7 +16,10 @@
     "text": "<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet."
   },
   "texts": {
-    "hero": {},
+    "hero": {
+      "title1": "Club de Judo",
+      "title2": "Traditionnel et Famillial"
+    },
     "club": {},
     "cours": {},
     "tarifs": {},
