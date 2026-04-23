@@ -47,18 +47,33 @@ exports.handler = async (event) => {
   }
 
   // Construction du mail
-  const subject = data._subject || '[Site] Nouveau message';
+  const baseSubject = data._subject || '[Site] Nouveau message';
   const source  = data._source  || 'site';
   const replyTo = (data.email || data.Email || '').trim();
 
+  // Identifier le visiteur (prenom + nom OU nom seul OU email)
+  const visitorName = [
+    (data.prenom || data.Prenom || data.firstName || '').trim(),
+    (data.nom    || data.Nom    || data.lastName  || data.name || '').trim()
+  ].filter(Boolean).join(' ').trim();
+
+  const visitorLabel = visitorName || replyTo || 'Visiteur anonyme';
+
+  // Subject enrichi : « [Site] Marie Dupont — Cours d'essai »
+  const subject = visitorName
+    ? baseSubject.replace(/^(\[[^\]]+\]\s*)?/, m => (m||'') + visitorName + ' — ').replace(/\[Site\]\s+/, '[Site] ')
+    : baseSubject;
+
   const lines = Object.keys(data)
-    .filter(k => !k.startsWith('_'))
+    .filter(k => !k.startsWith('_') && !k.startsWith('$'))
     .map(k => `  ${k} : ${data[k]}`);
 
   const textBody =
     `Nouveau message depuis ${source}\n` +
-    `Date : ${new Date().toLocaleString('fr-BE')}\n\n` +
-    `--- Contenu ---\n${lines.join('\n')}\n--- Fin ---\n`;
+    `De      : ${visitorLabel}${replyTo ? ' <' + replyTo + '>' : ''}\n` +
+    `Date    : ${new Date().toLocaleString('fr-BE')}\n` +
+    (replyTo ? `\n💡 Cliquez « Répondre » pour répondre directement à ${replyTo}\n` : '') +
+    `\n--- Contenu ---\n${lines.join('\n')}\n--- Fin ---\n`;
 
   // Configuration SMTP
   const port = parseInt(process.env.SMTP_PORT || '587', 10);
@@ -72,9 +87,14 @@ exports.handler = async (event) => {
     }
   });
 
+  // Sender display name : « Marie Dupont via Site JCA »
+  const senderName = visitorName
+    ? `${visitorName} via Site JCA`
+    : 'Site Judo Club Anderlecht';
+
   try {
     await transporter.sendMail({
-      from: `"Site Judo Club Anderlecht" <${process.env.SMTP_USER}>`,
+      from: `"${senderName}" <${process.env.SMTP_USER}>`,
       to: process.env.RECIPIENT_EMAIL || process.env.SMTP_USER,
       replyTo: replyTo || undefined,
       subject: subject,
