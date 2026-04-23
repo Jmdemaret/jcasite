@@ -468,7 +468,7 @@
         <div class="text-xs text-[#7a6f64] uppercase tracking-[.2em] mt-2 font-mono" data-text="hero.stat2Label">groupes d'âge</div>
       </div>
       <div>
-        <div class="stat-num" data-count="11">0</div>
+        <div class="stat-num" data-count="12">0</div>
         <div class="text-xs text-[#7a6f64] uppercase tracking-[.2em] mt-2 font-mono" data-text="hero.stat3Label">cours / semaine</div>
       </div>
     </div>
@@ -1290,18 +1290,23 @@ const AGE_COLOR={
 };
 
 // Each course entry: {day, ageId, start, end}
+// Source: www.judoclubanderlecht.be (horaires officiels du club)
 const COURSES=[
-  {day:'Mercredi', age:'4-5',  start:'14:15', end:'15:00'},
-  {day:'Mercredi', age:'7-10', start:'15:00', end:'16:00'},
-  {day:'Mercredi', age:'5-7',  start:'16:00', end:'17:00'},
-  {day:'Mercredi', age:'11-15',start:'18:00', end:'19:15'},
-  {day:'Mercredi', age:'15+',  start:'19:15', end:'20:45'},
-  {day:'Vendredi', age:'7-10', start:'17:30', end:'18:30'},
-  {day:'Vendredi', age:'11-15',start:'18:30', end:'20:00'},
-  {day:'Vendredi', age:'15+',  start:'19:15', end:'20:45'},
-  {day:'Samedi',   age:'5-7',  start:'09:45', end:'10:45'},
-  {day:'Samedi',   age:'7-10', start:'11:00', end:'12:00'},
-  {day:'Samedi',   age:'11-15',start:'12:00', end:'13:00'}
+  // Mercredi (6 cours)
+  {day:'Mercredi', age:'4-5',   start:'14:15', end:'15:00'},
+  {day:'Mercredi', age:'7-10',  start:'15:00', end:'16:00'},
+  {day:'Mercredi', age:'5-7',   start:'16:00', end:'17:00'},
+  {day:'Mercredi', age:'7-10',  start:'17:00', end:'18:00'},
+  {day:'Mercredi', age:'11-15', start:'18:00', end:'19:15'},
+  {day:'Mercredi', age:'15+',   start:'19:15', end:'20:45'},
+  // Vendredi (3 cours)
+  {day:'Vendredi', age:'7-10',  start:'17:00', end:'18:00'},
+  {day:'Vendredi', age:'11-15', start:'18:00', end:'19:15'},
+  {day:'Vendredi', age:'15+',   start:'19:15', end:'20:45'},
+  // Samedi (3 cours)
+  {day:'Samedi',   age:'5-7',   start:'09:45', end:'10:45'},
+  {day:'Samedi',   age:'7-10',  start:'10:45', end:'11:45'},
+  {day:'Samedi',   age:'11-15', start:'11:45', end:'13:00'}
 ];
 
 const DAYS=['Mercredi','Vendredi','Samedi'];
