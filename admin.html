@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
   tailwind.config={theme:{extend:{colors:{
     paper:{50:'#FEFCF6',100:'#FBF6E9',200:'#F6EEDB',300:'#ECE1C8'},
@@ -179,14 +180,36 @@
     <div id="tm-list"></div>
   </section>
 
-  <!-- ========== EXPORT ========== -->
-  <section class="card">
-    <div class="label">Export / Backup local</div>
-    <h2 class="font-display text-2xl mt-2 mb-4">Sauvegarder / Restaurer hors-ligne</h2>
-    <p class="text-sm text-[#6b6158] mb-5 max-w-xl">Export JSON complet — pour backup ou import dans un autre navigateur. La publication GitHub reste la source de vérité pour le site en ligne.</p>
+  <!-- ========== LOCAL MODE (NO GITHUB NEEDED) ========== -->
+  <section class="card" style="border:1px solid rgba(200,16,46,.15); background:#fff;">
+    <div class="label">Mode local — sans GitHub</div>
+    <h2 class="font-display text-2xl mt-2 mb-2">Édition hors-ligne + export du site complet</h2>
+    <p class="text-sm text-[#6b6158] mb-5 max-w-2xl">
+      Si tu ne veux pas passer par GitHub, tu peux éditer en local et télécharger
+      un <strong>ZIP complet du site</strong> (HTML, images, content.json) à uploader
+      ensuite sur n'importe quel hébergeur (Netlify drag-and-drop, OVH, FTP…).
+    </p>
     <div class="flex flex-wrap gap-3">
-      <button id="btn-export" class="btn btn-ghost">↓ Exporter (.json)</button>
-      <button id="btn-import" class="btn btn-ghost">↑ Importer (.json)</button>
+      <button id="btn-zip" class="btn btn-primary">
+        📦 Télécharger le site complet (.zip)
+      </button>
+      <button id="btn-load-local" class="btn btn-ghost">↑ Ouvrir un content.json local</button>
+      <input type="file" id="load-local-input" accept="application/json" style="display:none"/>
+    </div>
+    <p class="text-xs text-[#9a8f83] mt-4">
+      Le ZIP contient tous les fichiers nécessaires + le <code>content.json</code> avec tes dernières modifs.
+      Décompressez, uploadez l'ensemble sur votre hébergeur, et c'est en ligne.
+    </p>
+  </section>
+
+  <!-- ========== EXPORT JSON ========== -->
+  <section class="card">
+    <div class="label">Backup rapide</div>
+    <h2 class="font-display text-2xl mt-2 mb-4">Sauvegarder / Restaurer le content.json seul</h2>
+    <p class="text-sm text-[#6b6158] mb-5 max-w-xl">Juste le fichier de données (sans images ni HTML) — pour transférer entre navigateurs.</p>
+    <div class="flex flex-wrap gap-3">
+      <button id="btn-export" class="btn btn-ghost">↓ Exporter content.json</button>
+      <button id="btn-import" class="btn btn-ghost">↑ Importer content.json</button>
       <input type="file" id="import-input" accept="application/json" style="display:none"/>
       <button id="btn-reload" class="btn btn-ghost">⟲ Recharger depuis GitHub</button>
     </div>
@@ -510,6 +533,86 @@ document.getElementById('import-input').addEventListener('change',async e=>{
   const f=e.target.files[0];if(!f) return;
   try{state={...DEFAULTS,...JSON.parse(await f.text())};renderAll();toast('Importé — publiez pour envoyer sur GitHub');}
   catch(err){toast('JSON invalide',true);}
+});
+
+// ============ LOAD FROM LOCAL FILE ============
+document.getElementById('btn-load-local').addEventListener('click',()=>document.getElementById('load-local-input').click());
+document.getElementById('load-local-input').addEventListener('change',async e=>{
+  const f=e.target.files[0];if(!f) return;
+  try{
+    state={...DEFAULTS,...JSON.parse(await f.text())};
+    fileSha=null; // No GitHub sync in this flow
+    renderAll();
+    toast('Chargé depuis '+f.name);
+  }catch(err){toast('JSON invalide',true);}
+});
+
+// ============ DOWNLOAD COMPLETE SITE ZIP ============
+document.getElementById('btn-zip').addEventListener('click', async ()=>{
+  const btn=document.getElementById('btn-zip');
+  const original=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML='⏳ Préparation du ZIP…';
+  try{
+    const zip=new JSZip();
+
+    // List of files to include in the ZIP (relative to site root)
+    const files=[
+      'index.html','admin.html','logo2.png','logo.png','dojo.jpeg',
+      'judoclubanderlecht/dojo-hall.jpg',
+      'judoclubanderlecht/kids-judo.jpg',
+      'judoclubanderlecht/judo-training.jpg',
+      'judoclubanderlecht/favicon.png'
+    ];
+
+    // Fetch each file and add to ZIP
+    for(const path of files){
+      try{
+        const res=await fetch(path+'?v='+Date.now(),{cache:'no-store'});
+        if(!res.ok) continue;
+        const blob=await res.blob();
+        zip.file(path, blob);
+      }catch(e){console.warn('Skip '+path,e);}
+    }
+
+    // Inject current state as content.json
+    zip.file('content.json', JSON.stringify(state, null, 2));
+
+    // README inside the ZIP for upload guidance
+    zip.file('LISEZ-MOI.txt',
+`=== JUDO CLUB ANDERLECHT — SITE ===
+Exporté le ${new Date().toLocaleString('fr-BE')}
+
+Pour mettre en ligne :
+- Décompressez tout le contenu de ce ZIP
+- Uploadez l'intégralité des fichiers à la racine de votre hébergeur
+  (Netlify : glisser-déposer le dossier ; OVH/FTP : tout à la racine
+   du dossier www/public_html ; GitHub Pages : commit + push)
+- index.html doit rester à la racine avec tous les autres fichiers à côté
+
+Pour rééditer plus tard :
+- Ouvrez admin.html via un serveur local :
+    python -m http.server 8000
+- Ou uploadez aussi admin.html sur l'hébergeur
+  puis allez sur votre-domaine/admin.html
+- Bouton « Ouvrir un content.json local » pour charger ce fichier
+- Bouton « Télécharger le site complet » pour régénérer un ZIP
+`);
+
+    const blob=await zip.generateAsync({type:'blob'},(meta)=>{
+      btn.innerHTML=`⏳ ${Math.round(meta.percent)}%`;
+    });
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=`judoclubanderlecht-${new Date().toISOString().slice(0,10)}.zip`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('ZIP téléchargé ✓');
+  }catch(err){
+    console.error(err);
+    toast('Erreur : '+err.message,true);
+  }finally{
+    btn.disabled=false;btn.innerHTML=original;
+  }
 });
 
 // Kick off
