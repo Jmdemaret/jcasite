@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0008",
-    "publishedAt": "2026-04-23T21:42:45.529Z",
+    "version": "1.0009",
+    "publishedAt": "2026-04-23T21:45:16.490Z",
     "history": [
+      {
+        "version": "1.0009",
+        "date": "2026-04-23T21:45:16.490Z",
+        "summary": "Tarifs masqué, Actu masqué, Calendrier masqué, Équipe masqué, Avis masqué, Pré-inscription masqué"
+      },
       {
         "version": "1.0008",
         "date": "2026-04-23T21:42:45.529Z",
@@ -53,14 +58,14 @@
   "sections": {
     "club": true,
     "cours": true,
-    "tarifs": true,
-    "actu": true,
-    "evenements": true,
+    "tarifs": false,
+    "actu": false,
+    "evenements": false,
     "galerie": true,
-    "equipe": true,
-    "temoignages": true,
+    "equipe": false,
+    "temoignages": false,
     "faq": true,
-    "preInscription": true
+    "preInscription": false
   },
   "forms": {
     "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/.netlify/functions/send",
