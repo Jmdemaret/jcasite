@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin · Judo Club Anderlecht</title>
+<link rel="icon" type="image/png" href="logo2.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config={theme:{extend:{colors:{
+    paper:{50:'#FEFCF6',100:'#FBF6E9',200:'#F6EEDB',300:'#ECE1C8'},
+    sumi:{700:'#2A2623',800:'#1D1916',900:'#0F0D0B'},
+    hinomaru:{500:'#D41B33',600:'#C8102E',700:'#A10D25'}
+  },fontFamily:{display:['Fraunces','serif'],sans:['Inter','sans-serif'],mono:['"JetBrains Mono"','monospace']}}}};
+</script>
+<style>
+  html,body{background:#FBF6E9;color:#1D1916;font-family:'Inter',sans-serif;}
+  .card{background:#fff;border:1px solid rgba(29,25,22,.06);border-radius:20px;padding:2rem;box-shadow:0 20px 40px -20px rgba(29,25,22,.1);}
+  .label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#C8102E;}
+  input,textarea,select{width:100%;background:#FBF6E9;border:1px solid rgba(29,25,22,.1);border-radius:10px;padding:.7rem 1rem;font-family:inherit;font-size:.95rem;color:#1D1916;outline:none;transition:border-color .2s;}
+  input:focus,textarea:focus,select:focus{border-color:#C8102E;}
+  label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#7a6f64;display:block;margin-bottom:.35rem;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.3rem;border-radius:999px;font-weight:500;font-size:.9rem;border:none;cursor:pointer;transition:all .25s;}
+  .btn-primary{background:#1D1916;color:#FBF6E9;}
+  .btn-primary:hover{background:#C8102E;transform:translateY(-2px);}
+  .btn-ghost{background:transparent;color:#1D1916;border:1px solid rgba(29,25,22,.15);}
+  .btn-ghost:hover{border-color:#C8102E;color:#C8102E;}
+  .btn-danger{background:rgba(200,16,46,.1);color:#C8102E;}
+  .btn-danger:hover{background:#C8102E;color:#fff;}
+  .gallery-row{display:grid;grid-template-columns:80px 1fr 1fr auto;gap:1rem;align-items:center;padding:1rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.75rem;}
+  .gallery-row img{width:80px;height:80px;object-fit:cover;border-radius:10px;}
+  .crud-row{padding:1rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.75rem;}
+  .crud-row .row-grid{display:grid;gap:.75rem;}
+  .crud-row.news   .row-grid{grid-template-columns:180px 140px 1fr;}
+  .crud-row.event  .row-grid{grid-template-columns:180px 1fr 150px 160px;}
+  .crud-row.tm     .row-grid{grid-template-columns:1fr 1fr;}
+  .crud-actions{display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end;}
+  @media(max-width:900px){.crud-row .row-grid{grid-template-columns:1fr !important;}}
+  .toggle{position:relative;width:48px;height:26px;background:rgba(29,25,22,.15);border-radius:999px;cursor:pointer;transition:background .25s;flex-shrink:0;}
+  .toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:all .25s;}
+  .toggle.on{background:#C8102E;}
+  .toggle.on::after{left:25px;}
+  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1D1916;color:#FBF6E9;padding:.85rem 1.5rem;border-radius:999px;font-size:.9rem;opacity:0;transition:all .3s;pointer-events:none;z-index:100;}
+  .toast.show{opacity:1;bottom:2.5rem;}
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Header -->
+<header class="border-b border-sumi-900/5 bg-white">
+  <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="logo2.png" class="w-10 h-10 object-contain" alt="Logo" />
+      <div>
+        <div class="font-display text-lg">Admin · Judo Club Anderlecht</div>
+        <div class="font-mono text-[10px] tracking-[.18em] uppercase text-[#7a6f64]">Gestion du site</div>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <a href="index.html" class="btn btn-ghost">← Voir le site</a>
+      <button id="btn-save" class="btn btn-primary">
+        Enregistrer
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 py-10 space-y-10">
+
+  <!-- ========== BANNER ========== -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <div class="label">Bannière d'information</div>
+        <h2 class="font-display text-2xl mt-2">Message en haut du site</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Affichage au-dessus du menu. HTML autorisé (&lt;strong&gt;, &lt;em&gt;, &lt;a&gt;).</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-mono text-[#7a6f64]" id="banner-status">ACTIVE</span>
+        <div class="toggle on" id="banner-toggle" role="switch" aria-label="Activer la bannière"></div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label>Message</label>
+      <textarea id="banner-text" rows="3" placeholder="Ex: Fermeture exceptionnelle..."></textarea>
+    </div>
+
+    <div class="bg-sumi-900 text-paper-50 rounded-xl p-3 flex items-center justify-center gap-2 text-sm">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-hinomaru-600"></span>
+      <span id="banner-preview">Aperçu du message...</span>
+    </div>
+
+    <p class="text-xs text-[#9a8f83] mt-4 font-mono">APERÇU · TEL QUE VU SUR LE SITE</p>
+  </section>
+
+  <!-- ========== GALLERY ========== -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <div class="label">Galerie</div>
+        <h2 class="font-display text-2xl mt-2">Photos du site</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Ajoutez, supprimez ou modifiez les images. Import direct depuis votre ordinateur.</p>
+      </div>
+      <button id="btn-add-image" class="btn btn-primary">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Ajouter
+      </button>
+    </div>
+
+    <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+
+    <div id="gallery-list"></div>
+
+    <p class="text-xs text-[#9a8f83] mt-4 font-mono">ASTUCE · GLISSEZ-DÉPOSEZ LES CARTES POUR RÉORDONNER (à venir)</p>
+  </section>
+
+  <!-- ========== NEWS ========== -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <div class="label">Actualités</div>
+        <h2 class="font-display text-2xl mt-2">News du club</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Affichées en section « Actu » du site.</p>
+      </div>
+      <button id="btn-add-news" class="btn btn-primary">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Nouvelle actu
+      </button>
+    </div>
+    <div id="news-list"></div>
+  </section>
+
+  <!-- ========== EVENTS ========== -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <div class="label">Calendrier</div>
+        <h2 class="font-display text-2xl mt-2">Événements & stages</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Trié automatiquement par date. Types : Cours, Essai, Stage, Examen, Compétition.</p>
+      </div>
+      <button id="btn-add-event" class="btn btn-primary">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Nouvel événement
+      </button>
+    </div>
+    <div id="events-list"></div>
+  </section>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="card">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <div class="label">Témoignages</div>
+        <h2 class="font-display text-2xl mt-2">Avis parents & judokas</h2>
+        <p class="text-sm text-[#7a6f64] mt-1">Carrousel horizontal dans la section « Avis ».</p>
+      </div>
+      <button id="btn-add-tm" class="btn btn-primary">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Nouveau témoignage
+      </button>
+    </div>
+    <div id="tm-list"></div>
+  </section>
+
+  <!-- ========== EXPORT ========== -->
+  <section class="card">
+    <div class="label">Export / Backup</div>
+    <h2 class="font-display text-2xl mt-2 mb-4">Sauvegarder / Restaurer</h2>
+    <p class="text-sm text-[#6b6158] mb-5 max-w-xl">
+      Les données sont stockées dans le navigateur (localStorage). Pour les transférer vers un autre appareil ou un hébergement, utilisez l'export/import JSON.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <button id="btn-export" class="btn btn-ghost">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17V3M5 10l7 7 7-7M5 21h14"/></svg>
+        Exporter (.json)
+      </button>
+      <button id="btn-import" class="btn btn-ghost">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14M5 10l7 7 7-7M5 21h14"/></svg>
+        Importer (.json)
+      </button>
+      <input type="file" id="import-input" accept="application/json" style="display:none"/>
+      <button id="btn-reset" class="btn btn-danger">Réinitialiser</button>
+    </div>
+  </section>
+
+</main>
+
+<div id="toast" class="toast">Enregistré ✓</div>
+
+<script>
+const KEY='jca_config';
+
+const DEFAULTS={
+  banner:{
+    active:true,
+    text:'<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet.'
+  },
+  gallery:[
+    {img:'dojo.jpeg',                             label:'01 · DOJO',   title:'Le tatami'},
+    {img:'judoclubanderlecht/kids-judo.jpg',      label:'02 · KODOMO', title:'Les enfants'},
+    {img:'judoclubanderlecht/judo-training.jpg',  label:'03 · KEIKO',  title:'Entraînement'},
+    {img:'judoclubanderlecht/dojo-hall.jpg',      label:'04 · 道場',    title:'Le dojo'}
+  ],
+  news:[
+    {date:'2026-09-05', tag:'Rentrée',     title:'Reprise des cours — saison 2026/2027', body:'Les cours reprennent le lundi 1<sup>er</sup> septembre.'},
+    {date:'2026-06-15', tag:'Passage',     title:"Passages de grade de fin d'année",      body:'Nage Waza, Ne Waza et Ukemi au programme.'},
+    {date:'2026-05-20', tag:'Compétition', title:'Tournoi LFJ Bruxelles-Midi',              body:"Notre équipe jeune participe au tournoi régional."}
+  ],
+  events:[
+    {date:'2026-09-01', title:'Rentrée saison 2026/2027',                     type:'Cours',        loc:'Dojo'},
+    {date:'2026-09-12', title:"Porte ouverte · cours d'essai gratuit",         type:'Essai',        loc:'Dojo'},
+    {date:'2026-10-26', title:'Stage intensif Toussaint (4 jours)',            type:'Stage',        loc:'Dojo'},
+    {date:'2026-12-18', title:'Passages de grade · 1er semestre',              type:'Examen',       loc:'Dojo'}
+  ],
+  testimonials:[
+    {author:'Émilie L.', role:'Maman de Léo, 8 ans',              text:"Léo y va avec le sourire. Les sensei sont patients, l'ambiance familiale."},
+    {author:'Karim B.',  role:'Papa de Yasmine, 6 ans',           text:'Un vrai club traditionnel avec des valeurs fortes.'},
+    {author:'Sophie R.', role:'Judoka adulte, ceinture bleue',    text:"J'ai repris le judo à 35 ans ici, accueil parfait quel que soit le niveau."}
+  ]
+};
+
+let state = loadConfig();
+
+function loadConfig(){
+  try{
+    const s=localStorage.getItem(KEY);
+    if(s) return {...DEFAULTS,...JSON.parse(s)};
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULTS));
+}
+
+function persist(){
+  localStorage.setItem(KEY, JSON.stringify(state));
+  toast('Enregistré ✓');
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),1600);
+}
+
+// ========== BANNER ==========
+const bt=document.getElementById('banner-text');
+const bp=document.getElementById('banner-preview');
+const bs=document.getElementById('banner-status');
+const bToggle=document.getElementById('banner-toggle');
+
+function renderBanner(){
+  bt.value = state.banner.text;
+  bp.innerHTML = state.banner.text || '<em style="opacity:.5">Bannière vide</em>';
+  bToggle.classList.toggle('on', state.banner.active);
+  bs.textContent = state.banner.active ? 'ACTIVE' : 'DÉSACTIVÉE';
+}
+bt.addEventListener('input',()=>{state.banner.text=bt.value;bp.innerHTML=bt.value||'<em style="opacity:.5">Bannière vide</em>';});
+bToggle.addEventListener('click',()=>{state.banner.active=!state.banner.active;renderBanner();});
+renderBanner();
+
+// ========== GALLERY ==========
+const list=document.getElementById('gallery-list');
+const fileInput=document.getElementById('file-input');
+
+function renderGallery(){
+  list.innerHTML='';
+  state.gallery.forEach((it,i)=>{
+    const row=document.createElement('div');row.className='gallery-row';
+    row.innerHTML=`
+      <img src="${it.img}" alt="${it.title}" />
+      <div>
+        <label>Étiquette</label>
+        <input data-k="label" data-i="${i}" value="${it.label||''}" />
+      </div>
+      <div>
+        <label>Titre</label>
+        <input data-k="title" data-i="${i}" value="${it.title||''}" />
+      </div>
+      <div class="flex gap-2">
+        <button class="btn btn-ghost" data-act="up"  data-i="${i}" title="Monter">↑</button>
+        <button class="btn btn-ghost" data-act="down" data-i="${i}" title="Descendre">↓</button>
+        <button class="btn btn-danger" data-act="del"  data-i="${i}" title="Supprimer">✕</button>
+      </div>`;
+    list.appendChild(row);
+  });
+  // Wire inputs
+  list.querySelectorAll('input[data-k]').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      const i=+inp.dataset.i;const k=inp.dataset.k;
+      state.gallery[i][k]=inp.value;
+    });
+  });
+  list.querySelectorAll('button[data-act]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const i=+b.dataset.i;const a=b.dataset.act;
+      if(a==='del'){ state.gallery.splice(i,1); }
+      if(a==='up' && i>0){ [state.gallery[i-1],state.gallery[i]]=[state.gallery[i],state.gallery[i-1]]; }
+      if(a==='down' && i<state.gallery.length-1){ [state.gallery[i+1],state.gallery[i]]=[state.gallery[i],state.gallery[i+1]]; }
+      renderGallery();
+    });
+  });
+}
+renderGallery();
+
+document.getElementById('btn-add-image').addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change', async (e)=>{
+  const files=[...e.target.files];
+  for(const f of files){
+    const dataURL = await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);});
+    state.gallery.push({
+      img:dataURL,
+      label:String(state.gallery.length+1).padStart(2,'0')+' · NOUVEAU',
+      title:f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ')
+    });
+  }
+  fileInput.value='';
+  renderGallery();
+  toast(files.length+' image(s) ajoutée(s) — n\'oubliez pas d\'enregistrer');
+});
+
+// ========== NEWS ==========
+const newsList=document.getElementById('news-list');
+function renderNews(){
+  if(!state.news) state.news=[];
+  newsList.innerHTML='';
+  state.news.forEach((n,i)=>{
+    const r=document.createElement('div');r.className='crud-row news';
+    r.innerHTML=`
+      <div class="row-grid">
+        <div><label>Date</label><input type="date" data-l="news" data-i="${i}" data-k="date" value="${n.date||''}"/></div>
+        <div><label>Tag</label><input data-l="news" data-i="${i}" data-k="tag" value="${n.tag||''}"/></div>
+        <div><label>Titre</label><input data-l="news" data-i="${i}" data-k="title" value="${(n.title||'').replace(/"/g,'&quot;')}"/></div>
+      </div>
+      <div style="margin-top:.75rem"><label>Contenu (HTML)</label><textarea rows="2" data-l="news" data-i="${i}" data-k="body">${n.body||''}</textarea></div>
+      <div class="crud-actions">
+        <button class="btn btn-ghost" data-act="move" data-dir="-1" data-l="news" data-i="${i}">↑</button>
+        <button class="btn btn-ghost" data-act="move" data-dir="1"  data-l="news" data-i="${i}">↓</button>
+        <button class="btn btn-danger" data-act="del" data-l="news" data-i="${i}">Supprimer</button>
+      </div>`;
+    newsList.appendChild(r);
+  });
+  bindInputs(newsList);
+}
+document.getElementById('btn-add-news').addEventListener('click',()=>{
+  if(!state.news) state.news=[];
+  state.news.unshift({date:new Date().toISOString().slice(0,10), tag:'Info', title:'Nouveau titre', body:'Contenu de l\'actualité.'});
+  renderNews();
+});
+
+// ========== EVENTS ==========
+const evList=document.getElementById('events-list');
+function renderEvents(){
+  if(!state.events) state.events=[];
+  evList.innerHTML='';
+  state.events.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  state.events.forEach((e,i)=>{
+    const r=document.createElement('div');r.className='crud-row event';
+    r.innerHTML=`
+      <div class="row-grid">
+        <div><label>Date</label><input type="date" data-l="events" data-i="${i}" data-k="date" value="${e.date||''}"/></div>
+        <div><label>Titre</label><input data-l="events" data-i="${i}" data-k="title" value="${(e.title||'').replace(/"/g,'&quot;')}"/></div>
+        <div><label>Type</label>
+          <select data-l="events" data-i="${i}" data-k="type">
+            ${['Cours','Essai','Stage','Examen','Compétition'].map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div><label>Lieu</label><input data-l="events" data-i="${i}" data-k="loc" value="${(e.loc||'').replace(/"/g,'&quot;')}"/></div>
+      </div>
+      <div class="crud-actions">
+        <button class="btn btn-danger" data-act="del" data-l="events" data-i="${i}">Supprimer</button>
+      </div>`;
+    evList.appendChild(r);
+  });
+  bindInputs(evList);
+}
+document.getElementById('btn-add-event').addEventListener('click',()=>{
+  if(!state.events) state.events=[];
+  state.events.push({date:new Date().toISOString().slice(0,10), title:'Nouvel événement', type:'Stage', loc:'Dojo'});
+  renderEvents();
+});
+
+// ========== TESTIMONIALS ==========
+const tmList=document.getElementById('tm-list');
+function renderTm(){
+  if(!state.testimonials) state.testimonials=[];
+  tmList.innerHTML='';
+  state.testimonials.forEach((t,i)=>{
+    const r=document.createElement('div');r.className='crud-row tm';
+    r.innerHTML=`
+      <div class="row-grid">
+        <div><label>Auteur</label><input data-l="testimonials" data-i="${i}" data-k="author" value="${(t.author||'').replace(/"/g,'&quot;')}"/></div>
+        <div><label>Rôle / Rel.</label><input data-l="testimonials" data-i="${i}" data-k="role" value="${(t.role||'').replace(/"/g,'&quot;')}"/></div>
+      </div>
+      <div style="margin-top:.75rem"><label>Témoignage</label><textarea rows="3" data-l="testimonials" data-i="${i}" data-k="text">${t.text||''}</textarea></div>
+      <div class="crud-actions">
+        <button class="btn btn-ghost" data-act="move" data-dir="-1" data-l="testimonials" data-i="${i}">↑</button>
+        <button class="btn btn-ghost" data-act="move" data-dir="1"  data-l="testimonials" data-i="${i}">↓</button>
+        <button class="btn btn-danger" data-act="del" data-l="testimonials" data-i="${i}">Supprimer</button>
+      </div>`;
+    tmList.appendChild(r);
+  });
+  bindInputs(tmList);
+}
+document.getElementById('btn-add-tm').addEventListener('click',()=>{
+  if(!state.testimonials) state.testimonials=[];
+  state.testimonials.push({author:'Prénom N.', role:'Rôle', text:'Témoignage...'});
+  renderTm();
+});
+
+// Generic input binding
+function bindInputs(scope){
+  scope.querySelectorAll('[data-l]').forEach(el=>{
+    el.addEventListener('input',()=>{
+      const list=el.dataset.l,i=+el.dataset.i,k=el.dataset.k;
+      state[list][i][k]=el.value;
+    });
+  });
+  scope.querySelectorAll('button[data-act]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const list=b.dataset.l,i=+b.dataset.i,a=b.dataset.act;
+      if(a==='del'){state[list].splice(i,1);}
+      if(a==='move'){const d=+b.dataset.dir;const j=i+d;if(j<0||j>=state[list].length) return;[state[list][i],state[list][j]]=[state[list][j],state[list][i]];}
+      if(list==='news') renderNews();
+      if(list==='events') renderEvents();
+      if(list==='testimonials') renderTm();
+    });
+  });
+}
+
+renderNews();renderEvents();renderTm();
+
+// ========== EXPORT / IMPORT / RESET ==========
+document.getElementById('btn-export').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`jca-config-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('Exporté ✓');
+});
+document.getElementById('btn-import').addEventListener('click',()=>document.getElementById('import-input').click());
+document.getElementById('import-input').addEventListener('change',async (e)=>{
+  const f=e.target.files[0];if(!f) return;
+  const text=await f.text();
+  try{
+    const j=JSON.parse(text);
+    state={...DEFAULTS,...j};
+    renderBanner();renderGallery();renderNews();renderEvents();renderTm();
+    toast('Importé — n\'oubliez pas d\'enregistrer');
+  }catch(err){toast('Fichier JSON invalide');}
+});
+document.getElementById('btn-reset').addEventListener('click',()=>{
+  if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){
+    state=JSON.parse(JSON.stringify(DEFAULTS));
+    renderBanner();renderGallery();renderNews();renderEvents();renderTm();
+    localStorage.removeItem(KEY);
+    toast('Réinitialisé ✓');
+  }
+});
+
+// ========== SAVE ==========
+document.getElementById('btn-save').addEventListener('click',persist);
+// Save on Ctrl+S
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();persist();}});
+</script>
+</body>
+</html>

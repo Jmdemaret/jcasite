@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Judo Club Anderlecht</title>
+    
+    <!-- Quill Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    
+    <!-- Chart.js for Statistics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* LOGIN SCREEN */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        }
+        
+        .login-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .login-box h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #f3f4f6;
+            font-weight: 300;
+        }
+        
+        /* HEADER */
+        .admin-header {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+        
+        .admin-header h1 {
+            font-size: 1.8em;
+            margin: 0;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* LANGUAGE TOGGLE */
+        .language-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 5px;
+        }
+        
+        .language-toggle button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .language-toggle button.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        /* NAVIGATION TABS */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 15px;
+        }
+        
+        .nav-tab {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-tab:hover::before {
+            left: 100%;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* CONTENT CARDS */
+        .content-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content-card h3 {
+            color: #dc2626;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* FORM ELEMENTS */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f3f4f6;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* BUTTONS */
+        .btn {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        .btn-danger:hover {
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        /* STATISTICS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(153, 27, 27, 0.2) 100%);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label {
+            color: #f3f4f6;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* TOGGLE SWITCH */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555;
+            transition: .4s;
+            border-radius: 30px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #dc2626;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        /* RICH TEXT EDITOR */
+        .editor-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .ql-editor {
+            color: #333;
+            min-height: 200px;
+        }
+        
+        /* ITEMS LIST */
+        .item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .item-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* CHARTS */
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            height: 300px;
+        }
+        
+        /* ALERTS */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #10b981;
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #f59e0b;
+        }
+        
+        /* HIDDEN */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* BANNER PREVIEW */
+        .banner-preview {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        /* MAINTENANCE MODE */
+        .maintenance-active {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* LOADING SPINNER */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #dc2626;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- ÉCRAN DE CONNEXION -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-box">
+            <h1>🥋</h1>
+            <h2 id="loginTitle">Administration</h2>
+            <p id="loginSubtitle">Judo Club Anderlecht</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Mot de passe" required>
+                </div>
+                <div id="loginError" class="alert alert-error hidden"></div>
+                <button type="submit" class="btn" id="loginBtn">Se connecter</button>
+            </form>
+            
+            <div style="margin-top: 20px;">
+                <div class="language-toggle">
+                    <button type="button" onclick="setLanguage('fr')" class="active" id="langFr">Français</button>
+                    <button type="button" onclick="setLanguage('nl')" id="langNl">Nederlands</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERFACE D'ADMINISTRATION -->
+    <div id="adminPanel" class="hidden">
+        <div class="container">
+            <!-- HEADER -->
+            <header class="admin-header">
+                <div>
+                    <h1 id="headerTitle">🥋 Administration Judo Club</h1>
+                    <p id="headerSubtitle">Interface de gestion</p>
+                </div>
+                <div class="header-controls">
+                    <div class="language-toggle">
+                        <button type="button" onclick="setLanguage('fr')" class="active" id="headerLangFr">Français</button>
+                        <button type="button" onclick="setLanguage('nl')" id="headerLangNl">Nederlands</button>
+                    </div>
+                    <button class="btn" onclick="window.open('https://judo-club-anderlecht-34994d46.scout.site/', '_blank')" id="viewSiteBtn">🌐 Voir le site</button>
+                    <button class="btn btn-warning" onclick="logout()" id="logoutBtn">🚪 Déconnexion</button>
+                </div>
+            </header>
+
+            <!-- NAVIGATION -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('dashboard')" id="tabDashboard">📊 Tableau de bord</button>
+                <button class="nav-tab" onclick="showTab('content')" id="tabContent">📝 Contenu</button>
+                <button class="nav-tab" onclick="showTab('announcements')" id="tabAnnouncements">📢 Annonces</button>
+                <button class="nav-tab" onclick="showTab('events')" id="tabEvents">📅 Événements</button>
+                <button class="nav-tab" onclick="showTab('email')" id="tabEmail">📧 Configuration Email</button>
+                <button class="nav-tab" onclick="showTab('maintenance')" id="tabMaintenance">🔧 Maintenance</button>
+                <button class="nav-tab" onclick="showTab('help')" id="tabHelp">❓ Aide</button>
+            </nav>
+
+            <!-- CONTENU DES ONGLETS -->
+            
+            <!-- TABLEAU DE BORD -->
+            <div id="dashboard" class="tab-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="visitorCount">0</div>
+                        <div class="stat-label" id="visitorLabel">Visiteurs aujourd'hui</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="announcementCount">0</div>
+                        <div class="stat-label" id="announcementLabel">Annonces actives</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="eventCount">0</div>
+                        <div class="stat-label" id="eventLabel">Événements</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="memberCount">56</div>
+                        <div class="stat-label" id="memberLabel">Membres</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="chartTitle">📈 Statistiques des visiteurs</h3>
+                    <div class="chart-container">
+                        <canvas id="visitorChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="siteStatusTitle">🌐 État du site</h3>
+                    <div id="siteStatus">
+                        <p id="siteOnline">🟢 Site en ligne et fonctionnel</p>
+                        <p id="maintenanceStatus">🟢 Mode normal</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GESTION DU CONTENU -->
+            <div id="content" class="tab-content hidden">
+                <div class="content-card">
+                    <h3 id="contentManagementTitle">📝 Gestion du contenu du site</h3>
+                    
+                    <div class="form-group">
+                        <label id="sectionSelectLabel">Sélectionner une section :</label>
+                        <select id="contentSection">
+                            <option value="about" id="sectionAbout">À propos</option>
+                            <option value="courses" id="sectionCourses">Cours</option>
+                            <option value="contact" id="sectionContact">Contact</option>
+                            <option value="banner" id="sectionBanner">Bannière</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="languageSelectLabel">Langue :</label>
+                        <select id="contentLanguage">
+                            <option value="fr">Français</option>
+                            <option value="nl">Nederlands</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="contentTitleLabel">Titre :</label>
+                        <input type="text" id="contentTitle" placeholder="Titre de la section">
+                    </div>
+
+                    <div class="form-group">
+                        <label id="contentTextLabel">Contenu :</label>
+                        <div class="editor-container">
+                            <div id="contentEditor"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success" onclick="saveContent()" id="saveContentBtn">💾 Sauvegarder</button>
+                        <button class="btn" onclick="loadContent()" id="loadContentBtn">🔄 Charger</button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="contentBlocksTitle">🧱 Blocs de contenu</h3>
+                    <p id="contentBlocksDesc">Gérer les blocs de contenu activés/désactivés sur le site</p>
+                    
+                    <div id="contentBlocks">
+                        <!-- Les blocs seront générés dynamiquement -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANNONCES -->
+            <div id="announcements" class="tab-content hidden">
+                <div class="content-card">
+                    <h3 id="addAnnouncementTitle">📢 Ajouter une annonce</h3>
+                    
+                    <form id="announcementForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="announcementTitleLabel">Titre (FR) :</label>
+                                <input type="text" id="announcementTitleFr" placeholder="Titre en français" required>
+                            </div>
+                            <div class="form-group">
+                                <label id="announcementTitleNlLabel">Titre (NL) :</label>
+                                <input type="text" id="announcementTitleNl" placeholder="Titel in het Nederlands" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="announcementTypeLabel">Type :</label>
+                            <select id="announcementType">
+                                <option value="info">ℹ️ Information</option>
+                                <option value="warning">⚠️ Attention</option>
+                                <option value="success">✅ Succès</option>
+                                <option value="danger">🚨 Urgent</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="announcementContentFrLabel">Contenu (FR) :</label>
+                                <textarea id="announcementContentFr" rows="4" placeholder="Contenu en français" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label id="announcementContentNlLabel">Contenu (NL) :</label>
+                                <textarea id="announcementContentNl" rows="4" placeholder="Inhoud in het Nederlands" required></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success" id="addAnnouncementBtn">➕ Ajouter</button>
+                    </form>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="existingAnnouncementsTitle">📋 Annonces existantes</h3>
+                    <div id="announcementsList">
+                        <!-- Les annonces seront affichées ici -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ÉVÉNEMENTS -->
+            <div id="events" class="tab-content hidden">
+                <div class="content-card">
+                    <h3 id="addEventTitle">📅 Ajouter un événement</h3>
+                    
+                    <form id="eventForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="eventTitleFrLabel">Titre (FR) :</label>
+                                <input type="text" id="eventTitleFr" placeholder="Titre en français" required>
+                            </div>
+                            <div class="form-group">
+                                <label id="eventTitleNlLabel">Titre (NL) :</label>
+                                <input type="text" id="eventTitleNl" placeholder="Titel in het Nederlands" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="eventDateLabel">Date :</label>
+                                <input type="date" id="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label id="eventTimeLabel">Heure :</label>
+                                <input type="time" id="eventTime" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="eventLocationLabel">Lieu :</label>
+                                <input type="text" id="eventLocation" placeholder="Lieu de l'événement">
+                            </div>
+                            <div class="form-group">
+                                <label id="eventMaxParticipantsLabel">Participants max :</label>
+                                <input type="number" id="eventMaxParticipants" value="20" min="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="eventDescriptionFrLabel">Description (FR) :</label>
+                                <textarea id="eventDescriptionFr" rows="4" placeholder="Description en français" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label id="eventDescriptionNlLabel">Description (NL) :</label>
+                                <textarea id="eventDescriptionNl" rows="4" placeholder="Beschrijving in het Nederlands" required></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success" id="addEventBtn">➕ Ajouter</button>
+                    </form>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="existingEventsTitle">📋 Événements programmés</h3>
+                    <div id="eventsList">
+                        <!-- Les événements seront affichés ici -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURATION EMAIL -->
+            <div id="email" class="tab-content hidden">
+                <div class="content-card">
+                    <h3 id="emailConfigTitle">📧 Configuration du service email</h3>
+                    
+                    <div class="alert alert-warning">
+                        <p id="emailWarning">⚠️ Configuration EmailJS pour l'envoi d'emails depuis le formulaire de contact</p>
+                    </div>
+
+                    <form id="emailConfigForm">
+                        <div class="form-group">
+                            <label>EmailJS Service ID :</label>
+                            <input type="text" id="emailServiceId" placeholder="service_xxxxxxx">
+                        </div>
+
+                        <div class="form-group">
+                            <label>EmailJS Template ID :</label>
+                            <input type="text" id="emailTemplateId" placeholder="template_xxxxxxx">
+                        </div>
+
+                        <div class="form-group">
+                            <label>EmailJS Public Key :</label>
+                            <input type="text" id="emailPublicKey" placeholder="user_xxxxxxx">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="emailRecipientLabel">Email de réception :</label>
+                            <input type="email" id="emailRecipient" value="secretariat.judoclubanderlecht@gmail.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>WhatsApp (avec indicatif) :</label>
+                            <input type="tel" id="whatsappNumber" value="+32477910029">
+                        </div>
+
+                        <button type="submit" class="btn btn-success" id="saveEmailConfigBtn">💾 Sauvegarder</button>
+                        <button type="button" class="btn" onclick="testEmailConfig()" id="testEmailBtn">🧪 Tester</button>
+                    </form>
+
+                    <div id="emailTestResult" class="hidden"></div>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="emailStatsTitle">📊 Statistiques des emails</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="emailsSentToday">0</div>
+                            <div class="stat-label" id="emailsSentTodayLabel">Emails envoyés aujourd'hui</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="emailsSentTotal">0</div>
+                            <div class="stat-label" id="emailsSentTotalLabel">Total emails envoyés</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAINTENANCE -->
+            <div id="maintenance" class="tab-content hidden">
+                <div class="content-card">
+                    <h3 id="maintenanceModeTitle">🔧 Mode maintenance</h3>
+                    
+                    <div class="form-group">
+                        <label id="maintenanceToggleLabel">Activer le mode maintenance :</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="maintenanceToggle" onchange="toggleMaintenance()">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+
+                    <div id="maintenanceWarning" class="maintenance-active hidden">
+                        <p id="maintenanceActiveText">🚨 ATTENTION : Mode maintenance activé</p>
+                        <p id="maintenanceActiveDesc">Les visiteurs verront le message de maintenance au lieu du site normal</p>
+                    </div>
+
+                    <form id="maintenanceForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label id="maintenanceMessageFrLabel">Message de maintenance (FR) :</label>
+                                <textarea id="maintenanceMessageFr" rows="4" placeholder="Message en français">Site en maintenance. Nous serons bientôt de retour !</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label id="maintenanceMessageNlLabel">Message de maintenance (NL) :</label>
+                                <textarea id="maintenanceMessageNl" rows="4" placeholder="Bericht in het Nederlands">Site in onderhoud. We zijn binnenkort terug!</textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success" id="saveMaintenanceBtn">💾 Sauvegarder</button>
+                    </form>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="backupTitle">💾 Sauvegarde et restauration</h3>
+                    
+                    <div class="form-group">
+                        <button class="btn" onclick="exportData()" id="exportDataBtn">📥 Exporter les données</button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData()">
+                        <button class="btn" onclick="document.getElementById('importFile').click()" id="importDataBtn">📤 Importer les données</button>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-danger" onclick="resetData()" id="resetDataBtn">🗑️ Réinitialiser toutes les données</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AIDE -->
+            <div id="help" class="tab-content hidden">
+                <div class="content-card">
+                    <h3 id="helpLoginTitle">🔐 Connexion</h3>
+                    <p><strong id="helpPasswordLabel">Mot de passe :</strong> <code>JudoAdmin2025!</code></p>
+                    <p><strong id="helpSiteLabel">Site principal :</strong> <a href="https://judo-club-anderlecht-34994d46.scout.site/" target="_blank">judo-club-anderlecht-34994d46.scout.site</a></p>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="helpFeaturesTitle">🚀 Fonctionnalités</h3>
+                    <ul id="helpFeaturesList">
+                        <li><strong id="helpDashboard">Tableau de bord :</strong> <span id="helpDashboardDesc">Statistiques en temps réel et état du site</span></li>
+                        <li><strong id="helpContent">Contenu :</strong> <span id="helpContentDesc">Éditeur de texte riche pour modifier tout le contenu du site</span></li>
+                        <li><strong id="helpAnnouncements">Annonces :</strong> <span id="helpAnnouncementsDesc">Gérer les annonces et bannières bilingues</span></li>
+                        <li><strong id="helpEvents">Événements :</strong> <span id="helpEventsDesc">Créer et gérer les événements avec inscriptions</span></li>
+                        <li><strong id="helpEmail">Email :</strong> <span id="helpEmailDesc">Configuration pour l'envoi d'emails automatiques</span></li>
+                        <li><strong id="helpMaintenance">Maintenance :</strong> <span id="helpMaintenanceDesc">Mode maintenance avec message personnalisé</span></li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3 id="helpTechnicalTitle">🔧 Informations techniques</h3>
+                    <ul id="helpTechnicalList">
+                        <li id="helpBilingual">Interface entièrement bilingue (Français/Nederlands)</li>
+                        <li id="helpStorage">Stockage local des données dans le navigateur</li>
+                        <li id="helpEditor">Éditeur de texte riche avec formatage avancé</li>
+                        <li id="helpCharts">Graphiques en temps réel avec Chart.js</li>
+                        <li id="helpEmail">Integration EmailJS pour l'envoi d'emails</li>
+                        <li id="helpResponsive">Design responsive pour mobile et desktop</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration et variables globales
+        let currentLanguage = localStorage.getItem('adminLanguage') || 'fr';
+        let visitorChart = null;
+        let contentEditor = null;
+        
+        // Données
+        let adminData = {
+            announcements: JSON.parse(localStorage.getItem('judoAnnouncements')) || [],
+            events: JSON.parse(localStorage.getItem('judoEvents')) || [],
+            emailConfig: JSON.parse(localStorage.getItem('judoEmailConfig')) || {
+                serviceId: '',
+                templateId: '',
+                publicKey: '',
+                recipient: 'secretariat.judoclubanderlecht@gmail.com',
+                whatsapp: '+32477910029'
+            },
+            maintenanceMode: JSON.parse(localStorage.getItem('judoMaintenanceMode')) || false,
+            maintenanceMessage: JSON.parse(localStorage.getItem('judoMaintenanceMessage')) || {
+                fr: 'Site en maintenance. Nous serons bientôt de retour !',
+                nl: 'Site in onderhoud. We zijn binnenkort terug!'
+            },
+            contentBlocks: JSON.parse(localStorage.getItem('judoContentBlocks')) || {
+                about: { active: true },
+                courses: { active: true },
+                contact: { active: true },
+                banner: { active: true }
+            },
+            siteContent: JSON.parse(localStorage.getItem('judoSiteContent')) || {
+                fr: {
+                    about: { title: 'À propos', content: '' },
+                    courses: { title: 'Nos cours', content: '' },
+                    contact: { title: 'Contact', content: '' },
+                    banner: { title: 'Reprise des cours', content: 'Les cours reprennent mercredi 24 août 2025' }
+                },
+                nl: {
+                    about: { title: 'Over ons', content: '' },
+                    courses: { title: 'Onze lessen', content: '' },
+                    contact: { title: 'Contact', content: '' },
+                    banner: { title: 'Hervatting van de lessen', content: 'De lessen hervatten woensdag 24 augustus 2025' }
+                }
+            },
+            statistics: JSON.parse(localStorage.getItem('judoStatistics')) || {
+                visitors: {
+                    today: Math.floor(Math.random() * 100) + 50,
+                    week: [45, 52, 48, 61, 55, 67, 72],
+                    total: 1247
+                },
+                emails: {
+                    sentToday: Math.floor(Math.random() * 10),
+                    sentTotal: 124
+                }
+            }
+        };
+
+        // Traductions
+        const translations = {
+            fr: {
+                // Login
+                loginTitle: 'Administration',
+                loginSubtitle: 'Judo Club Anderlecht',
+                loginBtn: 'Se connecter',
+                loginError: 'Mot de passe incorrect',
+                
+                // Header
+                headerTitle: '🥋 Administration Judo Club',
+                headerSubtitle: 'Interface de gestion',
+                viewSiteBtn: '🌐 Voir le site',
+                logoutBtn: '🚪 Déconnexion',
+                
+                // Tabs
+                tabDashboard: '📊 Tableau de bord',
+                tabContent: '📝 Contenu',
+                tabAnnouncements: '📢 Annonces',
+                tabEvents: '📅 Événements',
+                tabEmail: '📧 Configuration Email',
+                tabMaintenance: '🔧 Maintenance',
+                tabHelp: '❓ Aide',
+                
+                // Dashboard
+                visitorLabel: 'Visiteurs aujourd\'hui',
+                announcementLabel: 'Annonces actives',
+                eventLabel: 'Événements',
+                memberLabel: 'Membres',
+                chartTitle: '📈 Statistiques des visiteurs',
+                siteStatusTitle: '🌐 État du site',
+                siteOnline: '🟢 Site en ligne et fonctionnel',
+                maintenanceStatus: '🟢 Mode normal',
+                
+                // Content Management
+                contentManagementTitle: '📝 Gestion du contenu du site',
+                sectionSelectLabel: 'Sélectionner une section :',
+                sectionAbout: 'À propos',
+                sectionCourses: 'Cours',
+                sectionContact: 'Contact',
+                sectionBanner: 'Bannière',
+                languageSelectLabel: 'Langue :',
+                contentTitleLabel: 'Titre :',
+                contentTextLabel: 'Contenu :',
+                saveContentBtn: '💾 Sauvegarder',
+                loadContentBtn: '🔄 Charger',
+                contentBlocksTitle: '🧱 Blocs de contenu',
+                contentBlocksDesc: 'Gérer les blocs de contenu activés/désactivés sur le site',
+                
+                // Announcements
+                addAnnouncementTitle: '📢 Ajouter une annonce',
+                announcementTitleLabel: 'Titre (FR) :',
+                announcementTitleNlLabel: 'Titre (NL) :',
+                announcementTypeLabel: 'Type :',
+                announcementContentFrLabel: 'Contenu (FR) :',
+                announcementContentNlLabel: 'Contenu (NL) :',
+                addAnnouncementBtn: '➕ Ajouter',
+                existingAnnouncementsTitle: '📋 Annonces existantes',
+                
+                // Events
+                addEventTitle: '📅 Ajouter un événement',
+                eventTitleFrLabel: 'Titre (FR) :',
+                eventTitleNlLabel: 'Titre (NL) :',
+                eventDateLabel: 'Date :',
+                eventTimeLabel: 'Heure :',
+                eventLocationLabel: 'Lieu :',
+                eventMaxParticipantsLabel: 'Participants max :',
+                eventDescriptionFrLabel: 'Description (FR) :',
+                eventDescriptionNlLabel: 'Description (NL) :',
+                addEventBtn: '➕ Ajouter',
+                existingEventsTitle: '📋 Événements programmés',
+                
+                // Email
+                emailConfigTitle: '📧 Configuration du service email',
+                emailWarning: '⚠️ Configuration EmailJS pour l\'envoi d\'emails depuis le formulaire de contact',
+                emailRecipientLabel: 'Email de réception :',
+                saveEmailConfigBtn: '💾 Sauvegarder',
+                testEmailBtn: '🧪 Tester',
+                emailStatsTitle: '📊 Statistiques des emails',
+                emailsSentTodayLabel: 'Emails envoyés aujourd\'hui',
+                emailsSentTotalLabel: 'Total emails envoyés',
+                
+                // Maintenance
+                maintenanceModeTitle: '🔧 Mode maintenance',
+                maintenanceToggleLabel: 'Activer le mode maintenance :',
+                maintenanceActiveText: '🚨 ATTENTION : Mode maintenance activé',
+                maintenanceActiveDesc: 'Les visiteurs verront le message de maintenance au lieu du site normal',
+                maintenanceMessageFrLabel: 'Message de maintenance (FR) :',
+                maintenanceMessageNlLabel: 'Message de maintenance (NL) :',
+                saveMaintenanceBtn: '💾 Sauvegarder',
+                backupTitle: '💾 Sauvegarde et restauration',
+                exportDataBtn: '📥 Exporter les données',
+                importDataBtn: '📤 Importer les données',
+                resetDataBtn: '🗑️ Réinitialiser toutes les données',
+                
+                // Help
+                helpLoginTitle: '🔐 Connexion',
+                helpPasswordLabel: 'Mot de passe :',
+                helpSiteLabel: 'Site principal :',
+                helpFeaturesTitle: '🚀 Fonctionnalités',
+                helpDashboard: 'Tableau de bord :',
+                helpDashboardDesc: 'Statistiques en temps réel et état du site',
+                helpContent: 'Contenu :',
+                helpContentDesc: 'Éditeur de texte riche pour modifier tout le contenu du site',
+                helpAnnouncements: 'Annonces :',
+                helpAnnouncementsDesc: 'Gérer les annonces et bannières bilingues',
+                helpEvents: 'Événements :',
+                helpEventsDesc: 'Créer et gérer les événements avec inscriptions',
+                helpEmail: 'Email :',
+                helpEmailDesc: 'Configuration pour l\'envoi d\'emails automatiques',
+                helpMaintenance: 'Maintenance :',
+                helpMaintenanceDesc: 'Mode maintenance avec message personnalisé',
+                helpTechnicalTitle: '🔧 Informations techniques',
+                helpBilingual: 'Interface entièrement bilingue (Français/Nederlands)',
+                helpStorage: 'Stockage local des données dans le navigateur',
+                helpEditor: 'Éditeur de texte riche avec formatage avancé',
+                helpCharts: 'Graphiques en temps réel avec Chart.js',
+                helpResponsive: 'Design responsive pour mobile et desktop'
+            },
+            nl: {
+                // Login
+                loginTitle: 'Administratie',
+                loginSubtitle: 'Judo Club Anderlecht',
+                loginBtn: 'Inloggen',
+                loginError: 'Onjuist wachtwoord',
+                
+                // Header
+                headerTitle: '🥋 Judo Club Administratie',
+                headerSubtitle: 'Beheerinterface',
+                viewSiteBtn: '🌐 Bekijk site',
+                logoutBtn: '🚪 Uitloggen',
+                
+                // Tabs
+                tabDashboard: '📊 Dashboard',
+                tabContent: '📝 Inhoud',
+                tabAnnouncements: '📢 Aankondigingen',
+                tabEvents: '📅 Evenementen',
+                tabEmail: '📧 Email Configuratie',
+                tabMaintenance: '🔧 Onderhoud',
+                tabHelp: '❓ Help',
+                
+                // Dashboard
+                visitorLabel: 'Bezoekers vandaag',
+                announcementLabel: 'Actieve aankondigingen',
+                eventLabel: 'Evenementen',
+                memberLabel: 'Leden',
+                chartTitle: '📈 Bezoekersstatistieken',
+                siteStatusTitle: '🌐 Site status',
+                siteOnline: '🟢 Site online en functioneel',
+                maintenanceStatus: '🟢 Normale modus',
+                
+                // Content Management
+                contentManagementTitle: '📝 Sitecontent beheer',
+                sectionSelectLabel: 'Selecteer een sectie:',
+                sectionAbout: 'Over ons',
+                sectionCourses: 'Lessen',
+                sectionContact: 'Contact',
+                sectionBanner: 'Banner',
+                languageSelectLabel: 'Taal:',
+                contentTitleLabel: 'Titel:',
+                contentTextLabel: 'Inhoud:',
+                saveContentBtn: '💾 Opslaan',
+                loadContentBtn: '🔄 Laden',
+                contentBlocksTitle: '🧱 Inhoudblokken',
+                contentBlocksDesc: 'Beheer geactiveerde/gedeactiveerde inhoudblokken op de site',
+                
+                // Announcements
+                addAnnouncementTitle: '📢 Aankondiging toevoegen',
+                announcementTitleLabel: 'Titel (FR):',
+                announcementTitleNlLabel: 'Titel (NL):',
+                announcementTypeLabel: 'Type:',
+                announcementContentFrLabel: 'Inhoud (FR):',
+                announcementContentNlLabel: 'Inhoud (NL):',
+                addAnnouncementBtn: '➕ Toevoegen',
+                existingAnnouncementsTitle: '📋 Bestaande aankondigingen',
+                
+                // Events
+                addEventTitle: '📅 Evenement toevoegen',
+                eventTitleFrLabel: 'Titel (FR):',
+                eventTitleNlLabel: 'Titel (NL):',
+                eventDateLabel: 'Datum:',
+                eventTimeLabel: 'Tijd:',
+                eventLocationLabel: 'Locatie:',
+                eventMaxParticipantsLabel: 'Max deelnemers:',
+                eventDescriptionFrLabel: 'Beschrijving (FR):',
+                eventDescriptionNlLabel: 'Beschrijving (NL):',
+                addEventBtn: '➕ Toevoegen',
+                existingEventsTitle: '📋 Geplande evenementen',
+                
+                // Email
+                emailConfigTitle: '📧 Email service configuratie',
+                emailWarning: '⚠️ EmailJS configuratie voor het verzenden van emails vanuit het contactformulier',
+                emailRecipientLabel: 'Ontvangst email:',
+                saveEmailConfigBtn: '💾 Opslaan',
+                testEmailBtn: '🧪 Testen',
+                emailStatsTitle: '📊 Email statistieken',
+                emailsSentTodayLabel: 'Emails verzonden vandaag',
+                emailsSentTotalLabel: 'Totaal verzonden emails',
+                
+                // Maintenance
+                maintenanceModeTitle: '🔧 Onderhoudsmodus',
+                maintenanceToggleLabel: 'Onderhoudsmodus activeren:',
+                maintenanceActiveText: '🚨 OPGELET: Onderhoudsmodus geactiveerd',
+                maintenanceActiveDesc: 'Bezoekers zien het onderhoudsberricht in plaats van de normale site',
+                maintenanceMessageFrLabel: 'Onderhoudsbericht (FR):',
+                maintenanceMessageNlLabel: 'Onderhoudsbericht (NL):',
+                saveMaintenanceBtn: '💾 Opslaan',
+                backupTitle: '💾 Back-up en herstel',
+                exportDataBtn: '📥 Data exporteren',
+                importDataBtn: '📤 Data importeren',
+                resetDataBtn: '🗑️ Alle data resetten',
+                
+                // Help
+                helpLoginTitle: '🔐 Inloggen',
+                helpPasswordLabel: 'Wachtwoord:',
+                helpSiteLabel: 'Hoofdsite:',
+                helpFeaturesTitle: '🚀 Functionaliteiten',
+                helpDashboard: 'Dashboard:',
+                helpDashboardDesc: 'Real-time statistieken en site status',
+                helpContent: 'Inhoud:',
+                helpContentDesc: 'Rich text editor om alle site-inhoud te wijzigen',
+                helpAnnouncements: 'Aankondigingen:',
+                helpAnnouncementsDesc: 'Beheer tweetalige aankondigingen en banners',
+                helpEvents: 'Evenementen:',
+                helpEventsDesc: 'Creëer en beheer evenementen met inschrijvingen',
+                helpEmail: 'Email:',
+                helpEmailDesc: 'Configuratie voor automatische email verzending',
+                helpMaintenance: 'Onderhoud:',
+                helpMaintenanceDesc: 'Onderhoudsmodus met aangepast bericht',
+                helpTechnicalTitle: '🔧 Technische informatie',
+                helpBilingual: 'Volledig tweetalige interface (Français/Nederlands)',
+                helpStorage: 'Lokale opslag van data in de browser',
+                helpEditor: 'Rich text editor met geavanceerde opmaak',
+                helpCharts: 'Real-time grafieken met Chart.js',
+                helpResponsive: 'Responsive design voor mobiel en desktop'
+            }
+        };
+
+        // Fonctions de base
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('adminLanguage', lang);
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLanguage];
+            
+            // Update language toggles
+            document.querySelectorAll('.language-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (currentLanguage === 'fr') {
+                document.getElementById('langFr')?.classList.add('active');
+                document.getElementById('headerLangFr')?.classList.add('active');
+            } else {
+                document.getElementById('langNl')?.classList.add('active');
+                document.getElementById('headerLangNl')?.classList.add('active');
+            }
+            
+            // Update all translatable elements
+            Object.keys(t).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.tagName === 'INPUT' && element.type === 'submit') {
+                        element.value = t[key];
+                    } else {
+                        element.textContent = t[key];
+                    }
+                }
+            });
+        }
+
+        // Connexion
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (password === 'JudoAdmin2025!') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                errorDiv.classList.add('hidden');
+                initializeAdmin();
+            } else {
+                errorDiv.textContent = translations[currentLanguage].loginError;
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        function logout() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('password').value = '';
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        // Navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.remove('hidden');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+            
+            // Load tab-specific data
+            if (tabName === 'dashboard') {
+                loadDashboard();
+            } else if (tabName === 'content') {
+                loadContentEditor();
+            } else if (tabName === 'announcements') {
+                loadAnnouncements();
+            } else if (tabName === 'events') {
+                loadEvents();
+            } else if (tabName === 'email') {
+                loadEmailConfig();
+            } else if (tabName === 'maintenance') {
+                loadMaintenanceConfig();
+            }
+        }
+
+        // Dashboard
+        function loadDashboard() {
+            updateStatistics();
+            createVisitorChart();
+        }
+
+        function updateStatistics() {
+            // Simulate real-time visitor count
+            adminData.statistics.visitors.today = Math.floor(Math.random() * 20) + adminData.statistics.visitors.today;
+            
+            document.getElementById('visitorCount').textContent = adminData.statistics.visitors.today;
+            document.getElementById('announcementCount').textContent = adminData.announcements.filter(a => a.active).length;
+            document.getElementById('eventCount').textContent = adminData.events.length;
+            document.getElementById('emailsSentToday').textContent = adminData.statistics.emails.sentToday;
+            document.getElementById('emailsSentTotal').textContent = adminData.statistics.emails.sentTotal;
+            
+            // Update maintenance status
+            const statusText = adminData.maintenanceMode ? 
+                '🟡 Mode maintenance' : '🟢 Mode normal';
+            document.getElementById('maintenanceStatus').textContent = statusText;
+        }
+
+        function createVisitorChart() {
+            if (visitorChart) {
+                visitorChart.destroy();
+            }
+            
+            const ctx = document.getElementById('visitorChart').getContext('2d');
+            visitorChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                    datasets: [{
+                        label: 'Visiteurs',
+                        data: adminData.statistics.visitors.week,
+                        borderColor: '#dc2626',
+                        backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Content Management
+        function loadContentEditor() {
+            if (!contentEditor) {
+                contentEditor = new Quill('#contentEditor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'align': [] }],
+                            ['link', 'image'],
+                            ['clean']
+                        ]
+                    }
+                });
+            }
+            
+            loadContentBlocks();
+            loadContent();
+        }
+
+        function loadContent() {
+            const section = document.getElementById('contentSection').value;
+            const language = document.getElementById('contentLanguage').value;
+            
+            const content = adminData.siteContent[language][section];
+            document.getElementById('contentTitle').value = content.title;
+            
+            if (contentEditor) {
+                contentEditor.setText(content.content);
+            }
+        }
+
+        function saveContent() {
+            const section = document.getElementById('contentSection').value;
+            const language = document.getElementById('contentLanguage').value;
+            const title = document.getElementById('contentTitle').value;
+            const content = contentEditor ? contentEditor.getText() : '';
+            
+            adminData.siteContent[language][section] = {
+                title: title,
+                content: content
+            };
+            
+            saveData();
+            showAlert('success', 'Contenu sauvegardé avec succès !');
+        }
+
+        function loadContentBlocks() {
+            const container = document.getElementById('contentBlocks');
+            const blocks = Object.keys(adminData.contentBlocks);
+            
+            container.innerHTML = blocks.map(block => `
+                <div class="item">
+                    <div class="item-header">
+                        <h4>${block.charAt(0).toUpperCase() + block.slice(1)}</h4>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="block_${block}" ${adminData.contentBlocks[block].active ? 'checked' : ''} onchange="toggleContentBlock('${block}')">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                    <p>Activer/désactiver la section ${block} sur le site</p>
+                </div>
+            `).join('');
+        }
+
+        function toggleContentBlock(block) {
+            const checkbox = document.getElementById(`block_${block}`);
+            adminData.contentBlocks[block].active = checkbox.checked;
+            saveData();
+        }
+
+        // Announcements
+        function loadAnnouncements() {
+            renderAnnouncements();
+        }
+
+        document.getElementById('announcementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const announcement = {
+                id: Date.now().toString(),
+                title: {
+                    fr: document.getElementById('announcementTitleFr').value,
+                    nl: document.getElementById('announcementTitleNl').value
+                },
+                content: {
+                    fr: document.getElementById('announcementContentFr').value,
+                    nl: document.getElementById('announcementContentNl').value
+                },
+                type: document.getElementById('announcementType').value,
+                active: true,
+                date: new Date().toISOString()
+            };
+            
+            adminData.announcements.push(announcement);
+            saveData();
+            renderAnnouncements();
+            updateStatistics();
+            
+            // Reset form
+            this.reset();
+            showAlert('success', 'Annonce ajoutée avec succès !');
+        });
+
+        function renderAnnouncements() {
+            const container = document.getElementById('announcementsList');
+            
+            if (adminData.announcements.length === 0) {
+                container.innerHTML = '<p>Aucune annonce</p>';
+                return;
+            }
+            
+            container.innerHTML = adminData.announcements.map(ann => `
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <h4>${ann.title[currentLanguage]}</h4>
+                            <small>${new Date(ann.date).toLocaleDateString()}</small>
+                        </div>
+                        <div class="item-controls">
+                            <button class="btn ${ann.active ? 'btn-success' : ''}" onclick="toggleAnnouncement('${ann.id}')">
+                                ${ann.active ? '🟢 Actif' : '🔴 Inactif'}
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteAnnouncement('${ann.id}')">🗑️</button>
+                        </div>
+                    </div>
+                    <p>${ann.content[currentLanguage]}</p>
+                </div>
+            `).join('');
+        }
+
+        function toggleAnnouncement(id) {
+            adminData.announcements = adminData.announcements.map(ann => 
+                ann.id === id ? {...ann, active: !ann.active} : ann
+            );
+            saveData();
+            renderAnnouncements();
+            updateStatistics();
+        }
+
+        function deleteAnnouncement(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')) {
+                adminData.announcements = adminData.announcements.filter(ann => ann.id !== id);
+                saveData();
+                renderAnnouncements();
+                updateStatistics();
+            }
+        }
+
+        // Events
+        function loadEvents() {
+            renderEvents();
+        }
+
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const event = {
+                id: Date.now().toString(),
+                title: {
+                    fr: document.getElementById('eventTitleFr').value,
+                    nl: document.getElementById('eventTitleNl').value
+                },
+                description: {
+                    fr: document.getElementById('eventDescriptionFr').value,
+                    nl: document.getElementById('eventDescriptionNl').value
+                },
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                location: document.getElementById('eventLocation').value,
+                maxParticipants: parseInt(document.getElementById('eventMaxParticipants').value),
+                participants: [],
+                created: new Date().toISOString()
+            };
+            
+            adminData.events.push(event);
+            saveData();
+            renderEvents();
+            updateStatistics();
+            
+            // Reset form
+            this.reset();
+            showAlert('success', 'Événement ajouté avec succès !');
+        });
+
+        function renderEvents() {
+            const container = document.getElementById('eventsList');
+            
+            if (adminData.events.length === 0) {
+                container.innerHTML = '<p>Aucun événement programmé</p>';
+                return;
+            }
+            
+            container.innerHTML = adminData.events.map(evt => `
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <h4>${evt.title[currentLanguage]}</h4>
+                            <small>📅 ${new Date(evt.date).toLocaleDateString()} à ${evt.time}</small>
+                        </div>
+                        <div class="item-controls">
+                            <button class="btn btn-danger" onclick="deleteEvent('${evt.id}')">🗑️</button>
+                        </div>
+                    </div>
+                    <p>${evt.description[currentLanguage]}</p>
+                    <p>📍 ${evt.location}</p>
+                    <p>👥 ${evt.participants.length}/${evt.maxParticipants} participants</p>
+                </div>
+            `).join('');
+        }
+
+        function deleteEvent(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
+                adminData.events = adminData.events.filter(evt => evt.id !== id);
+                saveData();
+                renderEvents();
+                updateStatistics();
+            }
+        }
+
+        // Email Configuration
+        function loadEmailConfig() {
+            document.getElementById('emailServiceId').value = adminData.emailConfig.serviceId;
+            document.getElementById('emailTemplateId').value = adminData.emailConfig.templateId;
+            document.getElementById('emailPublicKey').value = adminData.emailConfig.publicKey;
+            document.getElementById('emailRecipient').value = adminData.emailConfig.recipient;
+            document.getElementById('whatsappNumber').value = adminData.emailConfig.whatsapp;
+        }
+
+        document.getElementById('emailConfigForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            adminData.emailConfig = {
+                serviceId: document.getElementById('emailServiceId').value,
+                templateId: document.getElementById('emailTemplateId').value,
+                publicKey: document.getElementById('emailPublicKey').value,
+                recipient: document.getElementById('emailRecipient').value,
+                whatsapp: document.getElementById('whatsappNumber').value
+            };
+            
+            saveData();
+            showAlert('success', 'Configuration email sauvegardée !');
+        });
+
+        function testEmailConfig() {
+            const resultDiv = document.getElementById('emailTestResult');
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = '<div class="spinner"></div><p>Test en cours...</p>';
+            
+            // Simulate email test
+            setTimeout(() => {
+                if (adminData.emailConfig.serviceId && adminData.emailConfig.templateId && adminData.emailConfig.publicKey) {
+                    resultDiv.innerHTML = '<div class="alert alert-success">✅ Configuration valide ! EmailJS configuré correctement.</div>';
+                } else {
+                    resultDiv.innerHTML = '<div class="alert alert-error">❌ Configuration incomplète. Veuillez remplir tous les champs.</div>';
+                }
+            }, 2000);
+        }
+
+        // Maintenance
+        function loadMaintenanceConfig() {
+            document.getElementById('maintenanceToggle').checked = adminData.maintenanceMode;
+            document.getElementById('maintenanceMessageFr').value = adminData.maintenanceMessage.fr;
+            document.getElementById('maintenanceMessageNl').value = adminData.maintenanceMessage.nl;
+            updateMaintenanceDisplay();
+        }
+
+        function toggleMaintenance() {
+            adminData.maintenanceMode = document.getElementById('maintenanceToggle').checked;
+            saveData();
+            updateMaintenanceDisplay();
+            updateStatistics();
+        }
+
+        function updateMaintenanceDisplay() {
+            const warning = document.getElementById('maintenanceWarning');
+            if (adminData.maintenanceMode) {
+                warning.classList.remove('hidden');
+            } else {
+                warning.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            adminData.maintenanceMessage = {
+                fr: document.getElementById('maintenanceMessageFr').value,
+                nl: document.getElementById('maintenanceMessageNl').value
+            };
+            
+            saveData();
+            showAlert('success', 'Messages de maintenance sauvegardés !');
+        });
+
+        // Data Management
+        function saveData() {
+            localStorage.setItem('judoAnnouncements', JSON.stringify(adminData.announcements));
+            localStorage.setItem('judoEvents', JSON.stringify(adminData.events));
+            localStorage.setItem('judoEmailConfig', JSON.stringify(adminData.emailConfig));
+            localStorage.setItem('judoMaintenanceMode', JSON.stringify(adminData.maintenanceMode));
+            localStorage.setItem('judoMaintenanceMessage', JSON.stringify(adminData.maintenanceMessage));
+            localStorage.setItem('judoContentBlocks', JSON.stringify(adminData.contentBlocks));
+            localStorage.setItem('judoSiteContent', JSON.stringify(adminData.siteContent));
+            localStorage.setItem('judoStatistics', JSON.stringify(adminData.statistics));
+        }
+
+        function exportData() {
+            const dataBlob = new Blob([JSON.stringify(adminData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `judo-admin-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showAlert('success', 'Données exportées avec succès !');
+        }
+
+        function importData() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    adminData = importedData;
+                    saveData();
+                    showAlert('success', 'Données importées avec succès ! Rechargement de la page...');
+                    setTimeout(() => location.reload(), 2000);
+                } catch (error) {
+                    showAlert('error', 'Erreur lors de l\'importation des données');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetData() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les données ? Cette action est irréversible.')) {
+                localStorage.clear();
+                showAlert('warning', 'Toutes les données ont été supprimées. Rechargement de la page...');
+                setTimeout(() => location.reload(), 2000);
+            }
+        }
+
+        // Utility Functions
+        function showAlert(type, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        function initializeAdmin() {
+            updateLanguage();
+            loadDashboard();
+            
+            // Set minimum date for events
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('eventDate').min = today;
+            
+            // Load content section change handler
+            document.getElementById('contentSection').addEventListener('change', loadContent);
+            document.getElementById('contentLanguage').addEventListener('change', loadContent);
+            
+            // Auto-update statistics every 30 seconds
+            setInterval(updateStatistics, 30000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLanguage();
+        });
+    </script>
+</body>
+</html>

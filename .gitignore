@@ -1,0 +1,9 @@
+.claude/
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+
+# Original source logo (we use the lighter logo2.png)
+JudoClubAnderlecht_logo.png
+logo 2.png
