@@ -5,7 +5,7 @@
     "tarifs": true,
     "actu": true,
     "evenements": true,
-    "galerie": true,
+    "galerie": false,
     "equipe": false,
     "temoignages": false,
     "faq": true,
