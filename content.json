@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0004",
-    "publishedAt": "2026-04-23T19:42:44.707Z",
+    "version": "1.0005",
+    "publishedAt": "2026-04-23T19:53:10.074Z",
     "history": [
+      {
+        "version": "1.0005",
+        "date": "2026-04-23T19:53:10.074Z",
+        "summary": "Formulaires : email destinataire modifié"
+      },
       {
         "version": "1.0004",
         "date": "2026-04-23T19:42:44.707Z",
@@ -44,7 +49,7 @@
   },
   "forms": {
     "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/api/send",
-    "recipientEmail": "secretariat.judoclubanderlecht@gmail.com"
+    "recipientEmail": "jmdemaret@gmail.com"
   },
   "socials": {
     "facebook": {
