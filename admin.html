@@ -516,6 +516,22 @@ function describeChanges(before, after){
   });
   if(tc) parts.push(`${tc} texte${tc>1?'s':''} modifié${tc>1?'s':''}`);
 
+  // Socials (activation + URL changes)
+  const socChanges=[];
+  const bs=b.socials||{}, as=a.socials||{};
+  const allSocialKeys = new Set([...Object.keys(bs),...Object.keys(as)]);
+  allSocialKeys.forEach(k=>{
+    const before=bs[k]||{active:false,url:''};
+    const after=as[k]||{active:false,url:''};
+    const name = (SOCIAL_META && SOCIAL_META[k]?.name) || k;
+    if((before.active!==false)!==(after.active!==false)){
+      socChanges.push(`${name} ${after.active?'activé':'masqué'}`);
+    } else if((before.url||'')!==(after.url||'')){
+      socChanges.push(`${name} URL modifiée`);
+    }
+  });
+  if(socChanges.length) parts.push(socChanges.join(', '));
+
   return parts.length ? parts.join(' · ') : 'Aucun changement détecté';
 }
 
