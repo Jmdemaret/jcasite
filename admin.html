@@ -20,90 +20,115 @@
   html,body{background:#FBF6E9;color:#1D1916;font-family:'Inter',sans-serif;}
   .card{background:#fff;border:1px solid rgba(29,25,22,.06);border-radius:20px;padding:1.75rem 2rem;box-shadow:0 20px 40px -25px rgba(29,25,22,.12);}
   .label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#C8102E;}
-  input:not([type=file]),textarea,select{
+  input:not([type=file]):not([type=checkbox]),textarea,select{
     width:100%;background:#FBF6E9;border:1px solid rgba(29,25,22,.1);border-radius:10px;
-    padding:.7rem .9rem;font-family:inherit;font-size:.95rem;color:#1D1916;outline:none;
+    padding:.65rem .9rem;font-family:inherit;font-size:.95rem;color:#1D1916;outline:none;
     transition:border-color .2s;
   }
   input:focus,textarea:focus,select:focus{border-color:#C8102E;}
-  .fl{font-family:'Inter';font-size:.8rem;color:#7a6f64;display:block;margin-bottom:.4rem;font-weight:500;}
-  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.3rem;border-radius:999px;font-weight:500;font-size:.9rem;border:none;cursor:pointer;transition:all .25s;font-family:inherit;text-decoration:none;}
-  .btn-primary{background:#1D1916;color:#FBF6E9;}
-  .btn-primary:hover{background:#C8102E;transform:translateY(-1px);}
-  .btn-primary[disabled]{opacity:.5;cursor:not-allowed;transform:none;}
-  .btn-cta{background:#C8102E;color:#fff;font-weight:600;box-shadow:0 10px 24px -8px rgba(200,16,46,.4);}
-  .btn-cta:hover{background:#A10D25;transform:translateY(-1px);}
-  .btn-cta[disabled]{opacity:.5;cursor:not-allowed;}
-  .btn-ghost{background:transparent;color:#1D1916;border:1px solid rgba(29,25,22,.15);}
-  .btn-ghost:hover{border-color:#C8102E;color:#C8102E;}
-  .btn-danger{background:rgba(200,16,46,.08);color:#C8102E;border:1px solid rgba(200,16,46,.15);}
-  .btn-danger:hover{background:#C8102E;color:#fff;border-color:#C8102E;}
-  .btn-sm{padding:.45rem .8rem;font-size:.78rem;}
+  .fl{font-family:'Inter';font-size:.78rem;color:#4a423b;display:block;margin-bottom:.35rem;font-weight:500;}
+  .hint{font-size:.7rem;color:#9a8f83;margin-top:.25rem;}
 
-  .toggle{position:relative;width:48px;height:26px;background:rgba(29,25,22,.15);border-radius:999px;cursor:pointer;transition:background .25s;flex-shrink:0;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.25rem;border-radius:999px;font-weight:500;font-size:.88rem;border:none;cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:none;line-height:1;}
+  .btn-primary{background:#1D1916;color:#FBF6E9;}
+  .btn-primary:hover:not([disabled]){background:#C8102E;transform:translateY(-1px);}
+  .btn-cta{background:#C8102E;color:#fff;font-weight:600;box-shadow:0 10px 24px -8px rgba(200,16,46,.4);}
+  .btn-cta:hover:not([disabled]){background:#A10D25;transform:translateY(-1px);}
+  .btn-cta.dirty{animation:pulseDirty 2s ease-in-out infinite;}
+  @keyframes pulseDirty{0%,100%{box-shadow:0 10px 24px -8px rgba(200,16,46,.4);}50%{box-shadow:0 10px 28px -4px rgba(200,16,46,.8);}}
+  .btn-ghost{background:transparent;color:#1D1916;border:1px solid rgba(29,25,22,.15);}
+  .btn-ghost:hover:not([disabled]){border-color:#C8102E;color:#C8102E;}
+  .btn-danger{background:rgba(200,16,46,.08);color:#C8102E;border:1px solid rgba(200,16,46,.2);}
+  .btn-danger:hover:not([disabled]){background:#C8102E;color:#fff;border-color:#C8102E;}
+  .btn-ok{background:rgba(42,107,42,.1);color:#2A6B2A;border:1px solid rgba(42,107,42,.25);}
+  .btn-ok:hover:not([disabled]){background:#2A6B2A;color:#fff;}
+  .btn-sm{padding:.4rem .75rem;font-size:.78rem;}
+  .btn[disabled]{opacity:.5;cursor:not-allowed;transform:none;}
+
+  .toggle{position:relative;width:46px;height:26px;background:rgba(29,25,22,.15);border-radius:999px;cursor:pointer;transition:background .25s;flex-shrink:0;border:none;padding:0;}
   .toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:all .25s;}
   .toggle.on{background:#C8102E;}
-  .toggle.on::after{left:25px;}
+  .toggle.on::after{left:23px;}
 
-  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1D1916;color:#FBF6E9;padding:.9rem 1.6rem;border-radius:999px;font-size:.9rem;opacity:0;transition:all .35s;pointer-events:none;z-index:200;max-width:90vw;text-align:center;box-shadow:0 12px 40px -8px rgba(0,0,0,.3);}
-  .toast.show{opacity:1;bottom:2.5rem;}
+  .toast{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:#1D1916;color:#FBF6E9;padding:.9rem 1.6rem;border-radius:999px;font-size:.9rem;opacity:0;transition:all .35s;pointer-events:none;z-index:200;max-width:90vw;text-align:center;box-shadow:0 12px 40px -8px rgba(0,0,0,.3);}
+  .toast.show{opacity:1;bottom:2rem;}
   .toast.err{background:#C8102E;}
   .toast.ok{background:#2A6B2A;}
 
   .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#9a8f83;margin-right:.5rem;vertical-align:middle;}
   .dot.ok{background:#2A6B2A;}
   .dot.err{background:#C8102E;}
+  .dot.warn{background:#E8832F;}
   .dot.pulse{animation:pulse 1.4s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 
-  /* Items list */
-  .item{padding:1.1rem 1.2rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.75rem;transition:border-color .2s;}
+  /* Tabs */
+  .tabs{display:flex;gap:.25rem;background:rgba(29,25,22,.04);padding:.35rem;border-radius:999px;overflow-x:auto;margin-bottom:1rem;}
+  .tab{flex-shrink:0;padding:.65rem 1.2rem;border-radius:999px;font-size:.88rem;color:#4a423b;cursor:pointer;background:transparent;border:none;font-family:inherit;font-weight:500;transition:all .2s;white-space:nowrap;}
+  .tab:hover{background:rgba(29,25,22,.06);}
+  .tab.active{background:#1D1916;color:#FBF6E9;}
+  .tab .badge{display:inline-block;min-width:20px;height:20px;line-height:20px;padding:0 .4rem;border-radius:999px;background:rgba(29,25,22,.12);color:#4a423b;font-size:.7rem;font-weight:600;margin-left:.4rem;}
+  .tab.active .badge{background:rgba(255,255,255,.22);color:#FBF6E9;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* Items */
+  .item{padding:1.1rem 1.2rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.7rem;transition:border-color .2s;}
   .item:hover{border-color:rgba(200,16,46,.25);}
-  .item-row{display:grid;gap:.9rem;align-items:start;}
-  .item-actions{display:flex;gap:.35rem;justify-content:flex-end;margin-top:.7rem;}
-  .item-actions .btn-sm{padding:.35rem .7rem;}
+  .item-row{display:grid;gap:.8rem;align-items:start;}
+  .item-actions{display:flex;gap:.3rem;justify-content:flex-end;margin-top:.6rem;}
 
-  .g-row{display:grid;grid-template-columns:96px 1fr 1fr auto;gap:1rem;align-items:center;padding:.85rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.6rem;}
-  .g-row img{width:96px;height:72px;object-fit:cover;border-radius:10px;display:block;}
+  /* Image card in gallery */
+  .g-row{display:grid;grid-template-columns:96px 1fr auto;gap:1rem;align-items:center;padding:.75rem;border:1px solid rgba(29,25,22,.08);border-radius:14px;background:#FBF6E9;margin-bottom:.6rem;}
+  .g-row img{width:96px;height:72px;object-fit:cover;border-radius:10px;display:block;background:#ECE1C8;}
+  .g-row-body{display:grid;gap:.5rem;grid-template-columns:1fr 1fr;}
+  @media(max-width:720px){.g-row-body{grid-template-columns:1fr;}}
 
-  /* Rich text editor */
+  /* RTE */
   .rte-wrap{border:1px solid rgba(29,25,22,.1);border-radius:10px;overflow:hidden;background:#FBF6E9;}
   .rte-wrap:focus-within{border-color:#C8102E;}
-  .rte-tools{display:flex;gap:.15rem;padding:.35rem;border-bottom:1px solid rgba(29,25,22,.08);background:rgba(255,255,255,.5);}
-  .rte-tools button{padding:.35rem .55rem;font-size:.8rem;border-radius:6px;border:none;background:transparent;color:#1D1916;cursor:pointer;transition:background .15s;font-family:inherit;}
+  .rte-tools{display:flex;gap:.15rem;padding:.3rem;border-bottom:1px solid rgba(29,25,22,.08);background:rgba(255,255,255,.5);flex-wrap:wrap;}
+  .rte-tools button{padding:.35rem .55rem;font-size:.8rem;border-radius:6px;border:none;background:transparent;color:#1D1916;cursor:pointer;transition:background .15s;font-family:inherit;min-width:28px;}
   .rte-tools button:hover{background:rgba(29,25,22,.08);}
   .rte-tools button.on{background:#1D1916;color:#FBF6E9;}
-  .rte{padding:.7rem .9rem;min-height:68px;outline:none;font-family:inherit;font-size:.95rem;line-height:1.5;}
-  .rte:empty::before{content:attr(data-placeholder);color:#9a8f83;}
+  .rte{padding:.7rem .9rem;min-height:64px;outline:none;font-family:inherit;font-size:.95rem;line-height:1.55;color:#1D1916;}
+  .rte:empty::before{content:attr(data-placeholder);color:#9a8f83;pointer-events:none;}
+  .rte a{color:#C8102E;text-decoration:underline;}
 
-  /* Setup banner */
-  .setup-banner{
-    background:linear-gradient(135deg,#1D1916 0%,#432C5F 100%);color:#FBF6E9;
-    padding:1.5rem;border-radius:16px;margin-bottom:1.5rem;
-  }
-  .setup-banner a{color:#F76676;text-decoration:underline;}
-
-  /* Help */
-  details.help summary{cursor:pointer;list-style:none;font-size:.82rem;color:#7a6f64;display:inline-flex;align-items:center;gap:.3rem;}
-  details.help summary::-webkit-details-marker{display:none;}
-  details.help summary::before{content:'?';width:18px;height:18px;border-radius:50%;background:rgba(29,25,22,.08);display:inline-grid;place-items:center;font-size:.7rem;font-weight:600;color:#1D1916;}
-  details.help[open] summary::before{background:#C8102E;color:#fff;}
-  details.help .body{margin-top:.7rem;padding:.9rem;background:#FBF6E9;border-radius:10px;font-size:.85rem;color:#4a423b;line-height:1.55;}
+  /* Accordion */
+  details.acc{border:1px solid rgba(29,25,22,.08);border-radius:12px;overflow:hidden;background:#FBF6E9;margin-bottom:.6rem;}
+  details.acc[open]{border-color:rgba(200,16,46,.3);background:#fff;}
+  details.acc summary{cursor:pointer;list-style:none;padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:.95rem;}
+  details.acc summary::-webkit-details-marker{display:none;}
+  details.acc summary .chev{font-size:.7rem;color:#9a8f83;transition:transform .2s;}
+  details.acc[open] summary .chev{transform:rotate(180deg);}
+  details.acc .acc-body{padding:0 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.8rem;}
 
   /* Modal */
   .modal{position:fixed;inset:0;background:rgba(15,13,11,.6);display:none;align-items:center;justify-content:center;z-index:300;padding:1rem;}
   .modal.show{display:flex;}
-  .modal-box{background:#fff;border-radius:18px;max-width:440px;padding:1.8rem;box-shadow:0 30px 80px -20px rgba(0,0,0,.4);}
+  .modal-box{background:#fff;border-radius:18px;max-width:480px;width:100%;padding:1.8rem;box-shadow:0 30px 80px -20px rgba(0,0,0,.4);}
 
-  /* Preview */
-  .preview-note{font-size:.8rem;color:#7a6f64;padding:.65rem .85rem;background:#FBF6E9;border-radius:10px;border:1px dashed rgba(29,25,22,.15);}
+  /* Activity log */
+  .log{font-family:'JetBrains Mono',monospace;font-size:.75rem;background:#1D1916;color:#ECE1C8;padding:1rem;border-radius:10px;max-height:300px;overflow-y:auto;}
+  .log .row{padding:.15rem 0;display:flex;gap:.5rem;}
+  .log .row .ts{color:#7a6f64;flex-shrink:0;}
+  .log .row.ok .msg{color:#8DD09F;}
+  .log .row.err .msg{color:#F76676;}
+  .log .row.info .msg{color:#ECE1C8;}
+
+  .setup{background:linear-gradient(135deg,#1D1916 0%,#432C5F 100%);color:#FBF6E9;padding:1.5rem 1.75rem;border-radius:16px;}
+  .setup a{color:#F76676;text-decoration:underline;}
+  .setup code{background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:4px;font-size:.85em;}
+
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem;margin-top:1rem;}
+  .kpi-box{background:#FBF6E9;border:1px solid rgba(29,25,22,.08);border-radius:12px;padding:.9rem 1rem;}
+  .kpi-box .n{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:400;line-height:1;}
+  .kpi-box .l{font-family:'JetBrains Mono';font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#7a6f64;margin-top:.3rem;}
 
   @media(max-width:720px){
     main{padding:1rem !important;}
     .card{padding:1.2rem;}
-    .g-row{grid-template-columns:72px 1fr;gap:.6rem;}
-    .g-row img{width:72px;height:72px;}
-    .g-row > div:last-child{grid-column:1/-1;display:flex;gap:.3rem;}
   }
 </style>
 </head>
@@ -111,210 +136,239 @@
 
 <!-- ============ HEADER ============ -->
 <header class="border-b border-sumi-900/5 bg-white sticky top-0 z-40">
-  <div class="max-w-5xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
     <div class="flex items-center gap-3">
-      <img src="logo2.png" class="w-12 h-12 object-contain" alt="Logo" />
+      <img src="logo2.png" class="w-11 h-11 object-contain" alt="Logo" />
       <div>
-        <div class="font-display text-lg leading-tight">Espace admin · Judo Club Anderlecht</div>
-        <div class="text-[11px] text-[#7a6f64]" id="status"><span class="dot"></span>Bienvenue — merci de vous connecter ci-dessous</div>
+        <div class="font-display text-lg leading-tight">Espace admin</div>
+        <div class="text-[11px] text-[#7a6f64]" id="status"><span class="dot"></span>Chargement…</div>
       </div>
     </div>
     <div class="flex gap-2 flex-wrap">
+      <button id="btn-discard" class="btn btn-ghost" style="display:none" title="Annuler toutes les modifs non publiées">↺ Annuler les modifs</button>
       <a href="index.html" target="_blank" class="btn btn-ghost">👁 Voir le site</a>
       <button id="btn-publish" class="btn btn-cta" disabled>
-        ✓ Enregistrer &amp; publier
+        ✓ Publier les modifications
       </button>
     </div>
   </div>
 </header>
 
-<main class="max-w-5xl mx-auto px-4 md:px-6 py-8 space-y-6">
+<main class="max-w-5xl mx-auto px-4 md:px-6 py-6 space-y-4">
 
-  <!-- ============ ONBOARDING ============ -->
-  <div class="setup-banner" id="onboarding">
-    <div class="label" style="color:#F76676;">Première utilisation</div>
-    <h2 class="font-display text-2xl mt-2 mb-3">Connectez-vous pour modifier le site</h2>
-    <p class="text-sm opacity-90 mb-4 max-w-xl">
-      Cette interface permet de modifier le contenu du site (messages, photos, actualités, avis…)
-      <strong>sans toucher au design</strong>. Une seule connexion initiale est nécessaire.
-    </p>
-    <details class="help">
-      <summary>Comment obtenir ma clé d'accès ?</summary>
-      <div class="body" style="color:#FBF6E9;background:rgba(255,255,255,.08);">
-        <ol class="list-decimal pl-5 space-y-2">
-          <li>Cliquez sur <a href="https://github.com/settings/tokens/new?description=Admin%20Judo%20Club%20Anderlecht&scopes=public_repo" target="_blank" rel="noopener">ce lien pour créer une clé</a> (ouverture sur GitHub, page pré-remplie).</li>
-          <li>Si demandé, connectez-vous avec le compte GitHub du club.</li>
-          <li>Durée : choisissez <strong>1 an</strong> (ou « No expiration » si disponible).</li>
-          <li>Scope déjà coché : <code>public_repo</code> — ne modifiez rien.</li>
-          <li>Cliquez <strong>« Generate token »</strong> tout en bas.</li>
-          <li>Copiez la clé qui s'affiche (elle commence par <code>ghp_…</code>).</li>
-          <li>Revenez ici, collez-la dans le champ ci-dessous et cliquez <strong>Se connecter</strong>.</li>
-        </ol>
-        <p class="mt-3 opacity-75 text-xs">La clé reste dans ce navigateur uniquement — elle n'est jamais envoyée ailleurs que vers GitHub.</p>
+  <!-- Unsaved changes banner -->
+  <div id="dirty-banner" class="card" style="display:none;background:#fff8e1;border-color:#e8c547;">
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+      <div>
+        <div class="font-medium">📝 Modifications non publiées</div>
+        <div class="text-sm text-[#6b6158]" id="dirty-summary">0 changement en attente.</div>
       </div>
-    </details>
+      <button class="btn btn-cta btn-sm" onclick="document.getElementById('btn-publish').click()">Publier maintenant</button>
+    </div>
   </div>
 
-  <!-- ============ CONNEXION ============ -->
-  <section class="card" id="conn-card">
-    <div class="label">Connexion</div>
-    <h2 class="font-display text-2xl mt-2 mb-5">Clé d'accès</h2>
-    <div class="grid md:grid-cols-[1fr_auto] gap-3 items-end">
+  <!-- Draft restore banner -->
+  <div id="draft-banner" class="card" style="display:none;background:#e6f3e6;border-color:#3B7D2E;">
+    <div class="flex items-center justify-between gap-3 flex-wrap">
       <div>
-        <span class="fl">Collez votre clé ici (commence par <code>ghp_</code>)</span>
-        <input type="password" id="gh-token" placeholder="ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off"/>
+        <div class="font-medium">💾 Brouillon local retrouvé</div>
+        <div class="text-sm text-[#6b6158]" id="draft-summary">Des modifications non publiées ont été sauvegardées localement.</div>
       </div>
-      <button id="btn-connect" class="btn btn-primary">Se connecter</button>
-    </div>
-    <div class="flex flex-wrap gap-2 mt-4 text-xs text-[#7a6f64]">
-      <button id="btn-forget" class="btn btn-ghost btn-sm">Oublier la clé</button>
-      <a href="https://github.com/settings/tokens/new?description=Admin%20Judo%20Club%20Anderlecht&scopes=public_repo" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Créer une nouvelle clé ↗</a>
-    </div>
-    <!-- Advanced: hidden unless needed -->
-    <details class="mt-4" id="adv">
-      <summary class="text-xs text-[#9a8f83] cursor-pointer">Options avancées</summary>
-      <div class="grid md:grid-cols-3 gap-3 mt-3">
-        <div><span class="fl">Compte GitHub</span><input id="gh-owner" value="Jmdemaret"/></div>
-        <div><span class="fl">Nom du dépôt</span><input id="gh-repo" value="jcasite"/></div>
-        <div><span class="fl">Branche</span><input id="gh-branch" value="main"/></div>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ SECTIONS AFFICHÉES ============ -->
-  <section class="card">
-    <div class="label">Structure du site</div>
-    <h2 class="font-display text-2xl mt-2 mb-2">Sections affichées</h2>
-    <p class="text-sm text-[#7a6f64] mb-5 max-w-2xl">
-      Décochez une rubrique pour la retirer du site (et du menu). Vous pouvez la remettre à tout moment —
-      le contenu reste conservé.
-    </p>
-    <div id="sections-grid" class="grid md:grid-cols-2 gap-3"></div>
-    <p class="text-xs text-[#9a8f83] mt-4 italic">L'accueil, le formulaire de contact et la carte restent toujours affichés.</p>
-  </section>
-
-  <!-- ============ TEXTES DU SITE ============ -->
-  <section class="card">
-    <div class="label">Textes affichés</div>
-    <h2 class="font-display text-2xl mt-2 mb-2">Tous les textes du site</h2>
-    <p class="text-sm text-[#7a6f64] mb-5 max-w-2xl">
-      Cliquez sur une rubrique pour déplier et modifier ses textes (titres, intros, paragraphes).
-      Laissez un champ vide pour garder le texte par défaut. Les balises autorisées : <code>&lt;em&gt;</code> (italique rouge), <code>&lt;strong&gt;</code> (gras).
-    </p>
-    <div id="texts-accordion" class="space-y-2"></div>
-  </section>
-
-  <!-- ============ BANDEAU HAUT DE PAGE ============ -->
-  <section class="card">
-    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
-      <div>
-        <div class="label">Bandeau en haut du site</div>
-        <h2 class="font-display text-2xl mt-2">Message d'information</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">Fermeture, événement exceptionnel, info importante. Décochez pour masquer.</p>
-      </div>
-      <label class="flex items-center gap-2 cursor-pointer">
-        <span class="text-xs font-mono text-[#7a6f64]" id="banner-status">ACTIVE</span>
-        <div class="toggle on" id="banner-toggle" role="switch"></div>
-      </label>
-    </div>
-
-    <span class="fl">Texte du message</span>
-    <div class="rte-wrap">
-      <div class="rte-tools">
-        <button type="button" data-cmd="bold" title="Gras"><strong>B</strong></button>
-        <button type="button" data-cmd="italic" title="Italique"><em>I</em></button>
-        <button type="button" data-cmd="createLink" title="Lien">🔗</button>
-        <button type="button" data-cmd="removeFormat" title="Effacer la mise en forme">✕</button>
-      </div>
-      <div id="banner-rte" class="rte" contenteditable="true" data-placeholder="Ex : Fermeture du dojo du 20 au 28 juillet"></div>
-    </div>
-
-    <div class="mt-4 preview-note">
-      <div class="text-[11px] uppercase tracking-widest text-[#7a6f64] mb-1">Aperçu</div>
-      <div class="bg-sumi-900 text-paper-50 rounded px-3 py-2 inline-flex items-center gap-2 text-sm">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-hinomaru-600"></span>
-        <span id="banner-preview">—</span>
+      <div class="flex gap-2">
+        <button id="btn-draft-restore" class="btn btn-ok btn-sm">Restaurer</button>
+        <button id="btn-draft-ignore" class="btn btn-ghost btn-sm">Ignorer</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ============ ACTUALITÉS ============ -->
-  <section class="card">
-    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
-      <div>
-        <div class="label">Actualités</div>
-        <h2 class="font-display text-2xl mt-2">Les news du club</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">Affichées dans la section « Quoi de neuf ? »</p>
+  <!-- ============ TABS ============ -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="contenu" role="tab">Contenu <span class="badge" id="b-contenu">—</span></button>
+    <button class="tab" data-tab="textes" role="tab">Textes du site</button>
+    <button class="tab" data-tab="sections" role="tab">Sections <span class="badge" id="b-sections">—</span></button>
+    <button class="tab" data-tab="securite" role="tab">Sécurité &amp; Test</button>
+  </div>
+
+  <!-- ============ PANEL : CONTENU ============ -->
+  <div class="panel active" id="panel-contenu">
+
+    <!-- Bandeau -->
+    <section class="card mb-4">
+      <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <div class="label">Bandeau en haut du site</div>
+          <h2 class="font-display text-xl mt-1">Message d'information</h2>
+          <p class="text-sm text-[#7a6f64] mt-1">Fermeture, annonce, info importante. Désactivez pour masquer.</p>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <span class="text-xs font-mono text-[#7a6f64]" id="banner-status">—</span>
+          <button class="toggle" id="banner-toggle" role="switch"></button>
+        </label>
       </div>
-      <button id="btn-add-news" class="btn btn-primary">+ Ajouter une actu</button>
-    </div>
-    <div id="news-list"></div>
-  </section>
-
-  <!-- ============ ÉVÉNEMENTS ============ -->
-  <section class="card">
-    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
-      <div>
-        <div class="label">Calendrier</div>
-        <h2 class="font-display text-2xl mt-2">Événements à venir</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">Stages, passages de grade, compétitions, cours d'essai.</p>
+      <div id="banner-editor"></div>
+      <div class="mt-3 text-xs text-[#7a6f64]">
+        Aperçu :
+        <span class="inline-block bg-sumi-900 text-paper-50 rounded px-3 py-1 ml-2 text-sm">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-hinomaru-600 mr-2 align-middle"></span>
+          <span id="banner-preview">—</span>
+        </span>
       </div>
-      <button id="btn-add-event" class="btn btn-primary">+ Nouvel événement</button>
-    </div>
-    <div id="events-list"></div>
-  </section>
+    </section>
 
-  <!-- ============ GALERIE ============ -->
-  <section class="card">
-    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
-      <div>
-        <div class="label">Galerie photo</div>
-        <h2 class="font-display text-2xl mt-2">Images du site</h2>
-        <p class="text-sm text-[#7a6f64] mt-1">Glissez-déposez des images depuis votre ordinateur.</p>
+    <!-- Actualités -->
+    <section class="card mb-4">
+      <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <div class="label">Actualités</div>
+          <h2 class="font-display text-xl mt-1">News du club</h2>
+        </div>
+        <button id="btn-add-news" class="btn btn-primary">+ Ajouter</button>
       </div>
-      <button id="btn-add-image" class="btn btn-primary">+ Ajouter une photo</button>
-    </div>
-    <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
-    <div id="gallery-list"></div>
-  </section>
+      <div id="news-list"></div>
+    </section>
 
-  <!-- ============ TÉMOIGNAGES ============ -->
-  <section class="card">
-    <div class="flex items-center justify-between mb-5 gap-3 flex-wrap">
-      <div>
-        <div class="label">Avis et témoignages</div>
-        <h2 class="font-display text-2xl mt-2">Paroles de parents et judokas</h2>
+    <!-- Événements -->
+    <section class="card mb-4">
+      <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <div class="label">Calendrier</div>
+          <h2 class="font-display text-xl mt-1">Événements à venir</h2>
+        </div>
+        <button id="btn-add-event" class="btn btn-primary">+ Ajouter</button>
       </div>
-      <button id="btn-add-tm" class="btn btn-primary">+ Nouveau témoignage</button>
-    </div>
-    <div id="tm-list"></div>
-  </section>
+      <div id="events-list"></div>
+    </section>
 
-  <!-- ============ BACKUP ============ -->
-  <section class="card">
-    <div class="label">Sauvegardes</div>
-    <h2 class="font-display text-2xl mt-2 mb-3">Backup / Restauration</h2>
-    <p class="text-sm text-[#6b6158] mb-4 max-w-xl">
-      Toutes les modifications publiées sont automatiquement historisées dans GitHub.
-      Les boutons ci-dessous permettent des sauvegardes manuelles.
-    </p>
-    <div class="flex flex-wrap gap-2">
-      <button id="btn-export" class="btn btn-ghost btn-sm">↓ Exporter les données</button>
-      <button id="btn-import" class="btn btn-ghost btn-sm">↑ Importer des données</button>
-      <input type="file" id="import-input" accept="application/json" style="display:none"/>
-      <button id="btn-zip" class="btn btn-ghost btn-sm">📦 Télécharger le site complet</button>
-      <button id="btn-reload" class="btn btn-ghost btn-sm">⟲ Recharger depuis GitHub</button>
-    </div>
-  </section>
+    <!-- Galerie -->
+    <section class="card mb-4">
+      <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <div class="label">Galerie photo</div>
+          <h2 class="font-display text-xl mt-1">Images du site</h2>
+          <p class="text-sm text-[#7a6f64] mt-1">JPG/PNG, max 3 Mo par photo.</p>
+        </div>
+        <button id="btn-add-image" class="btn btn-primary">+ Ajouter</button>
+      </div>
+      <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+      <div id="gallery-list"></div>
+    </section>
 
-  <p class="text-center text-xs text-[#9a8f83] pt-4 pb-6">Judo Club Anderlecht · Espace admin · Le design et la structure ne peuvent pas être modifiés depuis cette interface.</p>
+    <!-- Témoignages -->
+    <section class="card">
+      <div class="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <div class="label">Témoignages</div>
+          <h2 class="font-display text-xl mt-1">Avis parents &amp; judokas</h2>
+        </div>
+        <button id="btn-add-tm" class="btn btn-primary">+ Ajouter</button>
+      </div>
+      <div id="tm-list"></div>
+    </section>
+
+  </div>
+
+  <!-- ============ PANEL : TEXTES ============ -->
+  <div class="panel" id="panel-textes">
+    <section class="card">
+      <div class="label">Textes affichés sur le site</div>
+      <h2 class="font-display text-xl mt-1 mb-2">Tous les titres &amp; paragraphes</h2>
+      <p class="text-sm text-[#7a6f64] mb-4 max-w-2xl">
+        Cliquez sur une rubrique pour déplier ses textes. Laissez un champ vide pour garder le texte par défaut du site.
+        Utilisez les boutons <strong>B</strong> (gras), <em>I</em> (italique) et 🔗 (lien) pour formater.
+      </p>
+      <div id="texts-accordion"></div>
+    </section>
+  </div>
+
+  <!-- ============ PANEL : SECTIONS ============ -->
+  <div class="panel" id="panel-sections">
+    <section class="card">
+      <div class="label">Structure du site</div>
+      <h2 class="font-display text-xl mt-1 mb-2">Sections affichées</h2>
+      <p class="text-sm text-[#7a6f64] mb-4 max-w-2xl">
+        Décochez une rubrique pour la retirer du site et du menu. Le contenu reste conservé — vous pouvez la remettre à tout moment.
+      </p>
+      <div id="sections-grid" class="grid md:grid-cols-2 gap-2"></div>
+      <p class="text-xs text-[#9a8f83] mt-4 italic">L'accueil, le formulaire de contact et la carte restent toujours visibles.</p>
+    </section>
+  </div>
+
+  <!-- ============ PANEL : SÉCURITÉ ============ -->
+  <div class="panel" id="panel-securite">
+
+    <!-- Setup / connection -->
+    <section class="card mb-4" id="setup-card">
+      <div class="label">Connexion GitHub</div>
+      <h2 class="font-display text-xl mt-1 mb-2">Clé d'accès</h2>
+      <div class="kpi">
+        <div class="kpi-box"><div class="n" id="k-state">—</div><div class="l">État</div></div>
+        <div class="kpi-box"><div class="n" id="k-repo">—</div><div class="l">Dépôt</div></div>
+        <div class="kpi-box"><div class="n" id="k-rate">—</div><div class="l">Requêtes restantes</div></div>
+      </div>
+      <div class="mt-5 grid md:grid-cols-[1fr_auto] gap-3 items-end">
+        <div>
+          <span class="fl">Votre clé d'accès (commence par <code>ghp_</code>)</span>
+          <input type="password" id="gh-token" placeholder="ghp_XXXXXXXXXXXXXXXXXXXX" autocomplete="off"/>
+        </div>
+        <button id="btn-connect" class="btn btn-primary">Se connecter</button>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-3 text-xs">
+        <a href="https://github.com/settings/tokens/new?description=Admin%20Judo%20Club%20Anderlecht&scopes=public_repo" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Créer une nouvelle clé ↗</a>
+        <button id="btn-forget" class="btn btn-ghost btn-sm">Oublier la clé</button>
+      </div>
+      <details class="acc mt-4">
+        <summary>Options avancées (dépôt, branche)<span class="chev">▼</span></summary>
+        <div class="acc-body">
+          <div class="grid md:grid-cols-3 gap-3">
+            <div><span class="fl">Compte</span><input id="gh-owner" value="Jmdemaret"/></div>
+            <div><span class="fl">Dépôt</span><input id="gh-repo" value="jcasite"/></div>
+            <div><span class="fl">Branche</span><input id="gh-branch" value="main"/></div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Tests -->
+    <section class="card mb-4">
+      <div class="label">Tests de connexion</div>
+      <h2 class="font-display text-xl mt-1 mb-2">Vérifier lecture &amp; écriture</h2>
+      <p class="text-sm text-[#7a6f64] mb-4 max-w-2xl">
+        Ces tests utilisent un fichier <code>hello-test.txt</code> dans le dépôt. Ils ne touchent pas au contenu du site.
+      </p>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button id="btn-test-read" class="btn btn-primary">📥 Tester la lecture</button>
+        <button id="btn-test-write" class="btn btn-primary">📤 Tester l'écriture</button>
+        <button id="btn-test-both" class="btn btn-cta">🔁 Test complet (écriture + relecture)</button>
+      </div>
+      <div class="log" id="log"><div class="row info"><span class="ts">—</span><span class="msg">En attente…</span></div></div>
+    </section>
+
+    <!-- Backup -->
+    <section class="card">
+      <div class="label">Sauvegardes</div>
+      <h2 class="font-display text-xl mt-1 mb-2">Backup / Restauration</h2>
+      <p class="text-sm text-[#6b6158] mb-4 max-w-xl">
+        Chaque publication crée automatiquement un historique sur GitHub (chaque version est conservée).
+        Vous pouvez aussi faire des backups manuels :
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <button id="btn-export" class="btn btn-ghost btn-sm">↓ Exporter (content.json)</button>
+        <button id="btn-import" class="btn btn-ghost btn-sm">↑ Importer (content.json)</button>
+        <input type="file" id="import-input" accept="application/json" style="display:none"/>
+        <button id="btn-zip" class="btn btn-ghost btn-sm">📦 Télécharger site complet (.zip)</button>
+        <button id="btn-reload" class="btn btn-ghost btn-sm">⟲ Recharger depuis GitHub</button>
+      </div>
+    </section>
+  </div>
+
+  <p class="text-center text-xs text-[#9a8f83] pt-4 pb-6 italic">Le design et la structure du site ne sont pas modifiables depuis cette interface.</p>
 </main>
 
-<!-- ============ CONFIRM MODAL ============ -->
+<!-- Confirm modal -->
 <div class="modal" id="modal">
   <div class="modal-box">
     <h3 class="font-display text-xl mb-2" id="modal-title">Confirmer</h3>
-    <p class="text-sm text-[#4a423b] mb-5" id="modal-text">Cette action est irréversible.</p>
+    <p class="text-sm text-[#4a423b] mb-5 whitespace-pre-line" id="modal-text">—</p>
     <div class="flex justify-end gap-2">
       <button id="modal-cancel" class="btn btn-ghost">Annuler</button>
       <button id="modal-ok" class="btn btn-primary">Confirmer</button>
@@ -325,78 +379,93 @@
 <div id="toast" class="toast">OK</div>
 
 <script>
-// ============ CONFIG ============
-const DEFAULTS={
-  sections:{club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
-  banner:{active:true,text:''},texts:{},gallery:[],news:[],events:[],testimonials:[]
+// ============================================================================
+//                               CONFIG & STATE
+// ============================================================================
+const DEFAULTS = {
+  sections: {club:true,cours:true,tarifs:true,actu:true,evenements:true,galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true},
+  banner: {active:true, text:''},
+  texts: {},
+  gallery: [], news: [], events: [], testimonials: []
 };
 
-// Schema describing every editable text block on the site
+const TOKEN_KEY='jca_gh_token';
+const CFG_KEY='jca_gh_cfg';
+const DRAFT_KEY='jca_draft';
+const DRAFT_BASE_KEY='jca_draft_base';
+
+let loadedState = null;   // what was loaded from GitHub (source of truth)
+let state = JSON.parse(JSON.stringify(DEFAULTS));  // working copy
+let fileSha = null;
+let dirty = false;
+let gh = (()=>{try{return JSON.parse(localStorage.getItem(CFG_KEY))||{};}catch(e){return {};}})();
+gh = {owner:gh.owner||'Jmdemaret', repo:gh.repo||'jcasite', branch:gh.branch||'main'};
+
 const TEXT_SCHEMA = [
-  { key:'hero', title:'Accueil (hero)', fields:[
-    {k:'label',         label:'Étiquette japonaise',  type:'text', placeholder:'道場 — Dojo depuis 1977'},
-    {k:'title1',        label:'Titre — ligne 1',       type:'text', placeholder:"L'art du judo,"},
-    {k:'title2',        label:'Titre — ligne 2 (en rouge italique)', type:'text', placeholder:'réinventé'},
-    {k:'desc',          label:'Description',          type:'textarea', placeholder:"École traditionnelle fondée par…"},
-    {k:'ctaPrimary',    label:'Bouton principal',     type:'text', placeholder:'Pré-inscription rentrée'},
-    {k:'ctaSecondary',  label:'Bouton secondaire',    type:'text', placeholder:'Voir les cours'},
-    {k:'stat1Label',    label:'Stat 1 — libellé',     type:'text', placeholder:'années'},
-    {k:'stat2Label',    label:'Stat 2 — libellé',     type:'text', placeholder:"groupes d'âge"},
-    {k:'stat3Label',    label:'Stat 3 — libellé',     type:'text', placeholder:'cours / semaine'}
+  { key:'hero', title:'🏠 Accueil (hero)', fields:[
+    {k:'label',         label:'Étiquette japonaise',    type:'text',     ph:'道場 — Dojo depuis 1977'},
+    {k:'title1',        label:'Titre — ligne 1',        type:'text',     ph:"L'art du judo,"},
+    {k:'title2',        label:'Titre — ligne 2 (italique rouge)', type:'text', ph:'réinventé'},
+    {k:'desc',          label:'Description',            type:'richtext', ph:'École traditionnelle fondée par Jean-Marc Demaret…'},
+    {k:'ctaPrimary',    label:'Bouton principal',       type:'text',     ph:'Pré-inscription rentrée'},
+    {k:'ctaSecondary',  label:'Bouton secondaire',      type:'text',     ph:'Voir les cours'},
+    {k:'stat1Label',    label:'Libellé stat 1',         type:'text',     ph:'années'},
+    {k:'stat2Label',    label:'Libellé stat 2',         type:'text',     ph:"groupes d'âge"},
+    {k:'stat3Label',    label:'Libellé stat 3',         type:'text',     ph:'cours / semaine'}
   ]},
-  { key:'club', title:'Le club — Histoire', fields:[
-    {k:'label', label:'Étiquette',  type:'text', placeholder:'Le club'},
-    {k:'title', label:'Titre (HTML autorisé, <em> pour rouge italique)', type:'html', placeholder:'Tradition japonaise, <em>pratique moderne.</em>'},
-    {k:'p1',    label:'Paragraphe 1 (HTML autorisé)', type:'html', placeholder:'Le Judo Club Anderlecht a ouvert ses portes en <strong>1977</strong>…'},
-    {k:'p2',    label:'Paragraphe 2 (HTML autorisé)', type:'html', placeholder:'Nous transmettons un judo fidèle aux codes traditionnels…'}
+  { key:'club', title:'🏛 Le club — Histoire', fields:[
+    {k:'label', label:'Étiquette',    type:'text',     ph:'Le club'},
+    {k:'title', label:'Titre',        type:'richtext', ph:'Tradition japonaise, pratique moderne.'},
+    {k:'p1',    label:'Paragraphe 1', type:'richtext', ph:'Le Judo Club Anderlecht a ouvert ses portes en 1977…'},
+    {k:'p2',    label:'Paragraphe 2', type:'richtext', ph:'Nous transmettons un judo fidèle aux codes traditionnels…'}
   ]},
-  { key:'cours', title:'Cours — Planning', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'稽古 — Programme'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Planning <em>hebdomadaire.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Mercredi au samedi…'}
+  { key:'cours', title:'🥋 Cours — Planning', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'稽古 — Programme'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Planning hebdomadaire.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Mercredi au samedi…'}
   ]},
-  { key:'tarifs', title:'Tarifs', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'月謝 — Tarifs'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Des formules <em>simples.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Cotisation annuelle incluant…'}
+  { key:'tarifs', title:'💶 Tarifs', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'月謝 — Tarifs'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Des formules simples.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Cotisation annuelle incluant…'}
   ]},
-  { key:'actu', title:'Actualités', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'新着 — Actualités'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Quoi de <em>neuf ?</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Les dernières nouvelles du club…'}
+  { key:'actu', title:'📰 Actualités', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'新着 — Actualités'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Quoi de neuf ?'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Les dernières nouvelles du club…'}
   ]},
-  { key:'evenements', title:'Calendrier', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'行事 — Calendrier'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'À venir au <em>dojo.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Stages, passages de grade…'}
+  { key:'evenements', title:'📅 Calendrier', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'行事 — Calendrier'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'À venir au dojo.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Stages, passages de grade…'}
   ]},
-  { key:'galerie', title:'Galerie', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'武 — Galerie'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Sur le <em>tatami.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Glissez horizontalement…'}
+  { key:'galerie', title:'🖼 Galerie', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'武 — Galerie'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Sur le tatami.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Glissez horizontalement…'}
   ]},
-  { key:'equipe', title:'Équipe / Sensei', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'先生 — Enseignants'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Nos <em>sensei.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Tous formés au sein du club…'}
+  { key:'equipe', title:'👥 Équipe / Sensei', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'先生 — Enseignants'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Nos sensei.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Tous formés au sein du club…'}
   ]},
-  { key:'temoignages', title:'Avis & témoignages', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'感想 — Témoignages'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:"Ce qu'ils <em>en disent.</em>"}
+  { key:'temoignages', title:'💬 Avis & témoignages', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'感想 — Témoignages'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Ce qu\'ils en disent.'}
   ]},
-  { key:'faq', title:'FAQ', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'質問 — FAQ'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Les <em>questions.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Ce que les parents demandent…'}
+  { key:'faq', title:'❓ FAQ', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'質問 — FAQ'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Les questions.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Ce que les parents demandent le plus souvent.'}
   ]},
-  { key:'preInscription', title:'Pré-inscription', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'入会 — Pré-inscription rentrée'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Réservez votre <em>place.</em>'},
-    {k:'intro', label:'Texte d\'intro', type:'textarea', placeholder:'Complétez cette pré-inscription…'}
+  { key:'preInscription', title:'📝 Pré-inscription', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'入会 — Pré-inscription rentrée'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Réservez votre place.'},
+    {k:'intro', label:'Texte d\'intro', type:'richtext', ph:'Complétez cette pré-inscription…'}
   ]},
-  { key:'contact', title:'Contact', fields:[
-    {k:'label', label:'Étiquette', type:'text', placeholder:'Contact'},
-    {k:'title', label:'Titre (HTML)', type:'html', placeholder:'Une <em>question ?</em>'}
+  { key:'contact', title:'✉️ Contact', fields:[
+    {k:'label', label:'Étiquette',     type:'text',     ph:'Contact'},
+    {k:'title', label:'Titre',         type:'richtext', ph:'Une question ?'}
   ]}
 ];
 
@@ -412,76 +481,175 @@ const SECTION_LIST = [
   {k:'faq',            name:'FAQ',                            desc:'Questions fréquentes'},
   {k:'preInscription', name:'Pré-inscription rentrée',        desc:'Formulaire d\'inscription'}
 ];
-const TOKEN_KEY='jca_gh_token';
-const CFG_KEY='jca_gh_cfg';
 
-let state = JSON.parse(JSON.stringify(DEFAULTS));
-let fileSha = null;
-let gh = (()=>{try{return JSON.parse(localStorage.getItem(CFG_KEY))||{};}catch(e){return {};}})();
-gh = {owner:gh.owner||'Jmdemaret',repo:gh.repo||'jcasite',branch:gh.branch||'main'};
-
-function saveGhCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(gh));}
+// ============================================================================
+//                                UTILITIES
+// ============================================================================
 function getToken(){return localStorage.getItem(TOKEN_KEY)||'';}
 function setToken(t){if(t)localStorage.setItem(TOKEN_KEY,t);else localStorage.removeItem(TOKEN_KEY);}
+function saveGhCfg(){localStorage.setItem(CFG_KEY,JSON.stringify(gh));}
+function escapeHtml(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
 
-// ============ TOAST ============
 function toast(msg,kind){
   const t=document.getElementById('toast');
   t.textContent=msg;t.className='toast show '+(kind||'');
-  clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2800);
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// ============ MODAL ============
-function confirmDialog(title,text,okLabel='Confirmer'){
+function confirmDialog(title,text,okLabel='Confirmer',okClass='btn-primary'){
   return new Promise(res=>{
     const m=document.getElementById('modal');
     document.getElementById('modal-title').textContent=title;
     document.getElementById('modal-text').textContent=text;
-    document.getElementById('modal-ok').textContent=okLabel;
+    const okBtn=document.getElementById('modal-ok');
+    okBtn.textContent=okLabel;okBtn.className='btn '+okClass;
     m.classList.add('show');
     const cleanup=v=>{m.classList.remove('show');res(v);};
-    document.getElementById('modal-ok').onclick=()=>cleanup(true);
+    okBtn.onclick=()=>cleanup(true);
     document.getElementById('modal-cancel').onclick=()=>cleanup(false);
   });
 }
 
-// ============ GITHUB API ============
-async function ghGetFile(){
+function log(msg,kind='info'){
+  const logEl=document.getElementById('log');
+  if(!logEl) return;
+  const now=new Date().toLocaleTimeString('fr-BE');
+  const row=document.createElement('div');row.className='row '+kind;
+  row.innerHTML=`<span class="ts">${now}</span><span class="msg">${escapeHtml(msg)}</span>`;
+  logEl.prepend(row);
+  while(logEl.children.length>50)logEl.removeChild(logEl.lastChild);
+}
+
+function setStatus(kind,msg){
+  document.getElementById('status').innerHTML=`<span class="dot ${kind}"></span>${escapeHtml(msg)}`;
+  const stateEl=document.getElementById('k-state');
+  if(stateEl) stateEl.textContent = kind==='ok'?'✓':kind==='err'?'✗':kind==='warn'?'!':'…';
+  document.getElementById('k-repo').textContent = `${gh.owner}/${gh.repo}`;
+}
+
+// ============================================================================
+//                               DIRTY TRACKING
+// ============================================================================
+function markDirty(){
+  dirty=true;
+  document.getElementById('btn-publish').classList.add('dirty');
+  document.getElementById('btn-discard').style.display='';
+  saveDraft();
+  updateDirtyBanner();
+  updateBadges();
+}
+
+function markClean(){
+  dirty=false;
+  document.getElementById('btn-publish').classList.remove('dirty');
+  document.getElementById('btn-discard').style.display='none';
+  localStorage.removeItem(DRAFT_KEY);
+  updateDirtyBanner();
+}
+
+function saveDraft(){
+  try{localStorage.setItem(DRAFT_KEY,JSON.stringify({state,when:Date.now(),baseSha:fileSha}));}catch(e){}
+}
+
+function hasDraft(){
+  try{
+    const d=JSON.parse(localStorage.getItem(DRAFT_KEY));
+    return d && d.state;
+  }catch(e){return false;}
+}
+
+function countDiffs(){
+  if(!loadedState) return 0;
+  return JSON.stringify(state)===JSON.stringify(loadedState)?0:1;
+}
+
+function updateDirtyBanner(){
+  const banner=document.getElementById('dirty-banner');
+  if(!loadedState){banner.style.display='none';return;}
+  const diff = JSON.stringify(state)!==JSON.stringify(loadedState);
+  if(diff){
+    banner.style.display='';
+    document.getElementById('dirty-summary').textContent='Vous avez des modifications qui n\'ont pas encore été publiées sur le site.';
+  } else {
+    banner.style.display='none';
+  }
+}
+
+function updateBadges(){
+  document.getElementById('b-contenu').textContent = (state.news?.length||0)+(state.events?.length||0)+(state.gallery?.length||0)+(state.testimonials?.length||0);
+  const s=state.sections||{};
+  document.getElementById('b-sections').textContent = SECTION_LIST.filter(x=>s[x.k]!==false).length+'/'+SECTION_LIST.length;
+}
+
+// ============================================================================
+//                                GITHUB API
+// ============================================================================
+let rateLimit = null;
+
+async function ghGetContent(){
+  const url=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/content.json?ref=${gh.branch}&_=${Date.now()}`;
   const token=getToken();
-  const url=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/content.json?ref=${gh.branch}`;
-  const res=await fetch(url,{headers:{'Accept':'application/vnd.github.v3+json',...(token?{Authorization:`token ${token}`}:{})}});
-  if(res.status===404) return null;
+  const res=await fetch(url,{headers:{'Accept':'application/vnd.github.v3+json',...(token?{Authorization:`token ${token}`}:{})},cache:'no-store'});
+  rateLimit = res.headers.get('x-ratelimit-remaining');
+  document.getElementById('k-rate').textContent = rateLimit||'—';
   if(res.status===401) throw new Error('Clé invalide ou expirée');
-  if(!res.ok) throw new Error('Erreur GitHub ('+res.status+')');
+  if(res.status===404) return null;
+  if(!res.ok) throw new Error('Lecture échouée ('+res.status+')');
   const data=await res.json();
   const bin=atob(data.content.replace(/\n/g,''));
   const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
   return {content:JSON.parse(new TextDecoder().decode(bytes)), sha:data.sha};
 }
 
-async function ghPutFile(json, sha){
+async function ghPutContent(obj, sha, message='Mise à jour du contenu'){
   const token=getToken();
   if(!token) throw new Error('Clé d\'accès manquante');
-  const bytes=new TextEncoder().encode(JSON.stringify(json,null,2));
+  const bytes=new TextEncoder().encode(JSON.stringify(obj,null,2));
   let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));
   const b64=btoa(bin);
   const url=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/content.json`;
   const res=await fetch(url,{
     method:'PUT',
     headers:{Authorization:`token ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-    body:JSON.stringify({message:`Mise à jour du contenu — ${new Date().toISOString().slice(0,19).replace('T',' ')}`,content:b64,sha:sha||undefined,branch:gh.branch})
+    body:JSON.stringify({message:`${message} — ${new Date().toISOString().slice(0,19).replace('T',' ')}`,content:b64,sha:sha||undefined,branch:gh.branch})
   });
-  if(!res.ok){const j=await res.json().catch(()=>({}));throw new Error(j.message||'Publication échouée ('+res.status+')');}
+  rateLimit = res.headers.get('x-ratelimit-remaining');
+  document.getElementById('k-rate').textContent = rateLimit||'—';
+  if(!res.ok){const j=await res.json().catch(()=>({}));throw new Error(j.message||'Écriture échouée ('+res.status+')');}
   return res.json();
 }
 
-// ============ STATUS ============
-function setStatus(kind,msg){
-  document.getElementById('status').innerHTML=`<span class="dot ${kind}"></span>${msg}`;
-  document.getElementById('btn-publish').disabled=(kind!=='ok');
+async function ghGetFile(path){
+  const url=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${encodeURIComponent(path)}?ref=${gh.branch}&_=${Date.now()}`;
+  const token=getToken();
+  const res=await fetch(url,{headers:{'Accept':'application/vnd.github.v3+json',...(token?{Authorization:`token ${token}`}:{})},cache:'no-store'});
+  if(res.status===404) return null;
+  if(!res.ok) throw new Error('Lecture échouée ('+res.status+')');
+  const data=await res.json();
+  const bin=atob(data.content.replace(/\n/g,''));
+  const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+  return {content:new TextDecoder().decode(bytes), sha:data.sha};
 }
 
-// ============ CONNECT / PUBLISH ============
+async function ghPutFile(path, text, sha, message='test'){
+  const token=getToken();
+  if(!token) throw new Error('Clé d\'accès manquante');
+  const bytes=new TextEncoder().encode(text);
+  let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));
+  const b64=btoa(bin);
+  const url=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${encodeURIComponent(path)}`;
+  const res=await fetch(url,{
+    method:'PUT',
+    headers:{Authorization:`token ${token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+    body:JSON.stringify({message:`${message} — ${new Date().toISOString().slice(0,19).replace('T',' ')}`,content:b64,sha:sha||undefined,branch:gh.branch})
+  });
+  if(!res.ok){const j=await res.json().catch(()=>({}));throw new Error(j.message||'Écriture échouée ('+res.status+')');}
+  return res.json();
+}
+
+// ============================================================================
+//                                CONNECT / PUBLISH
+// ============================================================================
 async function connect(){
   const tok=document.getElementById('gh-token').value.trim();
   if(tok) setToken(tok);
@@ -491,351 +659,568 @@ async function connect(){
     branch:document.getElementById('gh-branch').value.trim()||'main'
   };
   saveGhCfg();
-  setStatus('pulse','Connexion en cours…');
+  setStatus('pulse','Connexion…');
+  log(`Connexion à ${gh.owner}/${gh.repo}@${gh.branch}…`);
   try{
-    const r=await ghGetFile();
-    if(r){state={...DEFAULTS,...r.content};fileSha=r.sha;}
-    else{state=JSON.parse(JSON.stringify(DEFAULTS));fileSha=null;}
+    const r=await ghGetContent();
+    if(r){
+      loadedState = JSON.parse(JSON.stringify({...DEFAULTS, ...r.content}));
+      state = JSON.parse(JSON.stringify(loadedState));
+      fileSha = r.sha;
+      log(`Contenu chargé (${JSON.stringify(r.content).length} octets)`,'ok');
+    } else {
+      // File doesn't exist yet - initialize with defaults
+      loadedState = JSON.parse(JSON.stringify(DEFAULTS));
+      state = JSON.parse(JSON.stringify(DEFAULTS));
+      fileSha = null;
+      log('content.json absent — initialisation avec valeurs par défaut','warn');
+    }
     setStatus('ok','Connecté · prêt à éditer');
-    document.getElementById('onboarding').style.display='none';
-    document.getElementById('conn-card').style.display='none';
-    toast('Connecté ✓ Contenu chargé','ok');
+    document.querySelector('[data-tab="contenu"]').click();
+    toast('Connecté ✓','ok');
+
+    // Check for draft
+    const d=hasDraft() && localStorage.getItem(DRAFT_KEY);
+    if(d){
+      const parsed=JSON.parse(d);
+      if(parsed.baseSha===fileSha && JSON.stringify(parsed.state)!==JSON.stringify(loadedState)){
+        document.getElementById('draft-banner').style.display='';
+        document.getElementById('draft-summary').textContent = `Brouillon sauvé le ${new Date(parsed.when).toLocaleString('fr-BE')}.`;
+      }
+    }
     renderAll();
   }catch(err){
     setStatus('err','Problème : '+err.message);
+    log('Erreur connexion: '+err.message,'err');
     toast(err.message,'err');
   }
 }
 
 async function publish(){
-  const ok=await confirmDialog('Publier les modifications ?','Le site sera mis à jour publiquement dans environ 1 minute.','Publier');
-  if(!ok) return;
+  if(!loadedState){toast('Connectez-vous d\'abord','err');return;}
+
+  // Safety check: if user is about to delete a LOT of content
+  const before = loadedState;
+  const lost = [];
+  ['news','events','gallery','testimonials'].forEach(key=>{
+    const b=(before[key]||[]).length;
+    const a=(state[key]||[]).length;
+    if(a<b) lost.push(`${b-a} ${key}`);
+  });
+  if(lost.length){
+    const ok=await confirmDialog(
+      '⚠️ Suppression importante',
+      `Cette publication va supprimer : ${lost.join(', ')}.\n\nVoulez-vous continuer ?`,
+      'Oui, publier','btn-danger');
+    if(!ok) return;
+  } else {
+    const ok=await confirmDialog('Publier les modifications ?','Le site public sera mis à jour dans environ 1 minute.','Publier','btn-cta');
+    if(!ok) return;
+  }
+
   const btn=document.getElementById('btn-publish');
-  btn.disabled=true;const original=btn.innerHTML;btn.innerHTML='⏳ Publication…';
+  btn.disabled=true;const orig=btn.innerHTML;btn.innerHTML='⏳ Publication…';
   try{
-    const res=await ghPutFile(state,fileSha);
-    fileSha=res.content.sha;
+    const res=await ghPutContent(state, fileSha);
+    fileSha = res.content.sha;
+    loadedState = JSON.parse(JSON.stringify(state));
+    markClean();
+    log('Publié avec succès','ok');
     setStatus('ok',`Publié à ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`);
-    toast('Publié ✓ Le site est mis à jour','ok');
+    toast('Publié ✓ Le site se met à jour dans ~1 min','ok');
   }catch(err){
+    log('Erreur publication: '+err.message,'err');
     setStatus('err',err.message);
     toast(err.message,'err');
-  }finally{btn.disabled=false;btn.innerHTML=original;}
+  }finally{
+    btn.disabled=false;btn.innerHTML=orig;
+  }
 }
 
-// ============ BOOT ============
+async function discardChanges(){
+  if(!loadedState) return;
+  const ok=await confirmDialog('Annuler toutes les modifications ?','Tout ce qui n\'a pas été publié sera perdu.','Annuler','btn-danger');
+  if(!ok) return;
+  state = JSON.parse(JSON.stringify(loadedState));
+  markClean();
+  renderAll();
+  toast('Modifications annulées');
+}
+
+// ============================================================================
+//                                RICH TEXT EDITOR
+// ============================================================================
+function makeRTE(initial, placeholder, onChange){
+  const wrap=document.createElement('div');wrap.className='rte-wrap';
+  wrap.innerHTML=`
+    <div class="rte-tools">
+      <button type="button" data-cmd="bold" title="Gras"><strong>B</strong></button>
+      <button type="button" data-cmd="italic" title="Italique"><em>I</em></button>
+      <button type="button" data-cmd="createLink" title="Lien">🔗</button>
+      <button type="button" data-cmd="insertUnorderedList" title="Liste">• —</button>
+      <button type="button" data-cmd="removeFormat" title="Retirer la mise en forme">✕</button>
+    </div>
+    <div class="rte" contenteditable="true" data-placeholder="${escapeHtml(placeholder||'')}"></div>`;
+  const rte=wrap.querySelector('.rte');
+  rte.innerHTML=initial||'';
+  const emit=()=>{const v=rte.innerHTML.trim()==='<br>'?'':rte.innerHTML;onChange(v);};
+  rte.addEventListener('input',emit);
+  rte.addEventListener('blur',emit);
+  wrap.querySelectorAll('button[data-cmd]').forEach(b=>{
+    b.addEventListener('mousedown',e=>{e.preventDefault();});
+    b.addEventListener('click',e=>{
+      e.preventDefault();rte.focus();
+      const cmd=b.dataset.cmd;
+      if(cmd==='createLink'){
+        const url=prompt('Adresse du lien (https://… ou mailto:…)');
+        if(url) document.execCommand('createLink',false,url);
+      } else {
+        document.execCommand(cmd,false,null);
+      }
+      emit();
+    });
+  });
+  return wrap;
+}
+
+// ============================================================================
+//                                RENDER
+// ============================================================================
+function renderBanner(){
+  state.banner ||= {active:true,text:''};
+  const host=document.getElementById('banner-editor');
+  host.innerHTML='';
+  const rte=makeRTE(state.banner.text,'Ex: Fermeture du 20 au 28 juillet',v=>{
+    state.banner.text=v;
+    document.getElementById('banner-preview').innerHTML=v||'<em style="opacity:.5">Aucun message</em>';
+    markDirty();
+  });
+  host.appendChild(rte);
+  document.getElementById('banner-preview').innerHTML=state.banner.text||'<em style="opacity:.5">Aucun message</em>';
+  const tog=document.getElementById('banner-toggle');
+  tog.classList.toggle('on', state.banner.active!==false);
+  document.getElementById('banner-status').textContent=state.banner.active!==false?'AFFICHÉ':'MASQUÉ';
+}
+
+function renderNews(){
+  const list=document.getElementById('news-list');list.innerHTML='';
+  if(!state.news?.length){
+    list.innerHTML='<p class="text-sm text-[#9a8f83] italic py-4">Aucune actualité. Cliquez sur « + Ajouter ».</p>';
+    return;
+  }
+  state.news.forEach((n,i)=>{
+    const r=document.createElement('div');r.className='item';
+    const body=document.createElement('div');
+    body.innerHTML=`
+      <div class="item-row" style="grid-template-columns:180px 140px 1fr;">
+        <div><span class="fl">Date</span><input type="date" data-n-k="date" value="${n.date||''}"/></div>
+        <div><span class="fl">Étiquette</span><input data-n-k="tag" value="${escapeHtml(n.tag||'')}" placeholder="Info"/></div>
+        <div><span class="fl">Titre</span><input data-n-k="title" value="${escapeHtml(n.title||'')}" placeholder="Titre de l'actualité"/></div>
+      </div>
+      <div style="margin-top:.75rem"><span class="fl">Contenu</span><div class="n-body"></div></div>
+      <div class="item-actions">
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1">↑</button>
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1">↓</button>
+        <button class="btn btn-danger btn-sm" data-act="del">🗑 Supprimer</button>
+      </div>`;
+    r.appendChild(body);
+    body.querySelectorAll('[data-n-k]').forEach(inp=>{
+      inp.addEventListener('input',()=>{n[inp.dataset.nK]=inp.value;markDirty();});
+    });
+    const rte=makeRTE(n.body||'','Contenu de l\'actualité…',v=>{n.body=v;markDirty();});
+    body.querySelector('.n-body').appendChild(rte);
+    body.querySelectorAll('button[data-act]').forEach(b=>{
+      b.addEventListener('click',async()=>{
+        if(b.dataset.act==='del'){
+          const ok=await confirmDialog('Supprimer cette actualité ?','',('Supprimer'),'btn-danger');
+          if(!ok) return;
+          state.news.splice(i,1);markDirty();renderNews();
+        } else if(b.dataset.act==='move'){
+          const d=+b.dataset.dir,j=i+d;
+          if(j<0||j>=state.news.length) return;
+          [state.news[i],state.news[j]]=[state.news[j],state.news[i]];
+          markDirty();renderNews();
+        }
+      });
+    });
+    list.appendChild(r);
+  });
+}
+
+function renderEvents(){
+  const list=document.getElementById('events-list');list.innerHTML='';
+  if(!state.events?.length){
+    list.innerHTML='<p class="text-sm text-[#9a8f83] italic py-4">Aucun événement. Cliquez sur « + Ajouter ».</p>';
+    return;
+  }
+  state.events.forEach((e,i)=>{
+    const r=document.createElement('div');r.className='item';
+    r.innerHTML=`
+      <div class="item-row" style="grid-template-columns:180px 1fr 150px 160px;">
+        <div><span class="fl">Date</span><input type="date" data-e-k="date" value="${e.date||''}"/></div>
+        <div><span class="fl">Titre</span><input data-e-k="title" value="${escapeHtml(e.title||'')}" placeholder="Nom de l'événement"/></div>
+        <div><span class="fl">Type</span>
+          <select data-e-k="type">${['Cours','Essai','Stage','Examen','Compétition'].map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}</select>
+        </div>
+        <div><span class="fl">Lieu</span><input data-e-k="loc" value="${escapeHtml(e.loc||'')}" placeholder="Dojo"/></div>
+      </div>
+      <div class="item-actions"><button class="btn btn-danger btn-sm" data-act="del">🗑 Supprimer</button></div>`;
+    r.querySelectorAll('[data-e-k]').forEach(inp=>{
+      inp.addEventListener('input',()=>{e[inp.dataset.eK]=inp.value;markDirty();});
+    });
+    r.querySelector('button[data-act="del"]').addEventListener('click',async()=>{
+      const ok=await confirmDialog('Supprimer cet événement ?','','Supprimer','btn-danger');
+      if(!ok) return;
+      state.events.splice(i,1);markDirty();renderEvents();
+    });
+    list.appendChild(r);
+  });
+}
+
+function renderGallery(){
+  const list=document.getElementById('gallery-list');list.innerHTML='';
+  if(!state.gallery?.length){
+    list.innerHTML='<p class="text-sm text-[#9a8f83] italic py-4">Aucune photo. Cliquez sur « + Ajouter ».</p>';
+    return;
+  }
+  state.gallery.forEach((it,i)=>{
+    const r=document.createElement('div');r.className='g-row';
+    r.innerHTML=`
+      <img src="${it.img||''}" alt=""/>
+      <div class="g-row-body">
+        <div><span class="fl">Étiquette</span><input data-g-k="label" value="${escapeHtml(it.label||'')}"/></div>
+        <div><span class="fl">Titre</span><input data-g-k="title" value="${escapeHtml(it.title||'')}"/></div>
+      </div>
+      <div class="flex gap-1 flex-col md:flex-row">
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" title="Monter">↑</button>
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  title="Descendre">↓</button>
+        <button class="btn btn-danger btn-sm" data-act="del" title="Supprimer">🗑</button>
+      </div>`;
+    r.querySelectorAll('[data-g-k]').forEach(inp=>{
+      inp.addEventListener('input',()=>{it[inp.dataset.gK]=inp.value;markDirty();});
+    });
+    r.querySelectorAll('button[data-act]').forEach(b=>{
+      b.addEventListener('click',async()=>{
+        if(b.dataset.act==='del'){
+          const ok=await confirmDialog('Supprimer cette photo ?','','Supprimer','btn-danger');
+          if(!ok) return;
+          state.gallery.splice(i,1);markDirty();renderGallery();
+        } else if(b.dataset.act==='move'){
+          const d=+b.dataset.dir,j=i+d;
+          if(j<0||j>=state.gallery.length) return;
+          [state.gallery[i],state.gallery[j]]=[state.gallery[j],state.gallery[i]];
+          markDirty();renderGallery();
+        }
+      });
+    });
+    list.appendChild(r);
+  });
+}
+
+function renderTm(){
+  const list=document.getElementById('tm-list');list.innerHTML='';
+  if(!state.testimonials?.length){
+    list.innerHTML='<p class="text-sm text-[#9a8f83] italic py-4">Aucun témoignage.</p>';
+    return;
+  }
+  state.testimonials.forEach((t,i)=>{
+    const r=document.createElement('div');r.className='item';
+    const body=document.createElement('div');
+    body.innerHTML=`
+      <div class="item-row" style="grid-template-columns:1fr 1fr;">
+        <div><span class="fl">Auteur</span><input data-t-k="author" value="${escapeHtml(t.author||'')}" placeholder="Prénom N."/></div>
+        <div><span class="fl">Rôle / Relation</span><input data-t-k="role" value="${escapeHtml(t.role||'')}" placeholder="Ex: Maman de Léo, 8 ans"/></div>
+      </div>
+      <div style="margin-top:.75rem"><span class="fl">Témoignage</span><div class="t-text"></div></div>
+      <div class="item-actions">
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1">↑</button>
+        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1">↓</button>
+        <button class="btn btn-danger btn-sm" data-act="del">🗑 Supprimer</button>
+      </div>`;
+    r.appendChild(body);
+    body.querySelectorAll('[data-t-k]').forEach(inp=>{
+      inp.addEventListener('input',()=>{t[inp.dataset.tK]=inp.value;markDirty();});
+    });
+    const rte=makeRTE(t.text||'','Citation du parent ou du judoka…',v=>{t.text=v;markDirty();});
+    body.querySelector('.t-text').appendChild(rte);
+    body.querySelectorAll('button[data-act]').forEach(b=>{
+      b.addEventListener('click',async()=>{
+        if(b.dataset.act==='del'){
+          const ok=await confirmDialog('Supprimer ce témoignage ?','','Supprimer','btn-danger');
+          if(!ok) return;
+          state.testimonials.splice(i,1);markDirty();renderTm();
+        } else if(b.dataset.act==='move'){
+          const d=+b.dataset.dir,j=i+d;
+          if(j<0||j>=state.testimonials.length) return;
+          [state.testimonials[i],state.testimonials[j]]=[state.testimonials[j],state.testimonials[i]];
+          markDirty();renderTm();
+        }
+      });
+    });
+    list.appendChild(r);
+  });
+}
+
+function renderSections(){
+  const grid=document.getElementById('sections-grid');grid.innerHTML='';
+  state.sections ||= {};
+  SECTION_LIST.forEach(s=>{
+    const on = state.sections[s.k] !== false;
+    const row=document.createElement('div');
+    row.className='flex items-center justify-between gap-3 p-3 border border-sumi-900/8 rounded-xl bg-paper-100';
+    row.innerHTML=`
+      <div class="min-w-0">
+        <div class="font-medium text-sm">${escapeHtml(s.name)}</div>
+        <div class="text-xs text-[#7a6f64]">${escapeHtml(s.desc)}</div>
+      </div>
+      <button class="toggle ${on?'on':''}" data-sec="${s.k}" role="switch"></button>`;
+    row.querySelector('.toggle').addEventListener('click',()=>{
+      state.sections[s.k] = state.sections[s.k]===false;
+      renderSections();markDirty();
+    });
+    grid.appendChild(row);
+  });
+}
+
+function renderTexts(){
+  const root=document.getElementById('texts-accordion');
+  root.innerHTML='';
+  state.texts ||= {};
+  TEXT_SCHEMA.forEach(g=>{
+    state.texts[g.key] ||= {};
+    const d=document.createElement('details');d.className='acc';
+    d.innerHTML=`<summary>${escapeHtml(g.title)}<span class="chev">▼</span></summary><div class="acc-body"></div>`;
+    const body=d.querySelector('.acc-body');
+    g.fields.forEach(f=>{
+      const w=document.createElement('div');
+      const lbl=document.createElement('span');lbl.className='fl';lbl.textContent=f.label;
+      w.appendChild(lbl);
+      if(f.type==='richtext'){
+        const rte=makeRTE(state.texts[g.key][f.k]||'', f.ph, v=>{
+          state.texts[g.key][f.k]=v;markDirty();
+        });
+        w.appendChild(rte);
+      } else {
+        const inp=document.createElement('input');
+        inp.type='text';inp.placeholder=f.ph||'';inp.value=state.texts[g.key][f.k]||'';
+        inp.addEventListener('input',()=>{state.texts[g.key][f.k]=inp.value;markDirty();});
+        w.appendChild(inp);
+      }
+      if(f.ph){const h=document.createElement('div');h.className='hint';h.textContent='Par défaut : '+f.ph;w.appendChild(h);}
+      body.appendChild(w);
+    });
+    root.appendChild(d);
+  });
+}
+
+function renderAll(){
+  renderBanner();renderNews();renderEvents();renderGallery();renderTm();
+  renderSections();renderTexts();
+  updateBadges();
+  updateDirtyBanner();
+}
+
+// ============================================================================
+//                                TABS
+// ============================================================================
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+// ============================================================================
+//                                ADD ACTIONS
+// ============================================================================
+document.getElementById('banner-toggle').addEventListener('click',()=>{
+  state.banner ||= {active:true,text:''};
+  state.banner.active = state.banner.active===false;
+  const tog=document.getElementById('banner-toggle');
+  tog.classList.toggle('on', state.banner.active!==false);
+  document.getElementById('banner-status').textContent=state.banner.active!==false?'AFFICHÉ':'MASQUÉ';
+  markDirty();
+});
+document.getElementById('btn-add-news').addEventListener('click',()=>{
+  state.news ||= [];
+  state.news.unshift({date:new Date().toISOString().slice(0,10),tag:'Info',title:'',body:''});
+  markDirty();renderNews();
+});
+document.getElementById('btn-add-event').addEventListener('click',()=>{
+  state.events ||= [];
+  state.events.push({date:new Date().toISOString().slice(0,10),title:'',type:'Stage',loc:'Dojo'});
+  markDirty();renderEvents();
+});
+document.getElementById('btn-add-tm').addEventListener('click',()=>{
+  state.testimonials ||= [];
+  state.testimonials.push({author:'',role:'',text:''});
+  markDirty();renderTm();
+});
+const fileInput=document.getElementById('file-input');
+document.getElementById('btn-add-image').addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',async e=>{
+  const files=[...e.target.files];let ok=0;
+  for(const f of files){
+    if(f.size>3*1024*1024){toast(`${f.name} trop lourde (max 3 Mo)`,'err');continue;}
+    const dataURL=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);});
+    state.gallery ||= [];
+    state.gallery.push({img:dataURL,label:String(state.gallery.length+1).padStart(2,'0')+' · '+f.name.replace(/\.[^.]+$/,'').toUpperCase().slice(0,20),title:f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ')});
+    ok++;
+  }
+  fileInput.value='';
+  if(ok){markDirty();renderGallery();toast(ok+' photo(s) ajoutée(s)','ok');}
+});
+
+// ============================================================================
+//                                CONNECT / PUBLISH BUTTONS
+// ============================================================================
+document.getElementById('btn-connect').addEventListener('click',connect);
+document.getElementById('btn-publish').addEventListener('click',publish);
+document.getElementById('btn-discard').addEventListener('click',discardChanges);
+document.getElementById('btn-reload').addEventListener('click',async()=>{
+  const ok=dirty?await confirmDialog('Recharger ?','Les modifications non publiées seront perdues.','Recharger','btn-danger'):true;
+  if(ok) connect();
+});
+document.getElementById('btn-forget').addEventListener('click',async()=>{
+  const ok=await confirmDialog('Oublier la clé ?','Vous devrez la coller à nouveau pour publier.','Oublier','btn-danger');
+  if(!ok) return;
+  setToken('');document.getElementById('gh-token').value='';
+  setStatus('','Clé oubliée');toast('Clé supprimée');
+});
+
+// ============================================================================
+//                                DRAFT RECOVERY
+// ============================================================================
+document.getElementById('btn-draft-restore').addEventListener('click',()=>{
+  try{
+    const d=JSON.parse(localStorage.getItem(DRAFT_KEY));
+    if(!d) return;
+    state=d.state;
+    markDirty();renderAll();
+    document.getElementById('draft-banner').style.display='none';
+    toast('Brouillon restauré','ok');
+  }catch(e){toast('Erreur lecture brouillon','err');}
+});
+document.getElementById('btn-draft-ignore').addEventListener('click',()=>{
+  localStorage.removeItem(DRAFT_KEY);
+  document.getElementById('draft-banner').style.display='none';
+});
+
+// ============================================================================
+//                                SECURITY TESTS
+// ============================================================================
+async function testRead(){
+  log('Test lecture : fetch hello-test.txt…');
+  try{
+    const r=await ghGetFile('hello-test.txt');
+    if(!r){log('hello-test.txt absent — créez-le via « Tester l\'écriture » d\'abord','warn');return;}
+    log(`Lecture OK (${r.content.length} octets)`,'ok');
+    log('Contenu: '+r.content.slice(0,200),'info');
+  }catch(err){log('Erreur lecture: '+err.message,'err');}
+}
+
+async function testWrite(){
+  log('Test écriture : upload hello-test.txt…');
+  try{
+    // Get SHA if file exists
+    let sha=null;
+    try{const r=await ghGetFile('hello-test.txt');if(r) sha=r.sha;}catch(e){}
+    const content = `Test depuis l'admin\n`+
+                    `Date: ${new Date().toISOString()}\n`+
+                    `Utilisateur GitHub: (token actif)\n`+
+                    `Dépôt: ${gh.owner}/${gh.repo}@${gh.branch}\n\n`+
+                    `Si vous voyez ce fichier via « Tester la lecture », ` +
+                    `l'écriture et la lecture sont fonctionnelles.`;
+    await ghPutFile('hello-test.txt', content, sha, 'Admin test file');
+    log('Écriture OK — hello-test.txt créé/mis à jour','ok');
+  }catch(err){log('Erreur écriture: '+err.message,'err');}
+}
+
+async function testBoth(){
+  log('--- Test complet ---','info');
+  await testWrite();
+  await new Promise(r=>setTimeout(r,600));
+  await testRead();
+  log('--- Fin du test ---','info');
+}
+
+document.getElementById('btn-test-read').addEventListener('click',testRead);
+document.getElementById('btn-test-write').addEventListener('click',testWrite);
+document.getElementById('btn-test-both').addEventListener('click',testBoth);
+
+// ============================================================================
+//                                EXPORT / IMPORT / ZIP
+// ============================================================================
+document.getElementById('btn-export').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`jca-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
+  toast('Backup téléchargé','ok');
+});
+document.getElementById('btn-import').addEventListener('click',()=>document.getElementById('import-input').click());
+document.getElementById('import-input').addEventListener('change',async e=>{
+  const f=e.target.files[0];if(!f) return;
+  try{
+    state={...DEFAULTS,...JSON.parse(await f.text())};
+    markDirty();renderAll();
+    toast('Données importées · pensez à publier','ok');
+  }catch(err){toast('Fichier invalide','err');}
+});
+document.getElementById('btn-zip').addEventListener('click',async()=>{
+  const btn=document.getElementById('btn-zip');const o=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML='⏳';
+  try{
+    const zip=new JSZip();
+    const files=['index.html','admin.html','logo2.png','dojo.jpeg','judoclubanderlecht/dojo-hall.jpg','judoclubanderlecht/kids-judo.jpg','judoclubanderlecht/judo-training.jpg','judoclubanderlecht/favicon.png'];
+    for(const p of files){try{const r=await fetch(p+'?v='+Date.now(),{cache:'no-store'});if(r.ok) zip.file(p, await r.blob());}catch(e){}}
+    zip.file('content.json', JSON.stringify(state,null,2));
+    const blob=await zip.generateAsync({type:'blob'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`jca-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
+    toast('ZIP téléchargé ✓','ok');
+  }catch(err){toast('Erreur','err');}
+  finally{btn.disabled=false;btn.innerHTML=o;}
+});
+
+// Ctrl+S to publish
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(!document.getElementById('btn-publish').disabled&&dirty)publish();}});
+
+// Warn before leaving with unsaved changes
+addEventListener('beforeunload',e=>{
+  if(dirty){e.preventDefault();e.returnValue='';}
+});
+
+// ============================================================================
+//                                BOOT
+// ============================================================================
 async function boot(){
-  // Prefill advanced
   document.getElementById('gh-owner').value=gh.owner;
   document.getElementById('gh-repo').value=gh.repo;
   document.getElementById('gh-branch').value=gh.branch;
+  document.getElementById('k-repo').textContent = `${gh.owner}/${gh.repo}`;
 
   const tok=getToken();
   if(tok){
     document.getElementById('gh-token').value=tok;
     await connect();
-  }else{
-    // Read-only preview from raw content.json
+  } else {
+    setStatus('warn','Pas de clé — cliquez sur l\'onglet « Sécurité » pour vous connecter');
+    // Read-only preview
     try{
       const r=await fetch('content.json?v='+Date.now(),{cache:'no-store'});
-      if(r.ok){state={...DEFAULTS,...await r.json()};}
+      if(r.ok){
+        const c=await r.json();
+        loadedState = JSON.parse(JSON.stringify({...DEFAULTS,...c}));
+        state = JSON.parse(JSON.stringify(loadedState));
+      }
     }catch(e){}
     renderAll();
+    document.querySelector('[data-tab="securite"]').click();
   }
 }
 
-// ============ BANNER ============
-function renderBanner(){
-  const rte=document.getElementById('banner-rte');
-  const bp=document.getElementById('banner-preview');
-  const tog=document.getElementById('banner-toggle');
-  const bs=document.getElementById('banner-status');
-  if(document.activeElement!==rte) rte.innerHTML=state.banner?.text||'';
-  bp.innerHTML=state.banner?.text||'<em style="opacity:.5">Aucun message</em>';
-  tog.classList.toggle('on',!!state.banner?.active);
-  bs.textContent=state.banner?.active?'AFFICHÉ':'MASQUÉ';
-}
-document.getElementById('banner-rte').addEventListener('input',e=>{
-  state.banner ||={active:true,text:''};
-  state.banner.text=e.target.innerHTML.trim();
-  document.getElementById('banner-preview').innerHTML=state.banner.text||'<em style="opacity:.5">Aucun message</em>';
-});
-document.getElementById('banner-toggle').addEventListener('click',()=>{
-  state.banner ||={active:true,text:''};
-  state.banner.active=!state.banner.active;
-  renderBanner();
-});
-
-// Banner RTE toolbar
-document.querySelectorAll('.rte-tools button[data-cmd]').forEach(b=>{
-  b.addEventListener('click',e=>{
-    e.preventDefault();
-    const cmd=b.dataset.cmd;
-    if(cmd==='createLink'){
-      const url=prompt('Adresse du lien (https://…)');
-      if(url) document.execCommand('createLink',false,url);
-    }else{
-      document.execCommand(cmd,false,null);
-    }
-    document.getElementById('banner-rte').focus();
-    // Trigger update
-    const ev=new Event('input');document.getElementById('banner-rte').dispatchEvent(ev);
-  });
-});
-
-// ============ NEWS ============
-function renderNews(){
-  const list=document.getElementById('news-list');list.innerHTML='';
-  if(!state.news?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucune actualité. Cliquez sur « + Ajouter une actu ».</p>';return;}
-  state.news.forEach((n,i)=>{
-    const r=document.createElement('div');r.className='item';
-    r.innerHTML=`
-      <div class="item-row" style="grid-template-columns:180px 140px 1fr;">
-        <div><span class="fl">Date</span><input type="date" data-l="news" data-i="${i}" data-k="date" value="${n.date||''}"/></div>
-        <div><span class="fl">Étiquette</span><input data-l="news" data-i="${i}" data-k="tag" value="${escape(n.tag)}" placeholder="Ex: Info"/></div>
-        <div><span class="fl">Titre</span><input data-l="news" data-i="${i}" data-k="title" value="${escape(n.title)}"/></div>
-      </div>
-      <div style="margin-top:.9rem">
-        <span class="fl">Texte</span>
-        <textarea rows="2" data-l="news" data-i="${i}" data-k="body" placeholder="Contenu de l'actualité…">${n.body||''}</textarea>
-      </div>
-      <div class="item-actions">
-        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" data-l="news" data-i="${i}">↑</button>
-        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  data-l="news" data-i="${i}">↓</button>
-        <button class="btn btn-danger btn-sm" data-act="del" data-l="news" data-i="${i}">Supprimer</button>
-      </div>`;
-    list.appendChild(r);
-  });
-  bind(list);
-}
-
-// ============ EVENTS ============
-function renderEvents(){
-  const list=document.getElementById('events-list');list.innerHTML='';
-  if(!state.events?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucun événement. Cliquez sur « + Nouvel événement ».</p>';return;}
-  [...state.events].sort((a,b)=>(a.date||'').localeCompare(b.date||'')).forEach((e,sortedI)=>{
-    const i=state.events.indexOf(e);
-    const r=document.createElement('div');r.className='item';
-    r.innerHTML=`
-      <div class="item-row" style="grid-template-columns:180px 1fr 160px 160px;">
-        <div><span class="fl">Date</span><input type="date" data-l="events" data-i="${i}" data-k="date" value="${e.date||''}"/></div>
-        <div><span class="fl">Titre</span><input data-l="events" data-i="${i}" data-k="title" value="${escape(e.title)}"/></div>
-        <div><span class="fl">Type</span>
-          <select data-l="events" data-i="${i}" data-k="type">
-            ${['Cours','Essai','Stage','Examen','Compétition'].map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}
-          </select></div>
-        <div><span class="fl">Lieu</span><input data-l="events" data-i="${i}" data-k="loc" value="${escape(e.loc)}" placeholder="Dojo"/></div>
-      </div>
-      <div class="item-actions"><button class="btn btn-danger btn-sm" data-act="del" data-l="events" data-i="${i}">Supprimer</button></div>`;
-    list.appendChild(r);
-  });
-  bind(list);
-}
-
-// ============ GALLERY ============
-function renderGallery(){
-  const list=document.getElementById('gallery-list');list.innerHTML='';
-  if(!state.gallery?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucune photo. Cliquez sur « + Ajouter une photo ».</p>';return;}
-  state.gallery.forEach((it,i)=>{
-    const r=document.createElement('div');r.className='g-row';
-    r.innerHTML=`
-      <img src="${it.img}" alt=""/>
-      <div><span class="fl">Étiquette</span><input data-l="gallery" data-i="${i}" data-k="label" value="${escape(it.label)}"/></div>
-      <div><span class="fl">Titre</span><input data-l="gallery" data-i="${i}" data-k="title" value="${escape(it.title)}"/></div>
-      <div class="flex gap-1">
-        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" data-l="gallery" data-i="${i}" title="Monter">↑</button>
-        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  data-l="gallery" data-i="${i}" title="Descendre">↓</button>
-        <button class="btn btn-danger btn-sm" data-act="del" data-l="gallery" data-i="${i}" title="Supprimer">✕</button>
-      </div>`;
-    list.appendChild(r);
-  });
-  bind(list);
-}
-
-// ============ TESTIMONIALS ============
-function renderTm(){
-  const list=document.getElementById('tm-list');list.innerHTML='';
-  if(!state.testimonials?.length){list.innerHTML='<p class="text-sm text-[#9a8f83] italic">Aucun témoignage.</p>';return;}
-  state.testimonials.forEach((t,i)=>{
-    const r=document.createElement('div');r.className='item';
-    r.innerHTML=`
-      <div class="item-row" style="grid-template-columns:1fr 1fr;">
-        <div><span class="fl">Auteur</span><input data-l="testimonials" data-i="${i}" data-k="author" value="${escape(t.author)}" placeholder="Prénom N."/></div>
-        <div><span class="fl">Rôle / Relation</span><input data-l="testimonials" data-i="${i}" data-k="role" value="${escape(t.role)}" placeholder="Ex: Maman de Léo, 8 ans"/></div>
-      </div>
-      <div style="margin-top:.9rem"><span class="fl">Témoignage</span>
-        <textarea rows="3" data-l="testimonials" data-i="${i}" data-k="text" placeholder="Citation du parent ou du judoka…">${t.text||''}</textarea>
-      </div>
-      <div class="item-actions">
-        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="-1" data-l="testimonials" data-i="${i}">↑</button>
-        <button class="btn btn-ghost btn-sm" data-act="move" data-dir="1"  data-l="testimonials" data-i="${i}">↓</button>
-        <button class="btn btn-danger btn-sm" data-act="del" data-l="testimonials" data-i="${i}">Supprimer</button>
-      </div>`;
-    list.appendChild(r);
-  });
-  bind(list);
-}
-
-// ============ TEXTS (site-wide) ============
-function renderTexts(){
-  const root=document.getElementById('texts-accordion');
-  if(!root) return;
-  state.texts ||= {};
-  root.innerHTML='';
-  TEXT_SCHEMA.forEach(group=>{
-    state.texts[group.key] ||= {};
-    const det=document.createElement('details');
-    det.className='item';det.style.padding='0';
-    const sum=document.createElement('summary');
-    sum.style.cssText='cursor:pointer;list-style:none;padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;font-weight:500;';
-    sum.innerHTML=`<span>${group.title}</span><span style="font-size:.75rem;color:#9a8f83;">▼</span>`;
-    det.appendChild(sum);
-    const body=document.createElement('div');body.style.cssText='padding:0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:.9rem;';
-    group.fields.forEach(f=>{
-      const wrap=document.createElement('div');
-      const lbl=document.createElement('span');lbl.className='fl';lbl.textContent=f.label;
-      let ctrl;
-      if(f.type==='textarea' || f.type==='html'){
-        ctrl=document.createElement('textarea');ctrl.rows=f.type==='html'?2:3;
-      } else {
-        ctrl=document.createElement('input');ctrl.type='text';
-      }
-      ctrl.placeholder=f.placeholder||'';
-      ctrl.value=state.texts[group.key][f.k]||'';
-      ctrl.addEventListener('input',()=>{
-        state.texts[group.key][f.k]=ctrl.value;
-      });
-      wrap.appendChild(lbl);wrap.appendChild(ctrl);
-      body.appendChild(wrap);
-    });
-    det.appendChild(body);
-    root.appendChild(det);
-  });
-}
-
-// ============ SECTIONS TOGGLES ============
-function renderSections(){
-  const grid=document.getElementById('sections-grid');
-  if(!grid) return;
-  state.sections ||= {};
-  grid.innerHTML='';
-  SECTION_LIST.forEach(s=>{
-    const on = state.sections[s.k] !== false; // default true
-    const row=document.createElement('div');
-    row.className='flex items-center justify-between gap-3 p-3 border border-sumi-900/8 rounded-xl bg-paper-100';
-    row.innerHTML=`
-      <div class="min-w-0">
-        <div class="font-medium text-sm">${s.name}</div>
-        <div class="text-xs text-[#7a6f64]">${s.desc}</div>
-      </div>
-      <div class="toggle ${on?'on':''}" data-sec="${s.k}" role="switch"></div>`;
-    grid.appendChild(row);
-  });
-  grid.querySelectorAll('.toggle[data-sec]').forEach(t=>{
-    t.addEventListener('click',()=>{
-      const k=t.dataset.sec;
-      state.sections[k] = state.sections[k]===false;
-      t.classList.toggle('on', state.sections[k]!==false);
-    });
-  });
-}
-
-function renderAll(){renderSections();renderTexts();renderBanner();renderNews();renderEvents();renderGallery();renderTm();}
-
-function escape(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
-
-// ============ INPUT BINDING ============
-function bind(scope){
-  scope.querySelectorAll('[data-l]').forEach(el=>{
-    el.addEventListener('input',()=>{
-      const L=el.dataset.l,i=+el.dataset.i,k=el.dataset.k;
-      state[L][i][k]=el.value;
-    });
-  });
-  scope.querySelectorAll('button[data-act]').forEach(b=>{
-    b.addEventListener('click',async ()=>{
-      const L=b.dataset.l,i=+b.dataset.i,a=b.dataset.act;
-      if(a==='del'){
-        const ok=await confirmDialog('Supprimer cet élément ?','Vous pouvez toujours recharger depuis GitHub si erreur.','Supprimer');
-        if(!ok) return;
-        state[L].splice(i,1);
-      }
-      if(a==='move'){const d=+b.dataset.dir;const j=i+d;if(j<0||j>=state[L].length) return;[state[L][i],state[L][j]]=[state[L][j],state[L][i]];}
-      renderAll();
-    });
-  });
-}
-
-// ============ ADD ACTIONS ============
-document.getElementById('btn-add-news').addEventListener('click',()=>{
-  state.news ||=[];state.news.unshift({date:new Date().toISOString().slice(0,10),tag:'Info',title:'',body:''});renderNews();
-});
-document.getElementById('btn-add-event').addEventListener('click',()=>{
-  state.events ||=[];state.events.push({date:new Date().toISOString().slice(0,10),title:'',type:'Stage',loc:'Dojo'});renderEvents();
-});
-document.getElementById('btn-add-tm').addEventListener('click',()=>{
-  state.testimonials ||=[];state.testimonials.push({author:'',role:'',text:''});renderTm();
-});
-const fileInput=document.getElementById('file-input');
-document.getElementById('btn-add-image').addEventListener('click',()=>fileInput.click());
-fileInput.addEventListener('change',async e=>{
-  const files=[...e.target.files];
-  for(const f of files){
-    if(f.size>3*1024*1024){toast(`${f.name} trop lourde (max 3 Mo)`,'err');continue;}
-    const dataURL=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);});
-    state.gallery.push({img:dataURL,label:String((state.gallery?.length||0)+1).padStart(2,'0')+' · '+f.name.replace(/\.[^.]+$/,'').toUpperCase().slice(0,20),title:f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ')});
-  }
-  fileInput.value='';renderGallery();
-  toast(files.length+' photo(s) ajoutée(s) · pensez à publier');
-});
-
-// ============ CONNECT / PUBLISH BUTTONS ============
-document.getElementById('btn-connect').addEventListener('click',connect);
-document.getElementById('btn-publish').addEventListener('click',publish);
-document.getElementById('btn-reload').addEventListener('click',async ()=>{
-  const ok=await confirmDialog('Recharger depuis GitHub ?','Les modifications non publiées seront perdues.','Recharger');
-  if(ok) connect();
-});
-document.getElementById('btn-forget').addEventListener('click',async ()=>{
-  const ok=await confirmDialog('Oublier la clé ?','Vous devrez la recoller pour publier.','Oublier');
-  if(!ok) return;
-  setToken('');document.getElementById('gh-token').value='';
-  setStatus('','Clé oubliée');toast('Clé supprimée');
-});
-addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(!document.getElementById('btn-publish').disabled)publish();}});
-
-// ============ EXPORT / IMPORT ============
-document.getElementById('btn-export').addEventListener('click',()=>{
-  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=`jca-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
-  toast('Backup téléchargé');
-});
-document.getElementById('btn-import').addEventListener('click',()=>document.getElementById('import-input').click());
-document.getElementById('import-input').addEventListener('change',async e=>{
-  const f=e.target.files[0];if(!f) return;
-  try{state={...DEFAULTS,...JSON.parse(await f.text())};renderAll();toast('Données importées · pensez à publier');}
-  catch(err){toast('Fichier invalide','err');}
-});
-
-// ============ ZIP ============
-document.getElementById('btn-zip').addEventListener('click', async ()=>{
-  const btn=document.getElementById('btn-zip');const orig=btn.innerHTML;
-  btn.disabled=true;btn.innerHTML='⏳ ZIP…';
-  try{
-    const zip=new JSZip();
-    const files=['index.html','admin.html','logo2.png','logo.png','dojo.jpeg','judoclubanderlecht/dojo-hall.jpg','judoclubanderlecht/kids-judo.jpg','judoclubanderlecht/judo-training.jpg','judoclubanderlecht/favicon.png'];
-    for(const p of files){try{const r=await fetch(p+'?v='+Date.now(),{cache:'no-store'});if(r.ok) zip.file(p, await r.blob());}catch(e){}}
-    zip.file('content.json', JSON.stringify(state,null,2));
-    const blob=await zip.generateAsync({type:'blob'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-    a.download=`judoclubanderlecht-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
-    toast('ZIP téléchargé ✓','ok');
-  }catch(err){toast('Erreur ZIP','err');}
-  finally{btn.disabled=false;btn.innerHTML=orig;}
-});
-
-// Kick off
 boot();
 </script>
 </body>
