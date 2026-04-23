@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0002",
-    "publishedAt": "2026-04-23T17:02:07.296Z",
+    "version": "1.0003",
+    "publishedAt": "2026-04-23T19:17:19.292Z",
     "history": [
+      {
+        "version": "1.0003",
+        "date": "2026-04-23T19:17:19.292Z",
+        "summary": "Aucun changement détecté"
+      },
       {
         "version": "1.0002",
         "date": "2026-04-23T17:02:07.296Z",
@@ -33,7 +38,7 @@
     "preInscription": false
   },
   "forms": {
-    "scriptUrl": "",
+    "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/api/send",
     "recipientEmail": "secretariat.judoclubanderlecht@gmail.com"
   },
   "socials": {
