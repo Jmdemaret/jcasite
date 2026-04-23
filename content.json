@@ -1,6 +1,6 @@
 {
   "sections": {
-    "club": false,
+    "club": true,
     "cours": true,
     "tarifs": true,
     "actu": true,
