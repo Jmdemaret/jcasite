@@ -338,6 +338,15 @@
   }
   .recenter-btn:hover{background:var(--hinomaru);color:#fff;}
 
+  /* Sponsors */
+  .sponsor-grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:3rem 5rem;}
+  .sponsor-link{display:block;transition:transform .3s ease;}
+  .sponsor-link:hover{transform:translateY(-3px);}
+  .sponsor-link img{height:90px;width:auto;max-width:240px;object-fit:contain;display:block;
+    filter:grayscale(100%) opacity(.6);transition:filter .35s ease;}
+  .sponsor-link:hover img{filter:grayscale(0) opacity(1);}
+  @media(max-width:600px){.sponsor-grid{gap:2rem;} .sponsor-link img{height:70px;}}
+
   /* Transport */
   .t-card{background:#fff;padding:2rem;border-radius:20px;border:1px solid rgba(29,25,22,.06);transition:all .4s cubic-bezier(.2,.8,.2,1);}
   .t-card:hover{transform:translateY(-6px);box-shadow:0 30px 50px -25px rgba(29,25,22,.15);border-color:rgba(200,16,46,.25);}
@@ -1020,6 +1029,25 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================================
+                            SPONSORS / SUBSIDES
+==================================================================== -->
+<section id="sponsors" class="py-16 md:py-20 bg-paper-100/40 border-t border-sumi-900/5">
+  <div class="max-w-5xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-10 reveal">
+      <div class="label justify-center">支援 — Avec le soutien de</div>
+    </div>
+    <div class="sponsor-grid reveal">
+      <a href="https://www.cocof.brussels" target="_blank" rel="noopener" class="sponsor-link" title="COCOF — Commission communautaire française">
+        <img src="sponsors/cocof.svg" alt="COCOF — Commission communautaire française" />
+      </a>
+      <a href="https://www.anderlecht.be" target="_blank" rel="noopener" class="sponsor-link" title="Commune d'Anderlecht">
+        <img src="sponsors/anderlecht.svg" alt="Commune d'Anderlecht" />
+      </a>
     </div>
   </div>
 </section>
