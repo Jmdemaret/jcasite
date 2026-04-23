@@ -1093,7 +1093,7 @@ async function loadContent(){
   // latest content (no need for git pull). Otherwise use same-origin.
   const isLocal = /^(localhost|127\.|0\.0\.0\.0)/.test(location.hostname) || location.protocol==='file:';
   const sources = isLocal
-    ? ['https://jmdemaret.github.io/jcasite/content.json', 'content.json']
+    ? ['https://judoclubanderlecht.be/content.json', 'content.json']
     : ['content.json'];
   for(const url of sources){
     try{
