@@ -532,7 +532,9 @@ function setStatus(kind,msg){
 // ============================================================================
 function markDirty(){
   dirty=true;
-  document.getElementById('btn-publish').classList.add('dirty');
+  const btn=document.getElementById('btn-publish');
+  btn.classList.add('dirty');
+  btn.disabled = !loadedState || !getToken();  // enable if connected with token
   document.getElementById('btn-discard').style.display='';
   saveDraft();
   updateDirtyBanner();
@@ -541,7 +543,9 @@ function markDirty(){
 
 function markClean(){
   dirty=false;
-  document.getElementById('btn-publish').classList.remove('dirty');
+  const btn=document.getElementById('btn-publish');
+  btn.classList.remove('dirty');
+  btn.disabled=true;  // nothing to publish
   document.getElementById('btn-discard').style.display='none';
   localStorage.removeItem(DRAFT_KEY);
   updateDirtyBanner();
