@@ -1,0 +1,31 @@
+{
+  "banner": {
+    "active": true,
+    "text": "<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet."
+  },
+  "gallery": [
+    { "img": "dojo.jpeg",                            "label": "01 · DOJO",   "title": "Le tatami" },
+    { "img": "judoclubanderlecht/kids-judo.jpg",     "label": "02 · KODOMO", "title": "Les enfants" },
+    { "img": "judoclubanderlecht/judo-training.jpg", "label": "03 · KEIKO",  "title": "Entraînement" },
+    { "img": "judoclubanderlecht/dojo-hall.jpg",     "label": "04 · 道場",    "title": "Le dojo" }
+  ],
+  "news": [
+    { "date": "2026-09-05", "tag": "Rentrée",     "title": "Reprise des cours — saison 2026/2027", "body": "Les cours reprennent le lundi 1<sup>er</sup> septembre. Pensez à pré-inscrire votre enfant pour garantir sa place." },
+    { "date": "2026-06-15", "tag": "Passage",     "title": "Passages de grade de fin d'année",     "body": "Nage Waza, Ne Waza et Ukemi au programme. Liste d'inscription affichée au dojo." },
+    { "date": "2026-05-20", "tag": "Compétition", "title": "Tournoi LFJ Bruxelles-Midi",            "body": "Notre équipe jeune participe au tournoi régional — venez supporter !" }
+  ],
+  "events": [
+    { "date": "2026-09-01", "title": "Rentrée saison 2026/2027",                   "type": "Cours",       "loc": "Dojo" },
+    { "date": "2026-09-12", "title": "Porte ouverte · cours d'essai gratuit",       "type": "Essai",       "loc": "Dojo" },
+    { "date": "2026-10-26", "title": "Stage intensif Toussaint (4 jours)",          "type": "Stage",       "loc": "Dojo" },
+    { "date": "2026-12-18", "title": "Passages de grade · 1er semestre",            "type": "Examen",      "loc": "Dojo" },
+    { "date": "2027-02-21", "title": "Stage de Carnaval",                           "type": "Stage",       "loc": "Dojo" },
+    { "date": "2027-05-10", "title": "Tournoi inter-clubs",                         "type": "Compétition", "loc": "Extérieur" }
+  ],
+  "testimonials": [
+    { "author": "Émilie L.", "role": "Maman de Léo, 8 ans",           "text": "Léo y va avec le sourire. Les sensei sont patients, l'ambiance familiale. Il a gagné en confiance en quelques mois." },
+    { "author": "Karim B.",  "role": "Papa de Yasmine, 6 ans",        "text": "Un vrai club traditionnel avec des valeurs fortes. Ma fille adore ses mercredis après-midi." },
+    { "author": "Sophie R.", "role": "Judoka adulte, ceinture bleue", "text": "J'ai repris le judo à 35 ans ici, accueil parfait quel que soit le niveau. Les cours sont exigeants et bienveillants." },
+    { "author": "Marc V.",   "role": "Papa de deux enfants",          "text": "Prix accessibles, vrais enseignants, vrai dojo. On voit la différence avec les clubs qui font juste du loisir." }
+  ]
+}

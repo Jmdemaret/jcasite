@@ -972,57 +972,37 @@
                                 SCRIPTS
 ==================================================================== -->
 <script>
-// ============ CONFIG (default, overridden by localStorage) ============
+// ============ CONFIG — loaded from content.json (fallback: defaults) ============
 const DEFAULT_CONFIG = {
-  banner:{
-    active:true,
-    text:'<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet.'
-  },
+  banner:{active:true,text:'<strong>Info</strong> — Bienvenue au Judo Club Anderlecht.'},
   gallery:[
     {img:'dojo.jpeg',                             label:'01 · DOJO',   title:'Le tatami'},
     {img:'judoclubanderlecht/kids-judo.jpg',      label:'02 · KODOMO', title:'Les enfants'},
-    {img:'judoclubanderlecht/judo-training.jpg',  label:'03 · KEIKO',  title:'Entraînement'},
-    {img:'judoclubanderlecht/dojo-hall.jpg',      label:'04 · 道場',    title:'Le dojo'}
+    {img:'judoclubanderlecht/judo-training.jpg',  label:'03 · KEIKO',  title:'Entraînement'}
   ],
-  news:[
-    {date:'2026-09-05', tag:'Rentrée',     title:'Reprise des cours — saison 2026/2027',
-     body:'Les cours reprennent le lundi 1<sup>er</sup> septembre. Pensez à pré-inscrire votre enfant pour garantir sa place.'},
-    {date:'2026-06-15', tag:'Passage',     title:'Passages de grade de fin d\'année',
-     body:'Nage Waza, Ne Waza et Ukemi au programme. Liste d\'inscription affichée au dojo.'},
-    {date:'2026-05-20', tag:'Compétition', title:'Tournoi LFJ Bruxelles-Midi',
-     body:'Notre équipe jeune participe au tournoi régional — venez supporter !'}
-  ],
-  events:[
-    {date:'2026-09-01', title:'Rentrée saison 2026/2027', type:'Cours',        loc:'Dojo'},
-    {date:'2026-09-12', title:'Porte ouverte · cours d\'essai gratuit', type:'Essai', loc:'Dojo'},
-    {date:'2026-10-26', title:'Stage intensif Toussaint (4 jours)', type:'Stage',   loc:'Dojo'},
-    {date:'2026-12-18', title:'Passages de grade · 1<sup>er</sup> semestre', type:'Examen', loc:'Dojo'},
-    {date:'2027-02-21', title:'Stage de Carnaval', type:'Stage', loc:'Dojo'},
-    {date:'2027-05-10', title:'Tournoi inter-clubs', type:'Compétition', loc:'Extérieur'}
-  ],
-  testimonials:[
-    {author:'Émilie L.', role:'Maman de Léo, 8 ans',
-     text:'Léo y va avec le sourire. Les sensei sont patients, l\'ambiance familiale. Il a gagné en confiance en quelques mois.'},
-    {author:'Karim B.', role:'Papa de Yasmine, 6 ans',
-     text:'Un vrai club traditionnel avec des valeurs fortes. Ma fille adore ses mercredis après-midi.'},
-    {author:'Sophie R.', role:'Judoka adulte, ceinture bleue',
-     text:'J\'ai repris le judo à 35 ans ici, accueil parfait quel que soit le niveau. Les cours sont exigeants et bienveillants.'},
-    {author:'Marc V.', role:'Papa de deux enfants',
-     text:'Prix accessibles, vrais enseignants, vrai dojo. On voit la différence avec les clubs qui font juste du loisir.'}
-  ]
+  news:[],
+  events:[],
+  testimonials:[]
 };
 
-function getConfig(){
+// Fetched synchronously by blocking render until loaded
+let CFG = DEFAULT_CONFIG;
+
+async function loadContent(){
   try{
-    const saved = localStorage.getItem('jca_config');
-    if(saved){return {...DEFAULT_CONFIG,...JSON.parse(saved)};}
-  }catch(e){}
-  return DEFAULT_CONFIG;
+    // Cache-bust so updates show immediately
+    const res = await fetch('content.json?v=' + Date.now(), {cache:'no-store'});
+    if(res.ok){
+      const json = await res.json();
+      CFG = {...DEFAULT_CONFIG, ...json};
+    }
+  }catch(e){
+    console.warn('content.json not found — using defaults', e);
+  }
 }
-const CFG = getConfig();
 
 // ============ BANNER ============
-(()=>{
+function initBanner(){
   const b=document.getElementById('top-banner');
   const bt=document.getElementById('banner-text');
   const bc=document.getElementById('banner-close');
@@ -1036,11 +1016,15 @@ const CFG = getConfig();
   }
   bc.addEventListener('click',()=>{b.classList.add('hidden');localStorage.setItem(key,Date.now());setTimeout(setBH,400);});
   addEventListener('resize',setBH);
-})();
+}
+
+// ============ REVEALS OBSERVER (needed early) ============
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
 
 // ============ GALLERY (dynamic) ============
-(()=>{
+function initGallery(){
   const t=document.getElementById('gallery-track');
+  t.innerHTML='';
   (CFG.gallery||[]).forEach(it=>{
     const c=document.createElement('div');c.className='h-card';
     c.innerHTML=`<img src="${it.img}" alt="${it.title}" /><div class="cap"><div class="font-mono text-xs tracking-[.2em] opacity-90">${it.label}</div><div class="display text-3xl mt-1">${it.title}</div></div>`;
@@ -1050,15 +1034,12 @@ const CFG = getConfig();
   q.style.background='linear-gradient(135deg,#1D1916 0%,#432C5F 100%)';
   q.innerHTML=`<div style="height:70vh;max-height:640px;" class="grid place-items-center text-center px-8 text-paper-50"><div><div class="font-japan text-7xl text-hinomaru-600 mb-4">柔</div><p class="opacity-90 max-w-xs mx-auto italic">« La voie de la souplesse » — Jigoro Kano</p></div></div>`;
   t.appendChild(q);
-})();
-
-// ============ REVEALS OBSERVER (needed early) ============
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
+}
 
 // ============ NEWS (dynamic) ============
-(()=>{
+function initNews(){
   const grid=document.getElementById('news-grid');
-  const MONTHS=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+  grid.innerHTML='';
   const FULL=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
   (CFG.news||[]).forEach((n,i)=>{
     const d=new Date(n.date);
@@ -1074,11 +1055,12 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
     grid.appendChild(el);
     io.observe(el);
   });
-})();
+}
 
 // ============ EVENTS (dynamic) ============
-(()=>{
+function initEvents(){
   const list=document.getElementById('ev-list');
+  list.innerHTML='';
   const FULL=['janv','févr','mars','avril','mai','juin','juil','août','sept','oct','nov','déc'];
   (CFG.events||[]).sort((a,b)=>a.date.localeCompare(b.date)).forEach((e,i)=>{
     const d=new Date(e.date);
@@ -1098,11 +1080,12 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
     list.appendChild(row);
     io.observe(row);
   });
-})();
+}
 
 // ============ TESTIMONIALS (dynamic) ============
-(()=>{
+function initTestimonials(){
   const t=document.getElementById('tm-track');
+  t.innerHTML='';
   (CFG.testimonials||[]).forEach(tm=>{
     const init=(tm.author||'·').split(' ').map(w=>w[0]).join('').slice(0,2);
     const el=document.createElement('div');
@@ -1115,6 +1098,18 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
       </div>`;
     t.appendChild(el);
   });
+}
+
+// ============ BOOT — fetch content.json then render everything ============
+(async()=>{
+  await loadContent();
+  initBanner();
+  initGallery();
+  initNews();
+  initEvents();
+  initTestimonials();
+  // Re-observe newly injected .reveal elements
+  document.querySelectorAll('.reveal, .reveal-img').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); });
 })();
 
 // ============ PRELOADER ============
