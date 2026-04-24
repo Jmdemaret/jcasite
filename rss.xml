@@ -6,48 +6,8 @@
     <atom:link href="https://judoclubanderlecht.be/rss.xml" rel="self" type="application/rss+xml"/>
     <description>Actualités, événements et nouvelles photos du Judo Club Anderlecht.</description>
     <language>fr-BE</language>
-    <lastBuildDate>Fri, 24 Apr 2026 16:13:42 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 16:14:19 GMT</lastBuildDate>
     <ttl>60</ttl>
-    <item>
-      <title>[Compétition] Tournoi inter-clubs</title>
-      <link>https://judoclubanderlecht.be/#evenements</link>
-      <guid isPermaLink="false">event-2027-05-10-tournoi-inter-clubs</guid>
-      <pubDate>Mon, 10 May 2027 00:00:00 GMT</pubDate>
-      <category>Événement</category>
-      <description>Compétition au Extérieur — lundi 10 mai 2027.</description>
-    </item>
-    <item>
-      <title>[Stage] Stage de Carnaval</title>
-      <link>https://judoclubanderlecht.be/#evenements</link>
-      <guid isPermaLink="false">event-2027-02-21-stage-de-carnaval</guid>
-      <pubDate>Sun, 21 Feb 2027 00:00:00 GMT</pubDate>
-      <category>Événement</category>
-      <description>Stage au Dojo — dimanche 21 février 2027.</description>
-    </item>
-    <item>
-      <title>[Examen] Passages de grade · 1er semestre</title>
-      <link>https://judoclubanderlecht.be/#evenements</link>
-      <guid isPermaLink="false">event-2026-12-18-passages-de-grade-1er-semestre</guid>
-      <pubDate>Fri, 18 Dec 2026 00:00:00 GMT</pubDate>
-      <category>Événement</category>
-      <description>Examen au Dojo — vendredi 18 décembre 2026.</description>
-    </item>
-    <item>
-      <title>[Stage] Stage intensif Toussaint (4 jours)</title>
-      <link>https://judoclubanderlecht.be/#evenements</link>
-      <guid isPermaLink="false">event-2026-10-26-stage-intensif-toussaint-4-jours</guid>
-      <pubDate>Mon, 26 Oct 2026 00:00:00 GMT</pubDate>
-      <category>Événement</category>
-      <description>Stage au Dojo — lundi 26 octobre 2026.</description>
-    </item>
-    <item>
-      <title>[Essai] Porte ouverte · cours d&#39;essai gratuit</title>
-      <link>https://judoclubanderlecht.be/#evenements</link>
-      <guid isPermaLink="false">event-2026-09-12-porte-ouverte-cours-d-essai-gratuit</guid>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 GMT</pubDate>
-      <category>Événement</category>
-      <description>Essai au Dojo — samedi 12 septembre 2026.</description>
-    </item>
     <item>
       <title>Reprise des cours — saison 2026/2027</title>
       <link>https://judoclubanderlecht.be/#actu</link>
