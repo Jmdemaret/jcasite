@@ -626,14 +626,8 @@
     </div>
 
     <!-- Age filter chips -->
-    <div class="flex flex-wrap gap-2.5 mb-10 reveal" id="age-chips">
-      <button class="age-chip active" data-age="all" style="--c:#7a6f64"><span class="sw"></span>Tous les cours</button>
-      <button class="age-chip" data-age="4-5"  style="--c:#C8102E"><span class="sw"></span>4 – 5 ans</button>
-      <button class="age-chip" data-age="5-7"  style="--c:#B99A5A"><span class="sw"></span>5 – 7 ans</button>
-      <button class="age-chip" data-age="7-10" style="--c:#6E4C92"><span class="sw"></span>7 – 10 ans</button>
-      <button class="age-chip" data-age="11-15" style="--c:#432C5F"><span class="sw"></span>11 – 15 ans</button>
-      <button class="age-chip" data-age="15+"   style="--c:#2A2623"><span class="sw"></span>15 ans +</button>
-    </div>
+    <!-- Chips générés dynamiquement depuis CFG.groups (ou DEFAULT_GROUPS) -->
+    <div class="flex flex-wrap gap-2.5 mb-10 reveal" id="age-chips"></div>
 
     <!-- Day columns -->
     <div class="grid md:grid-cols-3 gap-5 reveal" id="day-cols"></div>
@@ -1482,7 +1476,8 @@ function initMap(){
   initTestimonials();
   initPricing();
   initTeam();
-  renderCourses();  // Re-render with CFG.courses if available
+  renderAgeChips();   // Re-render avec CFG.groups
+  renderCourses();    // Re-render avec CFG.courses + couleurs CFG.groups
   initMap();
   // Re-observe newly injected .reveal elements
   document.querySelectorAll('.reveal, .reveal-img').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); });
@@ -1521,13 +1516,21 @@ document.querySelectorAll('[data-count]').forEach(el=>{
 });
 
 // ============ SCHEDULE TILES BY DAY ============
-const AGE_COLOR={
-  '4-5':  {c:'#C8102E', label:'Éveil'},
-  '5-7':  {c:'#B99A5A', label:'Débutant'},
-  '7-10': {c:'#6E4C92', label:'Initiation'},
-  '11-15':{c:'#432C5F', label:'Ado'},
-  '15+':  {c:'#2A2623', label:'Adulte'}
+// Chaque groupe : {id, label, short, color, order}
+const DEFAULT_GROUPS = [
+  {id:'4-5',   label:'4 – 5 ans',   short:'Éveil',      color:'#C8102E', order:1},
+  {id:'5-7',   label:'5 – 7 ans',   short:'Débutant',   color:'#B99A5A', order:2},
+  {id:'7-10',  label:'7 – 10 ans',  short:'Initiation', color:'#6E4C92', order:3},
+  {id:'11-15', label:'11 – 15 ans', short:'Ado',        color:'#432C5F', order:4},
+  {id:'15+',   label:'15 ans +',    short:'Adulte',     color:'#2A2623', order:5}
+];
+const GROUPS_SOURCE = () => {
+  const g = CFG.groups && CFG.groups.length ? CFG.groups : DEFAULT_GROUPS;
+  return [...g].sort((a,b)=>(a.order||99)-(b.order||99));
 };
+function groupById(id){
+  return GROUPS_SOURCE().find(g => g.id === id) || {id, label:(id||'?')+' ans', short:'', color:'#7a6f64'};
+}
 
 // Each course entry: {day, ageId, start, end}
 // Source: www.judoclubanderlecht.be (horaires officiels du club)
@@ -1553,23 +1556,53 @@ const COURSES_SOURCE = () => (CFG.courses && CFG.courses.length ? CFG.courses : 
 const DAYS=['Mercredi','Vendredi','Samedi'];
 const DAY_KANJI={Mercredi:'水',Vendredi:'金',Samedi:'土'};
 
+function renderAgeChips(){
+  const host = document.getElementById('age-chips');
+  if(!host) return;
+  host.innerHTML = '';
+  const all = document.createElement('button');
+  all.type='button';all.className = 'age-chip active';all.dataset.age='all';
+  all.style.setProperty('--c','#7a6f64');
+  all.innerHTML = '<span class="sw"></span>Tous les cours';
+  host.appendChild(all);
+  GROUPS_SOURCE().forEach(g => {
+    const b = document.createElement('button');
+    b.type='button';b.className='age-chip';b.dataset.age=g.id;
+    b.style.setProperty('--c', g.color || '#7a6f64');
+    b.innerHTML = `<span class="sw"></span>${escapeHtml(g.label||g.id)}`;
+    host.appendChild(b);
+  });
+  host.querySelectorAll('.age-chip').forEach(b => {
+    b.addEventListener('click', () => {
+      host.querySelectorAll('.age-chip').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      applyFilter(b.dataset.age);
+    });
+  });
+}
+
 function renderCourses(){
   const root=document.getElementById('day-cols');
+  if(!root) return;
   root.innerHTML='';
-  DAYS.forEach(d=>{
-    const list=COURSES_SOURCE().filter(c=>c.day===d).sort((a,b)=>a.start.localeCompare(b.start));
+  const usedDays = new Set(COURSES_SOURCE().map(c => c.day));
+  const daysToShow = DAYS.filter(d => usedDays.has(d))
+    .concat([...usedDays].filter(d => !DAYS.includes(d)));
+  daysToShow.forEach(d=>{
+    const list=COURSES_SOURCE().filter(c=>c.day===d).sort((a,b)=>(a.start||'').localeCompare(b.start||''));
     const col=document.createElement('div');col.className='day-col';
-    col.innerHTML=`<h3>${d}<span class="cnt">${list.length} cours <span style="color:#C4BDAE;margin-left:.5rem;font-family:'Shippori Mincho';font-size:1rem;">${DAY_KANJI[d]||''}</span></span></h3>`;
+    col.innerHTML=`<h3>${escapeHtml(d)}<span class="cnt">${list.length} cours <span style="color:#C4BDAE;margin-left:.5rem;font-family:'Shippori Mincho';font-size:1rem;">${DAY_KANJI[d]||''}</span></span></h3>`;
     list.forEach(c=>{
-      const info=AGE_COLOR[c.age];
+      const gid = c.groupId || c.age;
+      const info = groupById(gid);
       const tile=document.createElement('div');
       tile.className='tile';
-      tile.dataset.age=c.age;
-      tile.style.setProperty('--c',info.c);
+      tile.dataset.age = gid;
+      tile.style.setProperty('--c', info.color);
       tile.innerHTML=`
-        <div class="age">${c.age} ans</div>
-        <div class="time">${c.start} – ${c.end}</div>
-        <span class="tag">${info.label}</span>`;
+        <div class="age">${escapeHtml(info.label || (gid+' ans'))}</div>
+        <div class="time">${escapeHtml(c.start||'')} – ${escapeHtml(c.end||'')}</div>
+        ${info.short ? `<span class="tag">${escapeHtml(info.short)}</span>` : ''}`;
       col.appendChild(tile);
     });
     root.appendChild(col);
@@ -1577,19 +1610,13 @@ function renderCourses(){
 }
 renderCourses();
 
-function applyFilter(age){
+function applyFilter(gid){
   document.querySelectorAll('.tile').forEach(t=>{
-    t.classList.toggle('dim', age!=='all' && t.dataset.age!==age);
+    t.classList.toggle('dim', gid!=='all' && t.dataset.age!==gid);
   });
 }
 
-document.querySelectorAll('#age-chips .age-chip').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('#age-chips .age-chip').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    applyFilter(b.dataset.age);
-  });
-});
+renderAgeChips();
 
 // ============ MAGNETIC BUTTONS ============
 document.querySelectorAll('.btn').forEach(b=>{
