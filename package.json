@@ -4,6 +4,7 @@
   "description": "Netlify Functions pour le formulaire du site Judo Club Anderlecht",
   "private": true,
   "dependencies": {
+    "@netlify/blobs": "^8.0.0",
     "nodemailer": "^6.9.14"
   }
 }

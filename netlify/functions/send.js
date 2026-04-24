@@ -11,6 +11,7 @@
  */
 
 const nodemailer = require('nodemailer');
+const { getStore } = require('@netlify/blobs');
 
 exports.handler = async (event) => {
   const allowedOrigin = process.env.ALLOWED_ORIGIN || '*';
@@ -92,6 +93,8 @@ exports.handler = async (event) => {
     ? `${visitorName} via Site JCA`
     : 'Site Judo Club Anderlecht';
 
+  let emailOk = false;
+  let emailError = null;
   try {
     await transporter.sendMail({
       from: `"${senderName}" <${process.env.SMTP_USER}>`,
@@ -100,13 +103,41 @@ exports.handler = async (event) => {
       subject: subject,
       text: textBody
     });
-    return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+    emailOk = true;
   } catch (err) {
     console.error('SMTP error:', err);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ ok: false, error: 'Envoi échoué : ' + (err.message || 'SMTP error') })
-    };
+    emailError = err.message || 'SMTP error';
   }
+
+  // Persistance dans Netlify Blobs (même si l'email a échoué — on garde la trace)
+  try {
+    const store = getStore('form-submissions');
+    const now = Date.now();
+    const key = String(now) + '-' + Math.random().toString(36).slice(2, 8);
+    const submission = {
+      id: key,
+      timestamp: now,
+      iso: new Date(now).toISOString(),
+      source: source,
+      subject: baseSubject,
+      visitorName: visitorLabel,
+      email: replyTo,
+      data: Object.fromEntries(Object.entries(data).filter(([k]) => !k.startsWith('_') && !k.startsWith('$'))),
+      emailOk: emailOk,
+      emailError: emailError
+    };
+    await store.setJSON(key, submission);
+  } catch (blobErr) {
+    console.error('Blobs error (non-fatal):', blobErr);
+    // Non bloquant — l'important c'est l'email
+  }
+
+  if (emailOk) {
+    return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+  }
+  return {
+    statusCode: 500,
+    headers,
+    body: JSON.stringify({ ok: false, error: 'Envoi échoué : ' + emailError })
+  };
 };
