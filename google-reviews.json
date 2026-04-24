@@ -1,5 +1,31 @@
 {
-  "reviews": [],
-  "fetched_at": 1777038504,
-  "error": "missing secrets"
+  "place_name": "Judo Club Anderlecht asbl",
+  "place_url": "https://www.google.com/maps/place/?q=place_id:ChIJ22u18afGw0cRHu7iNfdBoQ4",
+  "rating": 4.5,
+  "total": 39,
+  "reviews": [
+    {
+      "author": "Atilla. Abdulla",
+      "rating": 5.0,
+      "text": "Moi en vrais je kiffe judo depus que je mes inscrie et les prof sont trop bien c'est SUPER!!!!!👍🥋🥋🥋",
+      "time": 1773516495,
+      "relative": "il y a un mois",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocLx69GbM2bV_RlmHQTInb1bB3Vcrbs7YaqABEJ5BH0OGvFcUA=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
+    {
+      "author": "Sarah Dupriez",
+      "rating": 5.0,
+      "text": "Magnifique travail dans ce club bien caché derrière une vieille porte.",
+      "time": 1771430135,
+      "relative": "il y a 2 mois",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjUtO5J_bfIkBzJJZmm1fLaHDvKaEyde5DGSNMNdz25vOzyeMdRS=s120-c-rp-mo-ba4-br100",
+      "language": "fr"
+    }
+  ],
+  "returned_by_serpapi": 8,
+  "kept_recent": 2,
+  "cutoff_iso": "2025-10-26",
+  "fetched_at": 1777039339,
+  "source": "serpapi"
 }
