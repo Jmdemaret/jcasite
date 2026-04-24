@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0021",
-    "publishedAt": "2026-04-24T14:26:05.052Z",
+    "version": "1.0022",
+    "publishedAt": "2026-04-24T16:01:49.095Z",
     "history": [
+      {
+        "version": "1.0022",
+        "date": "2026-04-24T16:01:49.095Z",
+        "summary": "+1 photo"
+      },
       {
         "version": "1.0021",
         "date": "2026-04-24T14:26:05.052Z",
@@ -286,6 +291,11 @@
       "img": "dojo.jpeg",
       "label": "01 · DOJO",
       "title": "Le tatami"
+    },
+    {
+      "img": "images/20260424-180147-lila.jpg",
+      "label": "02 · Championnat de Belgique 2026",
+      "title": "Lila"
     }
   ],
   "news": [
