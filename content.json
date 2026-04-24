@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0011",
-    "publishedAt": "2026-04-24T08:11:11.632Z",
+    "version": "1.0012",
+    "publishedAt": "2026-04-24T08:57:47.992Z",
     "history": [
+      {
+        "version": "1.0012",
+        "date": "2026-04-24T08:57:47.992Z",
+        "summary": "Modifications diverses (champs non listés)"
+      },
       {
         "version": "1.0011",
         "date": "2026-04-24T08:11:11.632Z",
@@ -76,7 +81,7 @@
     "temoignages": false,
     "faq": true,
     "preInscription": false,
-    "sponsors": false
+    "sponsors": true
   },
   "forms": {
     "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/.netlify/functions/send",
