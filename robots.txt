@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /.github/
+
+Sitemap: https://judoclubanderlecht.be/sitemap.xml
