@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0024",
-    "publishedAt": "2026-04-24T16:14:17.967Z",
+    "version": "1.0025",
+    "publishedAt": "2026-04-24T16:29:07.148Z",
     "history": [
+      {
+        "version": "1.0025",
+        "date": "2026-04-24T16:29:07.148Z",
+        "summary": "Bannière → Horaires vacances"
+      },
       {
         "version": "1.0024",
         "date": "2026-04-24T16:14:17.967Z",
@@ -274,7 +279,8 @@
   },
   "banner": {
     "active": true,
-    "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai"
+    "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai",
+    "type": "horaires"
   },
   "texts": {
     "hero": {
