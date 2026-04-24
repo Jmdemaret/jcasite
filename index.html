@@ -1460,14 +1460,35 @@ function initBanner(){
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
 
 // ============ GALLERY (dynamic) ============
+// Phase 1 : lit "albums" en priorité (aplatit les photos), fallback sur "gallery" plat.
+// Phase 2 : remplacera ce rendu par un layout éditorial avec lightbox par album.
 function initGallery(){
   const t=document.getElementById('gallery-track');
   t.innerHTML='';
-  (CFG.gallery||[]).forEach(it=>{
+
+  // Construit une liste plate de photos à afficher, depuis albums si présent, sinon gallery
+  const flat = [];
+  if((CFG.albums||[]).length){
+    (CFG.albums||[]).forEach(alb => {
+      (alb.photos||[]).forEach((ph, idx) => {
+        flat.push({
+          img: ph.img,
+          title: ph.title || alb.title || '',
+          label: ph.caption || `${String(idx+1).padStart(2,'0')} · ${(alb.title||'').toUpperCase()}`
+        });
+      });
+    });
+  } else {
+    (CFG.gallery||[]).forEach(it => flat.push(it));
+  }
+
+  flat.forEach(it=>{
     const c=document.createElement('div');c.className='h-card';
-    c.innerHTML=`<img src="${it.img}" alt="${it.title}" /><div class="cap"><div class="font-mono text-xs tracking-[.2em] opacity-90">${it.label}</div><div class="display text-3xl mt-1">${it.title}</div></div>`;
+    c.innerHTML=`<img src="${it.img}" alt="${it.title||''}" /><div class="cap"><div class="font-mono text-xs tracking-[.2em] opacity-90">${it.label||''}</div><div class="display text-3xl mt-1">${it.title||''}</div></div>`;
     t.appendChild(c);
   });
+
+  // Carte finale "柔" toujours affichée comme conclusion
   const q=document.createElement('div');q.className='h-card';
   q.style.background='linear-gradient(135deg,#1D1916 0%,#432C5F 100%)';
   q.innerHTML=`<div style="height:70vh;max-height:640px;" class="grid place-items-center text-center px-8 text-paper-50"><div><div class="font-japan text-7xl text-hinomaru-600 mb-4">柔</div><p class="opacity-90 max-w-xs mx-auto italic">« La voie de la souplesse » — Jigoro Kano</p></div></div>`;
