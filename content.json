@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0014",
-    "publishedAt": "2026-04-24T10:04:04.553Z",
+    "version": "1.0015",
+    "publishedAt": "2026-04-24T10:11:45.438Z",
     "history": [
+      {
+        "version": "1.0015",
+        "date": "2026-04-24T10:11:45.438Z",
+        "summary": "Pré-inscription réactivé"
+      },
       {
         "version": "1.0014",
         "date": "2026-04-24T10:04:04.553Z",
@@ -90,7 +95,7 @@
     "equipe": false,
     "temoignages": false,
     "faq": true,
-    "preInscription": false,
+    "preInscription": true,
     "sponsors": true
   },
   "forms": {
