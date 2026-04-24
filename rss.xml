@@ -6,7 +6,7 @@
     <atom:link href="https://judoclubanderlecht.be/rss.xml" rel="self" type="application/rss+xml"/>
     <description>Actualités, événements et nouvelles photos du Judo Club Anderlecht.</description>
     <language>fr-BE</language>
-    <lastBuildDate>Fri, 24 Apr 2026 17:37:36 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 17:38:16 GMT</lastBuildDate>
     <ttl>60</ttl>
     <item>
       <title>Reprise des cours — saison 2026/2027</title>
@@ -49,7 +49,7 @@
       <pubDate>Sat, 07 Feb 2026 00:00:00 GMT</pubDate>
       <category>Galerie</category>
       <description>2 médailles</description>
-      <enclosure url="https://judoclubanderlecht.be/images/20260424-193712-kadiatou-3ieme.jpg" type="image/jpeg" length="0"/>
+      <enclosure url="https://judoclubanderlecht.be/images/20260424-193813-kadiatou-regional.jpg" type="image/jpeg" length="0"/>
     </item>
   </channel>
 </rss>
