@@ -6,7 +6,7 @@
     <atom:link href="https://judoclubanderlecht.be/rss.xml" rel="self" type="application/rss+xml"/>
     <description>Actualités, événements et nouvelles photos du Judo Club Anderlecht.</description>
     <language>fr-BE</language>
-    <lastBuildDate>Fri, 24 Apr 2026 16:50:37 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 17:02:05 GMT</lastBuildDate>
     <ttl>60</ttl>
     <item>
       <title>Reprise des cours — saison 2026/2027</title>
@@ -23,6 +23,24 @@
       <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
       <category>Événement</category>
       <description>Cours au Dojo — mardi 1 septembre 2026.</description>
+    </item>
+    <item>
+      <title>Lila 3ème</title>
+      <link>https://judoclubanderlecht.be/#galerie</link>
+      <guid isPermaLink="false">photo-20260424-190203-1-lila-3eme.jpg</guid>
+      <pubDate>Fri, 24 Apr 2026 17:02:03 GMT</pubDate>
+      <category>Galerie</category>
+      <description>03 · Championnat Régional 2026 — Lila 3ème</description>
+      <enclosure url="https://judoclubanderlecht.be/images/20260424-190203-1-lila-3eme.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Kadiatou 3ième</title>
+      <link>https://judoclubanderlecht.be/#galerie</link>
+      <guid isPermaLink="false">photo-20260424-190201-kadiatou-3ieme.jpg</guid>
+      <pubDate>Fri, 24 Apr 2026 17:02:01 GMT</pubDate>
+      <category>Galerie</category>
+      <description>03 · Championnat Régional 2026 — Kadiatou 3ième</description>
+      <enclosure url="https://judoclubanderlecht.be/images/20260424-190201-kadiatou-3ieme.jpg" type="image/jpeg" length="0"/>
     </item>
     <item>
       <title>Lila 3ème</title>
