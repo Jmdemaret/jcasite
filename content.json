@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0018",
-    "publishedAt": "2026-04-24T10:22:35.116Z",
+    "version": "1.0019",
+    "publishedAt": "2026-04-24T13:50:53.696Z",
     "history": [
+      {
+        "version": "1.0019",
+        "date": "2026-04-24T13:50:53.696Z",
+        "summary": "Avis réactivé"
+      },
       {
         "version": "1.0018",
         "date": "2026-04-24T10:22:35.116Z",
@@ -108,7 +113,7 @@
     "evenements": false,
     "galerie": true,
     "equipe": false,
-    "temoignages": false,
+    "temoignages": true,
     "faq": true,
     "preInscription": false,
     "sponsors": true
@@ -117,6 +122,83 @@
     "scriptUrl": "https://lovely-clafoutis-91f16b.netlify.app/.netlify/functions/send",
     "recipientEmail": "jmdemaret@gmail.com"
   },
+  "groups": [],
+  "courses": [
+    {
+      "day": "Mercredi",
+      "groupId": "4-5",
+      "start": "14:15",
+      "end": "15:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "7-10",
+      "start": "15:00",
+      "end": "16:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "5-7",
+      "start": "16:00",
+      "end": "17:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "7-10",
+      "start": "17:00",
+      "end": "18:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "11-15",
+      "start": "18:00",
+      "end": "19:15"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "15+",
+      "start": "19:15",
+      "end": "20:45"
+    },
+    {
+      "day": "Vendredi",
+      "groupId": "7-10",
+      "start": "17:00",
+      "end": "18:00"
+    },
+    {
+      "day": "Vendredi",
+      "groupId": "11-15",
+      "start": "18:00",
+      "end": "19:15"
+    },
+    {
+      "day": "Vendredi",
+      "groupId": "15+",
+      "start": "19:15",
+      "end": "20:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "5-7",
+      "start": "09:45",
+      "end": "10:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "7-10",
+      "start": "10:45",
+      "end": "11:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "11-15",
+      "start": "11:45",
+      "end": "13:00"
+    }
+  ],
+  "pricing": [],
+  "team": [],
   "socials": {
     "facebook": {
       "url": "https://www.facebook.com/share/1GmQrKPZ6E/?mibextid=wwXIfr",
