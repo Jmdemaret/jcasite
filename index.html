@@ -141,7 +141,9 @@
     position:absolute;inset:-5%;width:110%;height:110%;
     background:url('dojo.jpeg') center/cover no-repeat;
     animation:kenBurns 22s ease-in-out infinite alternate;
+    object-fit:cover;
   }
+  video.hero-photo{animation:none;}  /* la vidéo bouge déjà toute seule */
   @keyframes kenBurns{0%{transform:scale(1.05) translate(0,0);}100%{transform:scale(1.18) translate(-3%,-2%);}}
   .hero-right-veil{position:absolute;inset:0;
     background:linear-gradient(90deg, var(--paper) 0%, transparent 25%),
@@ -562,8 +564,10 @@
 
   <!-- RIGHT : cinematic photo / video slot -->
   <div class="hero-right">
-    <!-- Swap for <video autoplay muted loop playsinline poster="dojo.jpeg"><source src="dojo-loop.mp4" type="video/mp4"/></video> when ready -->
-    <div class="hero-photo" aria-hidden="true"></div>
+    <!-- Mode vidéo : si hero.mp4 présent, sinon fallback sur dojo.jpeg -->
+    <video class="hero-photo" autoplay muted loop playsinline preload="auto" poster="dojo.jpeg" aria-hidden="true" id="hero-video">
+      <source src="hero.mp4" type="video/mp4" />
+    </video>
     <div class="hero-right-veil"></div>
     <div class="hero-marker">LIVE · DOJO ANDERLECHT</div>
   </div>
@@ -1432,6 +1436,34 @@ function initTestimonials(){
       </a>`;
   }
 }
+
+// ============ HERO VIDEO FALLBACK ============
+// Si TOUTES les sources vidéo échouent, on remplace le <video> par un
+// <div> avec l'animation Ken Burns sur la photo.
+// La vérification se fait sur la dernière <source>, car l'event "error"
+// du <video> global se déclenche aussi quand une seule source échoue.
+(() => {
+  const v = document.getElementById('hero-video');
+  if(!v) return;
+  const fallback = () => {
+    const div = document.createElement('div');
+    div.className = 'hero-photo';
+    div.setAttribute('aria-hidden', 'true');
+    v.replaceWith(div);
+  };
+  // Attacher l'error listener sur la dernière <source> : ne se déclenche
+  // que quand toutes les sources précédentes ont déjà échoué
+  const sources = v.querySelectorAll('source');
+  if(sources.length) {
+    sources[sources.length - 1].addEventListener('error', fallback, {once: true});
+  }
+  // Check différé : si après 8s aucune lecture possible, on bascule
+  setTimeout(() => {
+    if(v.readyState === 0 && v.networkState !== HTMLMediaElement.NETWORK_LOADING) {
+      fallback();
+    }
+  }, 8000);
+})();
 
 // ============ MAP (Leaflet) ============
 function initMap(){
