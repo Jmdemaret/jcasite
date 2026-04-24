@@ -451,8 +451,9 @@
   .h-card{flex:0 0 auto;width:min(78vw,560px);scroll-snap-align:center;position:relative;border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(29,25,22,.2);transition:transform .5s cubic-bezier(.2,.8,.2,1);}
   .h-card:hover{transform:translateY(-8px);}
   .h-card img{width:100%;height:70vh;max-height:640px;object-fit:cover;display:block;}
-  .h-card .cap{position:absolute;left:1.5rem;bottom:1.5rem;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.4);}
-  .h-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.6));pointer-events:none;}
+  .h-card .cap{position:absolute;left:1.5rem;right:1.5rem;bottom:1.5rem;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.7);z-index:2;}
+  .h-card .cap .display{color:#fff;font-weight:500;}
+  .h-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.45) 75%,rgba(0,0,0,.75) 100%);pointer-events:none;}
 
   /* ============ PRICING ============ */
   .price-card{background:#fff;border:1px solid rgba(29,25,22,.06);border-radius:20px;padding:2rem;position:relative;transition:all .4s cubic-bezier(.2,.8,.2,1);}
@@ -1195,7 +1196,7 @@
           <div class="t-card">
             <div class="t-icon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 17h14v-5l-2-5H7l-2 5v5zm0 0v2m14-2v2"/><circle cx="7.5" cy="17.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="17.5" r="1.5" fill="currentColor"/></svg></div>
             <div class="font-display text-xl mb-1">En voiture</div>
-            <p class="text-sm text-[#4a423b]">Sortie R0 n°16. Parking gratuit en voirie. 5 min de Bruxelles-Midi.</p>
+            <p class="text-sm text-[#4a423b]">Ring R0, sortie <strong>13</strong> ou <strong>14</strong> → direction Saint-Guidon. <strong>Zone Verte payante</strong> 9h–18h (lun-sam) — 15 min gratuites via horodateur ou app.</p>
           </div>
           <div class="t-card">
             <div class="t-icon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17 9 7h3l3 6"/></svg></div>
