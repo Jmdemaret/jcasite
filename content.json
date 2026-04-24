@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0030",
-    "publishedAt": "2026-04-24T17:37:14.745Z",
+    "version": "1.0031",
+    "publishedAt": "2026-04-24T17:37:35.322Z",
     "history": [
+      {
+        "version": "1.0031",
+        "date": "2026-04-24T17:37:35.322Z",
+        "summary": "-1 album"
+      },
       {
         "version": "1.0030",
         "date": "2026-04-24T17:37:14.745Z",
@@ -350,15 +355,6 @@
       ]
     },
     {
-      "id": "album-20260424-kydg",
-      "title": "",
-      "date": "2026-04-24",
-      "kanji": "行事",
-      "description": "",
-      "cover": null,
-      "photos": []
-    },
-    {
       "id": "album-20260424-r8p1",
       "title": "Championnat de Belgique",
       "date": "2026-02-20",
@@ -375,7 +371,7 @@
     },
     {
       "id": "album-20260424-d7ua",
-      "title": "Galerie",
+      "title": "Dojo",
       "date": "2026-04-24",
       "kanji": "行事",
       "description": "",
