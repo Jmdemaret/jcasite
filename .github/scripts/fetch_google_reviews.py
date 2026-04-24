@@ -31,10 +31,18 @@ def write_empty(reason):
                   f, ensure_ascii=False, indent=2)
 
 if not SERPAPI_KEY or not PLACE_ID:
-    print(f"Missing secrets (SERPAPI_KEY={'yes' if SERPAPI_KEY else 'NO'}, "
-          f"GOOGLE_PLACE_ID={'yes' if PLACE_ID else 'NO'})")
-    write_empty("missing secrets")
-    sys.exit(0)
+    missing = []
+    if not SERPAPI_KEY: missing.append("SERPAPI_KEY")
+    if not PLACE_ID:    missing.append("GOOGLE_PLACE_ID")
+    msg = (
+        "❌ Secret(s) manquant(s) : " + ", ".join(missing) + "\n"
+        "   Ajoutez-les dans GitHub → Settings → Secrets and variables → Actions\n"
+        "   • SERPAPI_KEY      : obtenu sur https://serpapi.com/manage-api-key\n"
+        "   • GOOGLE_PLACE_ID  : obtenu sur https://developers.google.com/maps/documentation/places/web-service/place-id"
+    )
+    print(msg)
+    write_empty("missing secrets: " + ", ".join(missing))
+    sys.exit(1)  # Échec franc → croix rouge dans GitHub Actions
 
 params = {
     "engine":   "google_maps_reviews",
