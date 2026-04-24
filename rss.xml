@@ -6,7 +6,7 @@
     <atom:link href="https://judoclubanderlecht.be/rss.xml" rel="self" type="application/rss+xml"/>
     <description>Actualités, événements et nouvelles photos du Judo Club Anderlecht.</description>
     <language>fr-BE</language>
-    <lastBuildDate>Fri, 24 Apr 2026 16:01:50 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 16:13:42 GMT</lastBuildDate>
     <ttl>60</ttl>
     <item>
       <title>[Compétition] Tournoi inter-clubs</title>
@@ -63,22 +63,6 @@
       <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
       <category>Événement</category>
       <description>Cours au Dojo — mardi 1 septembre 2026.</description>
-    </item>
-    <item>
-      <title>Passages de grade de fin d&#39;année</title>
-      <link>https://judoclubanderlecht.be/#actu</link>
-      <guid isPermaLink="false">news-2026-06-15-passages-de-grade-de-fin-d-annee</guid>
-      <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
-      <category>Actualité</category>
-      <description>Nage Waza, Ne Waza et Ukemi au programme. Liste d&#39;inscription affichée au dojo.</description>
-    </item>
-    <item>
-      <title>Tournoi LFJ Bruxelles-Midi</title>
-      <link>https://judoclubanderlecht.be/#actu</link>
-      <guid isPermaLink="false">news-2026-05-20-tournoi-lfj-bruxelles-midi</guid>
-      <pubDate>Wed, 20 May 2026 00:00:00 GMT</pubDate>
-      <category>Actualité</category>
-      <description>Notre équipe jeune participe au tournoi régional — venez supporter !</description>
     </item>
     <item>
       <title>Lila</title>
