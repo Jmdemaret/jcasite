@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0020",
-    "publishedAt": "2026-04-24T14:06:00.097Z",
+    "version": "1.0021",
+    "publishedAt": "2026-04-24T14:26:05.052Z",
     "history": [
+      {
+        "version": "1.0021",
+        "date": "2026-04-24T14:26:05.052Z",
+        "summary": "Modifications diverses (champs non listés)"
+      },
       {
         "version": "1.0020",
         "date": "2026-04-24T14:06:00.097Z",
@@ -204,6 +209,8 @@
   ],
   "pricing": [],
   "team": [],
+  "googleReviewsHidden": [],
+  "googleReviewsPeriodMonths": 60,
   "socials": {
     "facebook": {
       "url": "https://www.facebook.com/share/1GmQrKPZ6E/?mibextid=wwXIfr",
