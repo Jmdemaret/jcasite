@@ -1360,8 +1360,10 @@ function initTestimonials(){
   const t=document.getElementById('tm-track');
   t.innerHTML='';
 
-  // 1) Google reviews (priority, last 6 months)
-  const gReviews = (GOOGLE_REVIEWS.reviews||[]);
+  // 1) Google reviews (priority, last 6 months, filter out hidden ones)
+  const hiddenIds = new Set(CFG.googleReviewsHidden || []);
+  const reviewId = r => (r.author||'anon') + '|' + (r.time||0);
+  const gReviews = (GOOGLE_REVIEWS.reviews||[]).filter(r => !hiddenIds.has(reviewId(r)));
   gReviews.forEach(r=>{
     const init=(r.author||'·').split(' ').map(w=>w[0]).join('').slice(0,2);
     const el=document.createElement('div');el.className='tm-card';
