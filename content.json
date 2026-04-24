@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0023",
-    "publishedAt": "2026-04-24T16:13:41.422Z",
+    "version": "1.0024",
+    "publishedAt": "2026-04-24T16:14:17.967Z",
     "history": [
+      {
+        "version": "1.0024",
+        "date": "2026-04-24T16:14:17.967Z",
+        "summary": "-5 événements"
+      },
       {
         "version": "1.0023",
         "date": "2026-04-24T16:13:41.422Z",
@@ -317,36 +322,6 @@
       "title": "Rentrée saison 2026/2027",
       "type": "Cours",
       "loc": "Dojo"
-    },
-    {
-      "date": "2026-09-12",
-      "title": "Porte ouverte · cours d'essai gratuit",
-      "type": "Essai",
-      "loc": "Dojo"
-    },
-    {
-      "date": "2026-10-26",
-      "title": "Stage intensif Toussaint (4 jours)",
-      "type": "Stage",
-      "loc": "Dojo"
-    },
-    {
-      "date": "2026-12-18",
-      "title": "Passages de grade · 1er semestre",
-      "type": "Examen",
-      "loc": "Dojo"
-    },
-    {
-      "date": "2027-02-21",
-      "title": "Stage de Carnaval",
-      "type": "Stage",
-      "loc": "Dojo"
-    },
-    {
-      "date": "2027-05-10",
-      "title": "Tournoi inter-clubs",
-      "type": "Compétition",
-      "loc": "Extérieur"
     }
   ],
   "testimonials": []
