@@ -40,7 +40,16 @@ exports.handler = async (event) => {
     return { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: 'Non autorisé' }) };
   }
 
-  const store = getStore('form-submissions');
+  // Configuration manuelle de Netlify Blobs (l'auto-config ne marche que sur les v2 Functions)
+  const siteID = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
+  const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_API_TOKEN;
+  if (!siteID || !token) {
+    return {
+      statusCode: 500, headers,
+      body: JSON.stringify({ ok: false, error: 'Netlify Blobs mal configuré : définissez NETLIFY_BLOBS_TOKEN dans les env vars' })
+    };
+  }
+  const store = getStore({ name: 'form-submissions', siteID, token });
 
   // DELETE : supprimer une soumission précise (?id=...) ou toutes (?all=1)
   if (event.httpMethod === 'DELETE') {

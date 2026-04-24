@@ -111,7 +111,10 @@ exports.handler = async (event) => {
 
   // Persistance dans Netlify Blobs (même si l'email a échoué — on garde la trace)
   try {
-    const store = getStore('form-submissions');
+    const siteID = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
+    const token  = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_API_TOKEN;
+    if (!siteID || !token) throw new Error('NETLIFY_BLOBS_TOKEN / SITE_ID manquant');
+    const store = getStore({ name: 'form-submissions', siteID, token });
     const now = Date.now();
     const key = String(now) + '-' + Math.random().toString(36).slice(2, 8);
     const submission = {
