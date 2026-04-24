@@ -409,8 +409,22 @@
   .ev-loc{font-size:.85rem;color:#7a6f64;}
 
   /* ============ TESTIMONIALS ============ */
-  .t-track{display:flex;gap:1.5rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2rem 0 1rem;}
+  .t-wrap{position:relative;}
+  .t-track{display:flex;gap:1.5rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2rem .5rem 1rem;scroll-behavior:smooth;}
   .t-track::-webkit-scrollbar{display:none;}
+  .t-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid rgba(29,25,22,.1);
+    display:grid;place-items:center;cursor:pointer;z-index:10;
+    color:var(--sumi);font-size:18px;font-family:inherit;
+    box-shadow:0 8px 24px -8px rgba(29,25,22,.25);
+    transition:all .25s cubic-bezier(.2,.8,.2,1);
+  }
+  .t-nav:hover{background:var(--hinomaru);color:#fff;border-color:var(--hinomaru);transform:translateY(-50%) scale(1.08);}
+  .t-nav:disabled{opacity:.25;cursor:not-allowed;transform:translateY(-50%);}
+  .t-nav.prev{left:-12px;}
+  .t-nav.next{right:-12px;}
+  @media(max-width:720px){.t-nav{display:none;}}
   .tm-card{
     flex:0 0 auto;width:min(85vw,440px);scroll-snap-align:center;
     background:#fff;padding:2rem 2rem 1.75rem;border-radius:24px;border:1px solid rgba(29,25,22,.06);
@@ -749,7 +763,15 @@
       </div>
     </div>
 
-    <div class="t-track reveal" id="tm-track"></div>
+    <div class="t-wrap reveal">
+      <button type="button" class="t-nav prev" id="tm-prev" aria-label="Avis précédent">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 6-6 6 6 6"/></svg>
+      </button>
+      <div class="t-track" id="tm-track"></div>
+      <button type="button" class="t-nav next" id="tm-next" aria-label="Avis suivant">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -1375,6 +1397,26 @@ function initTestimonials(){
       </div>`;
     t.appendChild(el);
   });
+
+  // Connect prev/next buttons (scroll by one card width)
+  const prevBtn = document.getElementById('tm-prev');
+  const nextBtn = document.getElementById('tm-next');
+  const scrollByCard = dir => {
+    const card = t.querySelector('.tm-card');
+    if(!card) return;
+    const step = card.offsetWidth + 24;  // card + gap
+    t.scrollBy({left: dir*step, behavior:'smooth'});
+  };
+  prevBtn?.addEventListener('click', ()=>scrollByCard(-1));
+  nextBtn?.addEventListener('click', ()=>scrollByCard(1));
+  const updateNavState = () => {
+    if(!prevBtn || !nextBtn) return;
+    prevBtn.disabled = t.scrollLeft <= 4;
+    nextBtn.disabled = t.scrollLeft >= (t.scrollWidth - t.clientWidth - 4);
+  };
+  t.addEventListener('scroll', updateNavState, {passive:true});
+  setTimeout(updateNavState, 100);
+  addEventListener('resize', updateNavState);
 
   // Summary card (rating + total)
   const sum=document.getElementById('google-summary');
