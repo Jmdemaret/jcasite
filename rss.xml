@@ -6,7 +6,97 @@
     <atom:link href="https://judoclubanderlecht.be/rss.xml" rel="self" type="application/rss+xml"/>
     <description>Actualités, événements et nouvelles photos du Judo Club Anderlecht.</description>
     <language>fr-BE</language>
-    <lastBuildDate>Thu, 24 Apr 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 16:01:50 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>[Compétition] Tournoi inter-clubs</title>
+      <link>https://judoclubanderlecht.be/#evenements</link>
+      <guid isPermaLink="false">event-2027-05-10-tournoi-inter-clubs</guid>
+      <pubDate>Mon, 10 May 2027 00:00:00 GMT</pubDate>
+      <category>Événement</category>
+      <description>Compétition au Extérieur — lundi 10 mai 2027.</description>
+    </item>
+    <item>
+      <title>[Stage] Stage de Carnaval</title>
+      <link>https://judoclubanderlecht.be/#evenements</link>
+      <guid isPermaLink="false">event-2027-02-21-stage-de-carnaval</guid>
+      <pubDate>Sun, 21 Feb 2027 00:00:00 GMT</pubDate>
+      <category>Événement</category>
+      <description>Stage au Dojo — dimanche 21 février 2027.</description>
+    </item>
+    <item>
+      <title>[Examen] Passages de grade · 1er semestre</title>
+      <link>https://judoclubanderlecht.be/#evenements</link>
+      <guid isPermaLink="false">event-2026-12-18-passages-de-grade-1er-semestre</guid>
+      <pubDate>Fri, 18 Dec 2026 00:00:00 GMT</pubDate>
+      <category>Événement</category>
+      <description>Examen au Dojo — vendredi 18 décembre 2026.</description>
+    </item>
+    <item>
+      <title>[Stage] Stage intensif Toussaint (4 jours)</title>
+      <link>https://judoclubanderlecht.be/#evenements</link>
+      <guid isPermaLink="false">event-2026-10-26-stage-intensif-toussaint-4-jours</guid>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 GMT</pubDate>
+      <category>Événement</category>
+      <description>Stage au Dojo — lundi 26 octobre 2026.</description>
+    </item>
+    <item>
+      <title>[Essai] Porte ouverte · cours d&#39;essai gratuit</title>
+      <link>https://judoclubanderlecht.be/#evenements</link>
+      <guid isPermaLink="false">event-2026-09-12-porte-ouverte-cours-d-essai-gratuit</guid>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Événement</category>
+      <description>Essai au Dojo — samedi 12 septembre 2026.</description>
+    </item>
+    <item>
+      <title>Reprise des cours — saison 2026/2027</title>
+      <link>https://judoclubanderlecht.be/#actu</link>
+      <guid isPermaLink="false">news-2026-09-05-reprise-des-cours-saison-2026-2027</guid>
+      <pubDate>Sat, 05 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Actualité</category>
+      <description>Les cours reprennent le lundi 1 er septembre. Pensez à pré-inscrire votre enfant pour garantir sa place.</description>
+    </item>
+    <item>
+      <title>[Cours] Rentrée saison 2026/2027</title>
+      <link>https://judoclubanderlecht.be/#evenements</link>
+      <guid isPermaLink="false">event-2026-09-01-rentree-saison-2026-2027</guid>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Événement</category>
+      <description>Cours au Dojo — mardi 1 septembre 2026.</description>
+    </item>
+    <item>
+      <title>Passages de grade de fin d&#39;année</title>
+      <link>https://judoclubanderlecht.be/#actu</link>
+      <guid isPermaLink="false">news-2026-06-15-passages-de-grade-de-fin-d-annee</guid>
+      <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
+      <category>Actualité</category>
+      <description>Nage Waza, Ne Waza et Ukemi au programme. Liste d&#39;inscription affichée au dojo.</description>
+    </item>
+    <item>
+      <title>Tournoi LFJ Bruxelles-Midi</title>
+      <link>https://judoclubanderlecht.be/#actu</link>
+      <guid isPermaLink="false">news-2026-05-20-tournoi-lfj-bruxelles-midi</guid>
+      <pubDate>Wed, 20 May 2026 00:00:00 GMT</pubDate>
+      <category>Actualité</category>
+      <description>Notre équipe jeune participe au tournoi régional — venez supporter !</description>
+    </item>
+    <item>
+      <title>Lila</title>
+      <link>https://judoclubanderlecht.be/#galerie</link>
+      <guid isPermaLink="false">photo-20260424-180147-lila.jpg</guid>
+      <pubDate>Fri, 24 Apr 2026 16:01:47 GMT</pubDate>
+      <category>Galerie</category>
+      <description>02 · Championnat de Belgique 2026 — Lila</description>
+      <enclosure url="https://judoclubanderlecht.be/images/20260424-180147-lila.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Le tatami</title>
+      <link>https://judoclubanderlecht.be/#galerie</link>
+      <guid isPermaLink="false">photo-dojo.jpeg</guid>
+      <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Galerie</category>
+      <description>01 · DOJO — Le tatami</description>
+      <enclosure url="https://judoclubanderlecht.be/dojo.jpeg" type="image/jpeg" length="0"/>
+    </item>
   </channel>
 </rss>
