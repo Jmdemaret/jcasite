@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0012",
-    "publishedAt": "2026-04-24T08:57:47.992Z",
+    "version": "1.0013",
+    "publishedAt": "2026-04-24T09:17:13.644Z",
     "history": [
+      {
+        "version": "1.0013",
+        "date": "2026-04-24T09:17:13.644Z",
+        "summary": "Bannière activée"
+      },
       {
         "version": "1.0012",
         "date": "2026-04-24T08:57:47.992Z",
@@ -134,7 +139,7 @@
     }
   },
   "banner": {
-    "active": false,
+    "active": true,
     "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai"
   },
   "texts": {
