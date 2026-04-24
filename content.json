@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0026",
-    "publishedAt": "2026-04-24T16:50:36.338Z",
+    "version": "1.0027",
+    "publishedAt": "2026-04-24T17:02:04.159Z",
     "history": [
+      {
+        "version": "1.0027",
+        "date": "2026-04-24T17:02:04.159Z",
+        "summary": "+2 photos"
+      },
       {
         "version": "1.0026",
         "date": "2026-04-24T16:50:36.338Z",
@@ -316,6 +321,16 @@
     {
       "img": "images/20260424-180147-lila.jpg",
       "label": "02 · Championnat de Belgique 2026",
+      "title": "Lila 3ème"
+    },
+    {
+      "img": "images/20260424-190201-kadiatou-3ieme.jpg",
+      "label": "03 · Championnat Régional 2026",
+      "title": "Kadiatou 3ième"
+    },
+    {
+      "img": "images/20260424-190203-1-lila-3eme.jpg",
+      "label": "03 · Championnat Régional 2026",
       "title": "Lila 3ème"
     }
   ],
