@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0029",
-    "publishedAt": "2026-04-24T17:33:05.548Z",
+    "version": "1.0030",
+    "publishedAt": "2026-04-24T17:37:14.745Z",
     "history": [
+      {
+        "version": "1.0030",
+        "date": "2026-04-24T17:37:14.745Z",
+        "summary": "+2 albums · +2 photos dans album(s)"
+      },
       {
         "version": "1.0029",
         "date": "2026-04-24T17:33:05.548Z",
@@ -324,6 +329,35 @@
   },
   "gallery": [],
   "albums": [
+    {
+      "id": "album-20260424-pta7",
+      "title": "Championnat Regionnal 2026",
+      "date": "2026-02-07",
+      "kanji": "試合",
+      "description": "2 médailles",
+      "cover": null,
+      "photos": [
+        {
+          "img": "images/20260424-193712-kadiatou-3ieme.jpg",
+          "title": "Kadiatou 3ième",
+          "caption": "U15 -48 Kg"
+        },
+        {
+          "img": "images/20260424-193713-1-lila-3ieme.jpg",
+          "title": "lila 3ième",
+          "caption": "U21 -78 Kg"
+        }
+      ]
+    },
+    {
+      "id": "album-20260424-kydg",
+      "title": "",
+      "date": "2026-04-24",
+      "kanji": "行事",
+      "description": "",
+      "cover": null,
+      "photos": []
+    },
     {
       "id": "album-20260424-r8p1",
       "title": "Championnat de Belgique",
