@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0027",
-    "publishedAt": "2026-04-24T17:02:04.159Z",
+    "version": "1.0028",
+    "publishedAt": "2026-04-24T17:20:36.014Z",
     "history": [
+      {
+        "version": "1.0028",
+        "date": "2026-04-24T17:20:36.014Z",
+        "summary": "-4 photos · +2 albums · +5 photos dans album(s)"
+      },
       {
         "version": "1.0027",
         "date": "2026-04-24T17:02:04.159Z",
@@ -312,26 +317,52 @@
     "contact": {},
     "sponsors": {}
   },
-  "gallery": [
+  "gallery": [],
+  "albums": [
     {
-      "img": "dojo.jpeg",
-      "label": "01 · DOJO",
-      "title": "Le tatami"
+      "id": "album-20260424-r8p1",
+      "title": "Championnat de Belgique",
+      "date": "2026-02-20",
+      "kanji": "試合",
+      "description": "Lila 3ème",
+      "cover": null,
+      "photos": [
+        {
+          "img": "images/20260424-192034-lila-3eme.jpg",
+          "title": "Lila 3ème",
+          "caption": "Podium -78 KG"
+        }
+      ]
     },
     {
-      "img": "images/20260424-180147-lila.jpg",
-      "label": "02 · Championnat de Belgique 2026",
-      "title": "Lila 3ème"
-    },
-    {
-      "img": "images/20260424-190201-kadiatou-3ieme.jpg",
-      "label": "03 · Championnat Régional 2026",
-      "title": "Kadiatou 3ième"
-    },
-    {
-      "img": "images/20260424-190203-1-lila-3eme.jpg",
-      "label": "03 · Championnat Régional 2026",
-      "title": "Lila 3ème"
+      "id": "album-20260424-d7ua",
+      "title": "Galerie",
+      "date": "2026-04-24",
+      "kanji": "行事",
+      "description": "",
+      "cover": null,
+      "photos": [
+        {
+          "img": "dojo.jpeg",
+          "title": "Le tatami",
+          "caption": "01 · DOJO"
+        },
+        {
+          "img": "images/20260424-180147-lila.jpg",
+          "title": "Lila 3ème",
+          "caption": "02 · Championnat de Belgique 2026"
+        },
+        {
+          "img": "images/20260424-190201-kadiatou-3ieme.jpg",
+          "title": "Kadiatou 3ième",
+          "caption": "03 · Championnat Régional 2026"
+        },
+        {
+          "img": "images/20260424-190203-1-lila-3eme.jpg",
+          "title": "Lila 3ème",
+          "caption": "03 · Championnat Régional 2026"
+        }
+      ]
     }
   ],
   "news": [
