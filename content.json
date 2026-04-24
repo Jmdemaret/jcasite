@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0010",
-    "publishedAt": "2026-04-24T08:05:00.755Z",
+    "version": "1.0011",
+    "publishedAt": "2026-04-24T08:11:11.632Z",
     "history": [
+      {
+        "version": "1.0011",
+        "date": "2026-04-24T08:11:11.632Z",
+        "summary": "Bannière modifiée"
+      },
       {
         "version": "1.0010",
         "date": "2026-04-24T08:05:00.755Z",
@@ -125,7 +130,7 @@
   },
   "banner": {
     "active": false,
-    "text": "<strong>Info</strong> — Fermeture estivale du <strong>20 au 28 juillet</strong>. Reprise des cours le 29 juillet."
+    "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai"
   },
   "texts": {
     "hero": {
