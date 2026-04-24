@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0028",
-    "publishedAt": "2026-04-24T17:20:36.014Z",
+    "version": "1.0029",
+    "publishedAt": "2026-04-24T17:33:05.548Z",
     "history": [
+      {
+        "version": "1.0029",
+        "date": "2026-04-24T17:33:05.548Z",
+        "summary": "-3 photos d'album(s)"
+      },
       {
         "version": "1.0028",
         "date": "2026-04-24T17:20:36.014Z",
@@ -346,21 +351,6 @@
           "img": "dojo.jpeg",
           "title": "Le tatami",
           "caption": "01 · DOJO"
-        },
-        {
-          "img": "images/20260424-180147-lila.jpg",
-          "title": "Lila 3ème",
-          "caption": "02 · Championnat de Belgique 2026"
-        },
-        {
-          "img": "images/20260424-190201-kadiatou-3ieme.jpg",
-          "title": "Kadiatou 3ième",
-          "caption": "03 · Championnat Régional 2026"
-        },
-        {
-          "img": "images/20260424-190203-1-lila-3eme.jpg",
-          "title": "Lila 3ème",
-          "caption": "03 · Championnat Régional 2026"
         }
       ]
     }
