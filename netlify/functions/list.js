@@ -14,9 +14,10 @@
 const { getStore } = require('@netlify/blobs');
 
 exports.handler = async (event) => {
-  const allowedOrigin = process.env.ALLOWED_ORIGIN || '*';
+  // Endpoint admin, protégé par secret → on autorise toute origine (y compris file://)
+  // Contrairement à send.js qui est restreint à l'origine du site public.
   const headers = {
-    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS',
     'Content-Type': 'application/json'
