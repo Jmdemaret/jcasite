@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0032",
-    "publishedAt": "2026-04-24T17:38:15.447Z",
+    "version": "1.0033",
+    "publishedAt": "2026-04-24T18:31:49.918Z",
     "history": [
+      {
+        "version": "1.0033",
+        "date": "2026-04-24T18:31:49.918Z",
+        "summary": "+1 album · +7 photos dans album(s)"
+      },
       {
         "version": "1.0032",
         "date": "2026-04-24T17:38:15.447Z",
@@ -339,6 +344,51 @@
   },
   "gallery": [],
   "albums": [
+    {
+      "id": "album-20260424-fc25",
+      "title": "Championnat Provincial 2026",
+      "date": "2026-01-25",
+      "kanji": "試合",
+      "description": "7 medailles",
+      "cover": null,
+      "photos": [
+        {
+          "img": "images/20260424-203141-elior.jpg",
+          "title": "Elior ",
+          "caption": "1er"
+        },
+        {
+          "img": "images/20260424-203143-1-lila.jpg",
+          "title": "Lila ",
+          "caption": "2ème"
+        },
+        {
+          "img": "images/20260424-203144-2-kadiatou.jpg",
+          "title": "kadiatou ",
+          "caption": "2ème"
+        },
+        {
+          "img": "images/20260424-203145-3-sacha-2-provincial.jpg",
+          "title": "sacha 2 provincial",
+          "caption": "2ème"
+        },
+        {
+          "img": "images/20260424-203146-4-bilal.jpg",
+          "title": "Bilal ",
+          "caption": "3ème"
+        },
+        {
+          "img": "images/20260424-203147-5-israe.jpg",
+          "title": "Israe ",
+          "caption": "3ème"
+        },
+        {
+          "img": "images/20260424-203148-6-jacopo.jpg",
+          "title": "jacopo ",
+          "caption": "3ème"
+        }
+      ]
+    },
     {
       "id": "album-20260424-pta7",
       "title": "Championnat Regionnal 2026",
