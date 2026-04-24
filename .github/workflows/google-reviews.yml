@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+# Force Node.js 24 pour les JS actions (évite l'avertissement de dépréciation
+# de Node 20 — sera le défaut le 2 juin 2026)
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
