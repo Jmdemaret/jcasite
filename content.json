@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0013",
-    "publishedAt": "2026-04-24T09:17:13.644Z",
+    "version": "1.0014",
+    "publishedAt": "2026-04-24T10:04:04.553Z",
     "history": [
+      {
+        "version": "1.0014",
+        "date": "2026-04-24T10:04:04.553Z",
+        "summary": "1 texte modifié"
+      },
       {
         "version": "1.0013",
         "date": "2026-04-24T09:17:13.644Z",
@@ -155,7 +160,9 @@
     "galerie": {},
     "equipe": {},
     "temoignages": {},
-    "faq": {},
+    "faq": {
+      "a2": "<span style=\"color: rgb(74, 66, 59); font-size: medium;\">Un survêtement et des vêtements propres suffisent. Le kimono peut être prêté. Prévoir une bouteille d'eau et une tenue de rechange.</span>"
+    },
     "preInscription": {},
     "contact": {},
     "sponsors": {}
