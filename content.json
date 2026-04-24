@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0022",
-    "publishedAt": "2026-04-24T16:01:49.095Z",
+    "version": "1.0023",
+    "publishedAt": "2026-04-24T16:13:41.422Z",
     "history": [
+      {
+        "version": "1.0023",
+        "date": "2026-04-24T16:13:41.422Z",
+        "summary": "-2 actus"
+      },
       {
         "version": "1.0022",
         "date": "2026-04-24T16:01:49.095Z",
@@ -304,18 +309,6 @@
       "tag": "Rentrée",
       "title": "Reprise des cours — saison 2026/2027",
       "body": "Les cours reprennent le lundi 1<sup>er</sup> septembre. Pensez à pré-inscrire votre enfant pour garantir sa place."
-    },
-    {
-      "date": "2026-06-15",
-      "tag": "Passage",
-      "title": "Passages de grade de fin d'année",
-      "body": "Nage Waza, Ne Waza et Ukemi au programme. Liste d'inscription affichée au dojo."
-    },
-    {
-      "date": "2026-05-20",
-      "tag": "Compétition",
-      "title": "Tournoi LFJ Bruxelles-Midi",
-      "body": "Notre équipe jeune participe au tournoi régional — venez supporter !"
     }
   ],
   "events": [
