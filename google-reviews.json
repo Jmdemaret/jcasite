@@ -1,5 +1,5 @@
 {
   "reviews": [],
-  "fetched_at": 0,
-  "note": "Ce fichier est rempli automatiquement par GitHub Actions une fois par semaine (workflow google-reviews.yml). Configurez les secrets GOOGLE_API_KEY et GOOGLE_PLACE_ID puis déclenchez manuellement le workflow la première fois."
+  "fetched_at": 1777038504,
+  "error": "missing secrets"
 }
