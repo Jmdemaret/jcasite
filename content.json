@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0019",
-    "publishedAt": "2026-04-24T13:50:53.696Z",
+    "version": "1.0020",
+    "publishedAt": "2026-04-24T14:06:00.097Z",
     "history": [
+      {
+        "version": "1.0020",
+        "date": "2026-04-24T14:06:00.097Z",
+        "summary": "-4 témoignages"
+      },
       {
         "version": "1.0019",
         "date": "2026-04-24T13:50:53.696Z",
@@ -334,26 +339,5 @@
       "loc": "Extérieur"
     }
   ],
-  "testimonials": [
-    {
-      "author": "Émilie L.",
-      "role": "Maman de Léo, 8 ans",
-      "text": "Léo y va avec le sourire. Les sensei sont patients, l'ambiance familiale. Il a gagné en confiance en quelques mois."
-    },
-    {
-      "author": "Karim B.",
-      "role": "Papa de Yasmine, 6 ans",
-      "text": "Un vrai club traditionnel avec des valeurs fortes. Ma fille adore ses mercredis après-midi."
-    },
-    {
-      "author": "Sophie R.",
-      "role": "Judoka adulte, ceinture bleue",
-      "text": "J'ai repris le judo à 35 ans ici, accueil parfait quel que soit le niveau. Les cours sont exigeants et bienveillants."
-    },
-    {
-      "author": "Marc V.",
-      "role": "Papa de deux enfants",
-      "text": "Prix accessibles, vrais enseignants, vrai dojo. On voit la différence avec les clubs qui font juste du loisir."
-    }
-  ]
+  "testimonials": []
 }
