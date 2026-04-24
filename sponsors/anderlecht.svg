@@ -1,6 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 120" role="img" aria-label="Commune d'Anderlecht — placeholder">
-  <rect x="2" y="2" width="276" height="116" rx="10" fill="#FBF6E9" stroke="#7a6f64" stroke-width="1.5" stroke-dasharray="6 4"/>
-  <text x="140" y="56" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="600" fill="#1D1916">Commune d'Anderlecht</text>
-  <text x="140" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#4a423b">Gemeente Anderlecht</text>
-  <text x="140" y="104" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#9a8f83" letter-spacing="0.15em">LOGO À UPLOADER</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" role="img" aria-label="Commune d'Anderlecht">
+  <rect x="1" y="1" width="318" height="108" rx="8" fill="#FFFFFF" stroke="#E5E5E5" stroke-width="1"/>
+  <g transform="translate(24 25)">
+    <rect x="0" y="0" width="42" height="60" fill="#C8102E" rx="3"/>
+    <text x="21" y="38" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#FFD700">A</text>
+  </g>
+  <text x="84" y="48" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1D1916" letter-spacing=".5">Commune d'Anderlecht</text>
+  <text x="84" y="68" font-family="Inter, Arial, sans-serif" font-size="12" font-style="italic" fill="#555">Gemeente Anderlecht</text>
+  <text x="84" y="92" font-family="ui-monospace, monospace" font-size="8" fill="#9a8f83" letter-spacing=".15em">PLACEHOLDER · REMPLACER</text>
 </svg>

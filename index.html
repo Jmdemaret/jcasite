@@ -172,9 +172,17 @@
 
   @media(max-width:900px){
     #hero{grid-template-columns:1fr;grid-template-rows:auto auto;}
-    .hero-left{padding:7rem 1.5rem 3rem;}
+    /* Sur mobile le menu passe en colonne (logo + 2 lignes de liens) et
+       peut prendre jusqu'à ~200px de haut avec la bannière. On décale
+       donc le contenu du hero pour éviter que l'étiquette « Dojo depuis 1977 »
+       soit masquée au chargement. */
+    .hero-left{padding:calc(var(--bh, 40px) + 13rem) 1.25rem 3rem;}
     .hero-right{min-height:60vh;border-left:none;border-top:1px solid rgba(29,25,22,.06);}
     .hero-kanji{font-size:60vw;top:auto;bottom:10vh;right:-10vw;}
+  }
+  @media(max-width:520px){
+    /* Écrans très étroits : prévoir un peu plus d'air pour la nav wrappée */
+    .hero-left{padding:calc(var(--bh, 40px) + 15rem) 1rem 3rem;}
   }
 
   /* Display */
@@ -286,6 +294,17 @@
   .pillar:hover{border-left-color:var(--hinomaru);padding-left:2.5rem;}
   .pillar .n{font-family:'JetBrains Mono';font-size:.7rem;letter-spacing:.2em;color:var(--hinomaru);margin-bottom:.8rem;}
   .pillar h4{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:.4rem;font-weight:400;}
+
+  /* Sponsors / Subsides */
+  #sponsors{background:linear-gradient(180deg,var(--paper) 0%, var(--paper-warm) 100%);border-top:1px solid rgba(29,25,22,.08);}
+  .sponsor-card{
+    display:flex;flex-direction:column;align-items:center;gap:.65rem;
+    padding:1.5rem 2rem;border-radius:14px;transition:all .35s cubic-bezier(.2,.8,.2,1);
+    filter:grayscale(.4);opacity:.85;text-decoration:none;
+  }
+  .sponsor-card:hover{filter:grayscale(0);opacity:1;transform:translateY(-3px);}
+  .sponsor-card img{height:72px;max-width:240px;object-fit:contain;display:block;}
+  .sponsor-card .caption{font-family:'JetBrains Mono';font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#7a6f64;}
 
   /* Map (Leaflet) */
   #dojo-map{z-index:1;}
@@ -1034,19 +1053,22 @@
 </section>
 
 <!-- ==================================================================
-                            SPONSORS / SUBSIDES
+                              SPONSORS / SUBSIDES
 ==================================================================== -->
-<section id="sponsors" class="py-16 md:py-20 bg-paper-100/40 border-t border-sumi-900/5">
-  <div class="max-w-5xl mx-auto px-6 lg:px-10">
-    <div class="text-center mb-10 reveal">
-      <div class="label justify-center">支援 — Avec le soutien de</div>
-    </div>
-    <div class="sponsor-grid reveal">
-      <a href="https://www.cocof.brussels" target="_blank" rel="noopener" class="sponsor-link" title="COCOF — Commission communautaire française">
+<section id="sponsors" class="py-16 md:py-20 relative">
+  <div class="max-w-5xl mx-auto px-6 lg:px-10 text-center">
+    <div class="label justify-center mb-6" data-text="sponsors.label">協賛 — Soutiens</div>
+    <h3 class="font-display text-2xl md:text-3xl text-sumi-900 mb-3" data-text-html="sponsors.title">Avec le soutien de</h3>
+    <p class="text-sm text-[#7a6f64] mb-10 max-w-xl mx-auto" data-text="sponsors.intro">Le Judo Club Anderlecht bénéficie de subsides qui contribuent à la pérennité et à l'accessibilité de ses activités.</p>
+
+    <div class="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
+      <a href="https://www.cocof.brussels" target="_blank" rel="noopener" class="sponsor-card">
         <img src="sponsors/cocof.svg" alt="COCOF — Commission communautaire française" />
+        <span class="caption">COCOF</span>
       </a>
-      <a href="https://www.anderlecht.be" target="_blank" rel="noopener" class="sponsor-link" title="Commune d'Anderlecht">
-        <img src="sponsors/anderlecht.svg" alt="Commune d'Anderlecht" />
+      <a href="https://www.anderlecht.be" target="_blank" rel="noopener" class="sponsor-card">
+        <img src="sponsors/anderlecht.svg" alt="Commune d'Anderlecht — Gemeente Anderlecht" />
+        <span class="caption">Commune d'Anderlecht</span>
       </a>
     </div>
   </div>
@@ -1085,7 +1107,7 @@
 const DEFAULT_CONFIG = {
   sections:{
     club:true,cours:true,tarifs:true,actu:true,evenements:true,
-    galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true
+    galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true,sponsors:true
   },
   banner:{active:true,text:'<strong>Info</strong> — Bienvenue au Judo Club Anderlecht.'},
   gallery:[
@@ -1109,7 +1131,8 @@ const SECTION_MAP = {
   equipe:          {id:'equipe',          nav:[]},
   temoignages:     {id:'temoignages',     nav:['#temoignages']},
   faq:             {id:'faq',             nav:['#faq']},
-  preInscription:  {id:'pre-inscription', nav:['#pre-inscription']}
+  preInscription:  {id:'pre-inscription', nav:['#pre-inscription']},
+  sponsors:        {id:'sponsors',        nav:[]}
 };
 
 function applySectionVisibility(){
