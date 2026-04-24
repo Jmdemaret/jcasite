@@ -445,15 +445,194 @@
   .age-chip.active{background:var(--sumi);color:#fff;border-color:var(--sumi);}
   .age-chip.active .sw{box-shadow:0 0 0 2px rgba(255,255,255,.3);}
 
-  /* ============ GALLERY ============ */
-  .h-gallery{display:flex;gap:1.25rem;overflow-x:auto;padding:2rem 0 3rem;scroll-snap-type:x mandatory;scrollbar-width:none;}
-  .h-gallery::-webkit-scrollbar{display:none;}
-  .h-card{flex:0 0 auto;width:min(78vw,560px);scroll-snap-align:center;position:relative;border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(29,25,22,.2);transition:transform .5s cubic-bezier(.2,.8,.2,1);}
-  .h-card:hover{transform:translateY(-8px);}
-  .h-card img{width:100%;height:70vh;max-height:640px;object-fit:cover;display:block;}
-  .h-card .cap{position:absolute;left:1.5rem;right:1.5rem;bottom:1.5rem;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.7);z-index:2;}
-  .h-card .cap .display{color:#fff;font-weight:500;}
-  .h-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.45) 75%,rgba(0,0,0,.75) 100%);pointer-events:none;}
+  /* ============ GALLERY — ALBUMS EDITORIAL MOSAIC (Phase 2) ============ */
+  #albums-mosaic{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:.9rem;
+    grid-auto-rows:minmax(210px,auto);grid-auto-flow:dense;
+  }
+  .alb-card{
+    position:relative;border-radius:18px;overflow:hidden;cursor:pointer;
+    background:#1D1916;isolation:isolate;
+    box-shadow:0 20px 50px -22px rgba(29,25,22,.35);
+    transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s;
+  }
+  .alb-card::after{
+    content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(180deg,rgba(29,25,22,.1) 0%,transparent 35%,rgba(29,25,22,.5) 78%,rgba(29,25,22,.85) 100%);
+  }
+  .alb-card img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    transition:transform 1.2s cubic-bezier(.2,.8,.2,1),filter .6s;
+    filter:saturate(.95);
+  }
+  .alb-card:hover{transform:translateY(-6px);box-shadow:0 30px 70px -25px rgba(29,25,22,.55);}
+  .alb-card:hover img{transform:scale(1.08);filter:saturate(1.1);}
+  /* Badge kanji */
+  .alb-kanji{
+    position:absolute;top:1rem;left:1.1rem;z-index:3;
+    font-family:'Shippori Mincho',serif;font-size:2.4rem;font-weight:700;
+    color:#FBF6E9;text-shadow:0 3px 14px rgba(0,0,0,.6);
+    line-height:1;letter-spacing:-.02em;
+    opacity:.92;
+  }
+  .alb-count{
+    position:absolute;top:1.15rem;right:1.15rem;z-index:3;
+    background:rgba(251,246,233,.15);backdrop-filter:blur(8px);
+    color:#FBF6E9;padding:.3rem .65rem;border-radius:999px;
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;
+    border:1px solid rgba(251,246,233,.22);
+  }
+  /* Caption stack en bas */
+  .alb-caption{
+    position:absolute;left:1.4rem;right:1.4rem;bottom:1.3rem;z-index:3;
+    color:#FBF6E9;text-shadow:0 2px 14px rgba(0,0,0,.55);
+  }
+  .alb-caption .alb-date{
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;
+    text-transform:uppercase;opacity:.85;margin-bottom:.35rem;
+  }
+  .alb-caption .alb-title{
+    font-family:'Fraunces',serif;font-size:1.7rem;font-weight:400;line-height:1.05;
+    font-variation-settings:"opsz" 144,"SOFT" 50;letter-spacing:-.015em;
+  }
+  .alb-caption .alb-desc{
+    font-size:.82rem;opacity:.85;margin-top:.4rem;max-width:48ch;
+    overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  }
+  .alb-cta{
+    display:inline-flex;align-items:center;gap:.4rem;
+    margin-top:.7rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;
+    letter-spacing:.18em;text-transform:uppercase;opacity:0;transform:translateX(-8px);
+    transition:opacity .4s,transform .4s;
+  }
+  .alb-card:hover .alb-cta{opacity:.95;transform:translateX(0);}
+  .alb-cta::after{content:'→';font-family:inherit;}
+
+  /* Tailles irrégulières (grille bento, cycle de 6) */
+  .alb-size-xl{grid-column:span 8;grid-row:span 2;}       /* hero */
+  .alb-size-l {grid-column:span 4;grid-row:span 2;}       /* tall */
+  .alb-size-m {grid-column:span 6;grid-row:span 1;}       /* wide */
+  .alb-size-s {grid-column:span 4;grid-row:span 1;}       /* square */
+
+  /* Quote card 柔 : span 4 cols row 1 */
+  .alb-quote{
+    grid-column:span 4;grid-row:span 1;
+    background:linear-gradient(135deg,#1D1916 0%,#432C5F 100%);
+    border-radius:18px;display:grid;place-items:center;padding:1.5rem;text-align:center;
+    box-shadow:0 20px 50px -22px rgba(29,25,22,.35);
+  }
+  .alb-quote .k{font-family:'Shippori Mincho',serif;font-size:3.5rem;color:#D41B33;line-height:1;margin-bottom:.6rem;}
+  .alb-quote p{color:#FBF6E9;font-style:italic;opacity:.9;max-width:22ch;font-size:.88rem;}
+
+  @media(max-width:1024px){
+    #albums-mosaic{grid-template-columns:repeat(6,1fr);}
+    .alb-size-xl{grid-column:span 6;grid-row:span 2;}
+    .alb-size-l {grid-column:span 3;grid-row:span 2;}
+    .alb-size-m {grid-column:span 6;grid-row:span 1;}
+    .alb-size-s {grid-column:span 3;grid-row:span 1;}
+    .alb-quote  {grid-column:span 3;grid-row:span 1;}
+  }
+  @media(max-width:640px){
+    #albums-mosaic{grid-template-columns:1fr;gap:.7rem;grid-auto-rows:minmax(260px,auto);}
+    .alb-size-xl,.alb-size-l,.alb-size-m,.alb-size-s,.alb-quote{grid-column:span 1;grid-row:span 1;}
+    .alb-size-xl{grid-row:span 2;}
+    .alb-caption .alb-title{font-size:1.4rem;}
+  }
+
+  /* ============ ALBUM LIGHTBOX (niveau 2) ============ */
+  #album-lightbox{
+    position:fixed;inset:0;z-index:100;background:rgba(15,13,11,.92);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    opacity:0;pointer-events:none;transition:opacity .35s;
+    overflow-y:auto;overscroll-behavior:contain;
+  }
+  #album-lightbox.open{opacity:1;pointer-events:auto;}
+  body.lightbox-open{overflow:hidden;}
+  .lb-header{
+    position:sticky;top:0;z-index:5;padding:1.2rem 1.5rem 1.1rem;
+    background:linear-gradient(180deg,rgba(15,13,11,.95) 0%,rgba(15,13,11,.6) 80%,transparent);
+    display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+  }
+  .lb-header .lb-meta{color:#FBF6E9;max-width:900px;}
+  .lb-header .lb-kanji{font-family:'Shippori Mincho',serif;font-size:1.8rem;color:#D41B33;margin-bottom:.2rem;line-height:1;}
+  .lb-header .lb-title{font-family:'Fraunces',serif;font-size:2rem;line-height:1.1;margin-bottom:.3rem;font-variation-settings:"opsz" 144;}
+  .lb-header .lb-sub{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#B99A5A;}
+  .lb-header .lb-desc{color:#d5ccc0;font-size:.92rem;margin-top:.6rem;max-width:60ch;}
+  .lb-close{
+    width:44px;height:44px;border-radius:50%;border:1px solid rgba(251,246,233,.3);
+    display:grid;place-items:center;color:#FBF6E9;
+    transition:background .25s,transform .25s;flex:0 0 auto;
+  }
+  .lb-close:hover{background:rgba(251,246,233,.12);transform:rotate(90deg);}
+  .lb-masonry{
+    columns:3 240px;column-gap:.9rem;padding:0 1.5rem 3rem;max-width:1400px;margin:0 auto;
+  }
+  .lb-thumb{
+    break-inside:avoid;margin-bottom:.9rem;border-radius:10px;overflow:hidden;position:relative;
+    cursor:zoom-in;box-shadow:0 10px 30px -15px rgba(0,0,0,.5);
+    transition:transform .4s,box-shadow .4s;
+  }
+  .lb-thumb img{width:100%;display:block;transition:transform .8s cubic-bezier(.2,.8,.2,1);}
+  .lb-thumb:hover{transform:translateY(-3px);box-shadow:0 18px 38px -15px rgba(0,0,0,.6);}
+  .lb-thumb:hover img{transform:scale(1.04);}
+  .lb-thumb .lb-cap{
+    position:absolute;left:0;right:0;bottom:0;padding:.7rem .9rem .6rem;
+    color:#FBF6E9;font-size:.78rem;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.75));
+    opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;
+  }
+  .lb-thumb:hover .lb-cap{opacity:1;transform:translateY(0);}
+
+  /* ============ PHOTO LIGHTBOX (niveau 3) ============ */
+  #photo-lightbox{
+    position:fixed;inset:0;z-index:110;background:rgba(8,7,6,.96);
+    opacity:0;pointer-events:none;transition:opacity .25s;
+    display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  }
+  #photo-lightbox.open{opacity:1;pointer-events:auto;}
+  .ph-stage{
+    position:relative;max-width:min(96vw,1400px);max-height:86vh;
+    display:flex;flex-direction:column;align-items:center;gap:.8rem;
+  }
+  .ph-stage img{
+    max-width:100%;max-height:78vh;object-fit:contain;border-radius:6px;
+    box-shadow:0 30px 80px -20px rgba(0,0,0,.8);
+    transform:scale(.98);opacity:0;transition:transform .3s,opacity .3s;
+  }
+  #photo-lightbox.open .ph-stage img{transform:scale(1);opacity:1;}
+  .ph-cap{
+    color:#FBF6E9;text-align:center;max-width:80ch;min-height:2.4rem;
+    font-size:.95rem;
+  }
+  .ph-cap .ph-title{font-family:'Fraunces',serif;font-size:1.1rem;}
+  .ph-cap .ph-sub{color:#b8afa4;font-size:.85rem;margin-top:.15rem;}
+  .ph-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:54px;height:54px;border-radius:50%;border:1px solid rgba(251,246,233,.25);
+    background:rgba(15,13,11,.55);backdrop-filter:blur(10px);
+    display:grid;place-items:center;color:#FBF6E9;
+    transition:background .25s,border-color .25s,transform .2s;
+  }
+  .ph-nav:hover{background:rgba(251,246,233,.15);border-color:rgba(251,246,233,.45);}
+  .ph-nav:active{transform:translateY(-50%) scale(.94);}
+  .ph-prev{left:-1.5rem;} .ph-next{right:-1.5rem;}
+  @media(max-width:900px){.ph-prev{left:-.3rem;} .ph-next{right:-.3rem;} .ph-nav{width:46px;height:46px;}}
+  .ph-close{
+    position:absolute;top:-1.1rem;right:-1.1rem;
+    width:46px;height:46px;border-radius:50%;border:1px solid rgba(251,246,233,.3);
+    background:rgba(15,13,11,.55);backdrop-filter:blur(10px);
+    display:grid;place-items:center;color:#FBF6E9;
+    transition:background .25s,transform .25s;
+  }
+  .ph-close:hover{background:rgba(251,246,233,.15);transform:rotate(90deg);}
+  .ph-counter{
+    position:absolute;top:-1.3rem;left:0;color:#b8afa4;
+    font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.2em;
+  }
+  @media(prefers-reduced-motion:reduce){
+    .alb-card,.alb-card img,.lb-thumb,.lb-thumb img,.ph-stage img{transition:none !important;}
+    #top-banner.t-important{animation:none !important;}
+  }
 
   /* ============ PRICING ============ */
   .price-card{background:#fff;border:1px solid rgba(29,25,22,.06);border-radius:20px;padding:2rem;position:relative;transition:all .4s cubic-bezier(.2,.8,.2,1);}
@@ -885,14 +1064,51 @@
         <div class="label mb-8" data-text="galerie.label">武 — Galerie</div>
         <h2 class="display s-heading text-sumi-900" data-text-html="galerie.title">Sur le <em>tatami.</em></h2>
       </div>
-      <p class="text-[#4a423b] max-w-md" data-text-html="galerie.intro">Glissez horizontalement pour découvrir le dojo.</p>
+      <p class="text-[#4a423b] max-w-md" data-text-html="galerie.intro">Chaque album raconte un moment du club — compétitions, stages, passages de grade. Cliquez pour plonger dans les photos.</p>
     </div>
   </div>
 
-  <div class="h-gallery pl-6 lg:pl-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))] reveal" id="gallery-track">
-    <!-- Dynamically populated from localStorage or default -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 reveal" id="albums-mosaic">
+    <!-- Peuplé dynamiquement : une carte par album + carte 柔 finale -->
   </div>
 </section>
+
+<!-- Lightbox niveau 2 : détail d'un album (masonry) -->
+<div id="album-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="lb-header">
+    <div class="lb-meta">
+      <div class="lb-kanji" id="lb-kanji"></div>
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-sub" id="lb-sub"></div>
+      <div class="lb-desc" id="lb-desc"></div>
+    </div>
+    <button class="lb-close" id="lb-close" aria-label="Fermer l'album">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="lb-masonry" id="lb-masonry"></div>
+</div>
+
+<!-- Lightbox niveau 3 : photo individuelle -->
+<div id="photo-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="ph-stage">
+    <div class="ph-counter" id="ph-counter"></div>
+    <button class="ph-close" id="ph-close" aria-label="Fermer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <button class="ph-nav ph-prev" id="ph-prev" aria-label="Photo précédente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <img id="ph-img" src="" alt=""/>
+    <div class="ph-cap">
+      <div class="ph-title" id="ph-title"></div>
+      <div class="ph-sub" id="ph-sub"></div>
+    </div>
+    <button class="ph-nav ph-next" id="ph-next" aria-label="Photo suivante">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
 
 <!-- ==================================================================
                                  ÉQUIPE
@@ -1459,41 +1675,207 @@ function initBanner(){
 // ============ REVEALS OBSERVER (needed early) ============
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
 
-// ============ GALLERY (dynamic) ============
-// Phase 1 : lit "albums" en priorité (aplatit les photos), fallback sur "gallery" plat.
-// Phase 2 : remplacera ce rendu par un layout éditorial avec lightbox par album.
-function initGallery(){
-  const t=document.getElementById('gallery-track');
-  t.innerHTML='';
+// ============ GALLERY (Phase 2 — éditorial avec lightbox) ============
+// Pattern bento : cycle de 6 tailles pour créer un rythme visuel irrégulier
+const _ALBUM_SIZE_CYCLE = ['xl','s','s','l','m','m'];
+function _albSize(i){ return _ALBUM_SIZE_CYCLE[i % _ALBUM_SIZE_CYCLE.length]; }
+function _esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function _fmtDate(iso){
+  if(!iso) return '';
+  try{
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-BE',{month:'long',year:'numeric'});
+  }catch(_){ return iso; }
+}
 
-  // Construit une liste plate de photos à afficher, depuis albums si présent, sinon gallery
-  const flat = [];
+// Retourne la liste des albums à afficher (depuis CFG.albums, fallback sur flat gallery)
+function _resolveAlbums(){
   if((CFG.albums||[]).length){
-    (CFG.albums||[]).forEach(alb => {
-      (alb.photos||[]).forEach((ph, idx) => {
-        flat.push({
-          img: ph.img,
-          title: ph.title || alb.title || '',
-          label: ph.caption || `${String(idx+1).padStart(2,'0')} · ${(alb.title||'').toUpperCase()}`
-        });
-      });
-    });
-  } else {
-    (CFG.gallery||[]).forEach(it => flat.push(it));
+    return (CFG.albums||[])
+      .filter(a => (a.photos||[]).length > 0)
+      .slice()
+      .sort((a,b) => (b.date||'').localeCompare(a.date||''));
   }
+  // Fallback : pas d'albums → crée un album virtuel depuis gallery plat
+  if((CFG.gallery||[]).length){
+    return [{
+      id: 'legacy',
+      title: 'Galerie',
+      date: '',
+      kanji: '行事',
+      description: '',
+      cover: (CFG.gallery[0]||{}).img || '',
+      photos: (CFG.gallery||[]).map(g => ({
+        img: g.img, title: g.title || '', caption: g.label || ''
+      }))
+    }];
+  }
+  return [];
+}
 
-  flat.forEach(it=>{
-    const c=document.createElement('div');c.className='h-card';
-    c.innerHTML=`<img src="${it.img}" alt="${it.title||''}" /><div class="cap"><div class="font-mono text-xs tracking-[.2em] opacity-90">${it.label||''}</div><div class="display text-3xl mt-1">${it.title||''}</div></div>`;
-    t.appendChild(c);
+function initGallery(){
+  const mosaic = document.getElementById('albums-mosaic');
+  if(!mosaic) return;
+  mosaic.innerHTML = '';
+  const albums = _resolveAlbums();
+
+  albums.forEach((alb, i) => {
+    const cover = alb.cover || ((alb.photos||[])[0]||{}).img || '';
+    const size = _albSize(i);
+    const card = document.createElement('article');
+    card.className = 'alb-card alb-size-' + size;
+    card.setAttribute('role','button');
+    card.setAttribute('tabindex','0');
+    card.setAttribute('aria-label', `Ouvrir l'album ${alb.title||''} — ${alb.photos.length} photos`);
+    card.dataset.albumId = alb.id || ('a'+i);
+    card.innerHTML = `
+      ${cover ? `<img src="${_esc(cover)}" alt="" loading="lazy"/>` : ''}
+      <span class="alb-kanji">${_esc(alb.kanji||'行事')}</span>
+      <span class="alb-count">${alb.photos.length} photo${alb.photos.length>1?'s':''}</span>
+      <div class="alb-caption">
+        ${alb.date ? `<div class="alb-date">${_esc(_fmtDate(alb.date))}</div>` : ''}
+        <div class="alb-title">${_esc(alb.title||'Sans titre')}</div>
+        ${alb.description ? `<div class="alb-desc">${_esc(alb.description)}</div>` : ''}
+        <span class="alb-cta">Voir l'album</span>
+      </div>`;
+    const open = () => openAlbumLightbox(alb);
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); }});
+    mosaic.appendChild(card);
   });
 
-  // Carte finale "柔" toujours affichée comme conclusion
-  const q=document.createElement('div');q.className='h-card';
-  q.style.background='linear-gradient(135deg,#1D1916 0%,#432C5F 100%)';
-  q.innerHTML=`<div style="height:70vh;max-height:640px;" class="grid place-items-center text-center px-8 text-paper-50"><div><div class="font-japan text-7xl text-hinomaru-600 mb-4">柔</div><p class="opacity-90 max-w-xs mx-auto italic">« La voie de la souplesse » — Jigoro Kano</p></div></div>`;
-  t.appendChild(q);
+  // Carte finale 柔 (citation Kano)
+  const q = document.createElement('div');
+  q.className = 'alb-quote';
+  q.innerHTML = `<div><div class="k">柔</div><p>« La voie de la souplesse » — Jigoro Kano</p></div>`;
+  mosaic.appendChild(q);
 }
+
+// ============ ALBUM LIGHTBOX (niveau 2) ============
+let _currentAlbum = null;
+let _currentPhotoIndex = 0;
+
+function openAlbumLightbox(alb){
+  _currentAlbum = alb;
+  const lb = document.getElementById('album-lightbox');
+  document.getElementById('lb-kanji').textContent = alb.kanji || '行事';
+  document.getElementById('lb-title').textContent = alb.title || '';
+  const subBits = [];
+  if(alb.date) subBits.push(_fmtDate(alb.date));
+  subBits.push(`${alb.photos.length} photo${alb.photos.length>1?'s':''}`);
+  document.getElementById('lb-sub').textContent = subBits.join(' · ');
+  const desc = document.getElementById('lb-desc');
+  desc.textContent = alb.description || '';
+  desc.style.display = alb.description ? '' : 'none';
+
+  const grid = document.getElementById('lb-masonry');
+  grid.innerHTML = '';
+  alb.photos.forEach((ph, idx) => {
+    const fig = document.createElement('figure');
+    fig.className = 'lb-thumb';
+    fig.innerHTML = `<img src="${_esc(ph.img)}" alt="${_esc(ph.title||'')}" loading="lazy"/>
+      ${ph.title || ph.caption ? `<figcaption class="lb-cap"><strong>${_esc(ph.title||'')}</strong>${ph.caption?` · ${_esc(ph.caption)}`:''}</figcaption>` : ''}`;
+    fig.addEventListener('click', () => openPhotoLightbox(idx));
+    grid.appendChild(fig);
+  });
+
+  lb.classList.add('open');
+  lb.setAttribute('aria-hidden','false');
+  document.body.classList.add('lightbox-open');
+  // Reset scroll
+  lb.scrollTop = 0;
+}
+
+function closeAlbumLightbox(){
+  const lb = document.getElementById('album-lightbox');
+  lb.classList.remove('open');
+  lb.setAttribute('aria-hidden','true');
+  document.body.classList.remove('lightbox-open');
+  _currentAlbum = null;
+}
+
+// ============ PHOTO LIGHTBOX (niveau 3) ============
+function openPhotoLightbox(idx){
+  if(!_currentAlbum) return;
+  _currentPhotoIndex = idx;
+  _renderPhotoLightbox();
+  const pl = document.getElementById('photo-lightbox');
+  pl.classList.add('open');
+  pl.setAttribute('aria-hidden','false');
+}
+
+function _renderPhotoLightbox(){
+  if(!_currentAlbum) return;
+  const photos = _currentAlbum.photos;
+  const ph = photos[_currentPhotoIndex];
+  if(!ph) return;
+  document.getElementById('ph-img').src = ph.img || '';
+  document.getElementById('ph-img').alt = ph.title || '';
+  document.getElementById('ph-title').textContent = ph.title || '';
+  document.getElementById('ph-sub').textContent = ph.caption || '';
+  document.getElementById('ph-counter').textContent =
+    String(_currentPhotoIndex+1).padStart(2,'0') + ' / ' + String(photos.length).padStart(2,'0');
+  // Preload adjacents pour navigation instantanée
+  [_currentPhotoIndex-1, _currentPhotoIndex+1].forEach(i => {
+    const p = photos[(i+photos.length) % photos.length];
+    if(p && p.img){ const pre = new Image(); pre.src = p.img; }
+  });
+}
+
+function closePhotoLightbox(){
+  const pl = document.getElementById('photo-lightbox');
+  pl.classList.remove('open');
+  pl.setAttribute('aria-hidden','true');
+}
+
+function photoNav(dir){
+  if(!_currentAlbum) return;
+  const n = _currentAlbum.photos.length;
+  _currentPhotoIndex = (_currentPhotoIndex + dir + n) % n;
+  _renderPhotoLightbox();
+}
+
+// Câblage global (une seule fois au load)
+(() => {
+  const lb = document.getElementById('album-lightbox');
+  const pl = document.getElementById('photo-lightbox');
+  if(!lb || !pl) return;
+
+  document.getElementById('lb-close').addEventListener('click', closeAlbumLightbox);
+  document.getElementById('ph-close').addEventListener('click', closePhotoLightbox);
+  document.getElementById('ph-prev').addEventListener('click', () => photoNav(-1));
+  document.getElementById('ph-next').addEventListener('click', () => photoNav(+1));
+
+  // Clic backdrop = fermer (seulement si clic direct sur overlay, pas sur contenu)
+  lb.addEventListener('click', e => { if(e.target === lb) closeAlbumLightbox(); });
+  pl.addEventListener('click', e => { if(e.target === pl) closePhotoLightbox(); });
+
+  // Clavier
+  addEventListener('keydown', e => {
+    if(pl.classList.contains('open')){
+      if(e.key === 'Escape')     closePhotoLightbox();
+      else if(e.key === 'ArrowLeft')  photoNav(-1);
+      else if(e.key === 'ArrowRight') photoNav(+1);
+    } else if(lb.classList.contains('open')){
+      if(e.key === 'Escape') closeAlbumLightbox();
+    }
+  });
+
+  // Swipe tactile sur la lightbox photo
+  let tStartX = 0, tStartY = 0;
+  pl.addEventListener('touchstart', e => {
+    if(!e.touches[0]) return;
+    tStartX = e.touches[0].clientX; tStartY = e.touches[0].clientY;
+  }, {passive:true});
+  pl.addEventListener('touchend', e => {
+    if(!e.changedTouches[0]) return;
+    const dx = e.changedTouches[0].clientX - tStartX;
+    const dy = e.changedTouches[0].clientY - tStartY;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){
+      photoNav(dx < 0 ? +1 : -1);
+    }
+  }, {passive:true});
+})();
 
 // ============ NEWS (dynamic) ============
 function initNews(){
