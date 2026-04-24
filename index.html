@@ -916,11 +916,11 @@
     </p>
 
     <div class="reveal flex flex-wrap gap-4 mt-10">
-      <a href="#pre-inscription" class="btn btn-primary">
+      <a href="#pre-inscription" class="btn btn-primary" data-requires-section="preInscription">
         <span data-text="hero.ctaPrimary">Pré-inscription rentrée</span>
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <a href="#cours" class="btn btn-outline" data-text="hero.ctaSecondary">Voir les cours</a>
+      <a href="#cours" class="btn btn-outline" data-text="hero.ctaSecondary" data-requires-section="cours">Voir les cours</a>
     </div>
 
     <div class="reveal grid grid-cols-3 gap-6 lg:gap-10 mt-16 max-w-2xl">
@@ -1518,6 +1518,11 @@ function applySectionVisibility(){
         if(active){a.style.removeProperty('display');}
         else{a.style.setProperty('display','none','important');}
       });
+    });
+    // Tout élément qui déclare une dépendance à une section (ex: CTA hero)
+    document.querySelectorAll(`[data-requires-section="${key}"]`).forEach(el => {
+      if(active) el.style.removeProperty('display');
+      else       el.style.setProperty('display','none','important');
     });
   });
 }
