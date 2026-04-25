@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0038",
-    "publishedAt": "2026-04-25T12:57:29.799Z",
+    "version": "1.0039",
+    "publishedAt": "2026-04-25T13:00:49.787Z",
     "history": [
+      {
+        "version": "1.0039",
+        "date": "2026-04-25T13:00:49.787Z",
+        "summary": "+4 annonces"
+      },
       {
         "version": "1.0038",
         "date": "2026-04-25T12:57:29.799Z",
@@ -348,6 +353,50 @@
     "type": "horaires"
   },
   "announcements": [
+    {
+      "id": "ann-20260425-g1a",
+      "type": "important",
+      "title": "test",
+      "message": "",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-4iw",
+      "type": "evenement",
+      "title": "Test",
+      "message": "",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-bpn",
+      "type": "fermeture",
+      "title": "test",
+      "message": "",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-o2r",
+      "type": "information",
+      "title": "Test",
+      "message": "",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    },
     {
       "id": "ann-20260425-5po",
       "type": "vacances",
