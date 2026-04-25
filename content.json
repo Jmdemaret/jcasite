@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0043",
-    "publishedAt": "2026-04-25T13:16:10.126Z",
+    "version": "1.0044",
+    "publishedAt": "2026-04-25T13:18:11.760Z",
     "history": [
+      {
+        "version": "1.0044",
+        "date": "2026-04-25T13:18:11.760Z",
+        "summary": "Modifications diverses (champs non listés)"
+      },
       {
         "version": "1.0043",
         "date": "2026-04-25T13:16:10.126Z",
@@ -450,9 +455,7 @@
     "tarifs": {},
     "actu": {},
     "evenements": {},
-    "galerie": {
-      "intro": "<span style=\"color: rgb(74, 66, 59); font-size: medium;\">Chaque album raconte un moment du club — compétitions, stages, passages de grade. C</span>"
-    },
+    "galerie": {},
     "equipe": {},
     "temoignages": {},
     "faq": {
