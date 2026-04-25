@@ -1824,13 +1824,9 @@ function initAnnouncements(){
     return _annDays(_annToday(), a.ann.startDate) - _annDays(_annToday(), b.ann.startDate);
   });
 
-  // Affichage : urgences (important/fermeture) toujours, autres limités à 6
-  const URGENT_TYPES = new Set(['important','fermeture']);
-  const urgent  = items.filter(x => URGENT_TYPES.has(x.ann.type));
-  const regular = items.filter(x => !URGENT_TYPES.has(x.ann.type)).slice(0, 6);
-  const toRender = [...urgent, ...regular];
-
-  toRender.forEach((item, idx) => {
+  // Affichage : 3 max au total. Le tri (priorité par type, puis proximité)
+  // garantit que les "important" et "fermeture" remontent en haut et passent en premier.
+  items.slice(0, 3).forEach((item, idx) => {
     const node = renderAnnCard(item.ann, item.st, idx);
     if(node) host.appendChild(node);
   });

@@ -227,7 +227,16 @@ Schéma simplifié (les défauts dans index.html prennent le relais si une clé 
 - Filtre par période, écrit `google-reviews.json`
 - Commit auto si changements
 
-### 5.4 Upload image (depuis admin)
+### 5.4 Restauration de version
+- L'admin liste l'historique stocké dans `_meta.history`
+- Bouton **↶ Restaurer** par ligne (sauf version active)
+- `ghGetCommits('content.json', 100)` → liste les 100 derniers commits qui ont touché content.json
+- Match par regex `\bvX.XXXX\b` dans le message de commit
+- `ghGetContentAtRef(sha)` → récupère content.json à ce commit
+- Le state local est remplacé MAIS `_meta` actuel conservé (pas de régression de version)
+- L'utilisateur prévisualise puis publie normalement → nouveau commit créé
+
+### 5.5 Upload image (depuis admin)
 - User glisse fichier → compressed (1600px max, quality 85) → base64 dans state
 - À la publication : migration auto vers `/images/YYYYMMDD-HHMMSS-slug.ext`
 - Filename via `makeImageFilename()` : timestamp + slug du titre
@@ -381,6 +390,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 - [x] Formulaires SMTP Combell + persistance Netlify Blobs
 - [x] Dashboard messages dans admin
 - [x] Anti-conflit sha auto-retry
+- [x] **Restauration de version** depuis l'historique (un clic, fetch via API GitHub à un commit passé, l'état revient en local pour preview avant publish)
 - [x] Migration auto base64 → /images/
 - [x] Google Search Console vérifié + sitemap soumis
 - [x] Onglet Guide intégré dans admin (pour secrétaire)
