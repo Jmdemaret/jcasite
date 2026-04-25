@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0037",
-    "publishedAt": "2026-04-25T12:52:35.446Z",
+    "version": "1.0038",
+    "publishedAt": "2026-04-25T12:57:29.799Z",
     "history": [
+      {
+        "version": "1.0038",
+        "date": "2026-04-25T12:57:29.799Z",
+        "summary": "+3 annonces"
+      },
       {
         "version": "1.0037",
         "date": "2026-04-25T12:52:35.446Z",
@@ -344,11 +349,44 @@
   },
   "announcements": [
     {
-      "id": "ann-20260425-knk",
-      "type": "information",
+      "id": "ann-20260425-5po",
+      "type": "vacances",
+      "title": "Fête du travail",
+      "message": "Fermeture exceptionnelle",
+      "startDate": "2026-05-01",
+      "endDate": "",
+      "showDaysBefore": 6,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-omt",
+      "type": "vacances",
+      "title": "Vacances de printemps",
+      "message": "Fermeture les Samedi pendant les vacances",
+      "startDate": "2026-05-09",
+      "endDate": "",
+      "showDaysBefore": 6,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-8xi",
+      "type": "vacances",
       "title": "Vacances de printemps",
       "message": "Fermeture les Samedi pendant les vacances",
       "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 6,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-knk",
+      "type": "vacances",
+      "title": "Vacances de printemps",
+      "message": "Fermeture les Samedis pendant les vacances",
+      "startDate": "2026-05-02",
       "endDate": "",
       "showDaysBefore": 7,
       "showDaysAfter": 0,
