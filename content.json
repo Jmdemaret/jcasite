@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0041",
-    "publishedAt": "2026-04-25T13:11:31.958Z",
+    "version": "1.0042",
+    "publishedAt": "2026-04-25T13:13:09.342Z",
     "history": [
+      {
+        "version": "1.0042",
+        "date": "2026-04-25T13:13:09.342Z",
+        "summary": "+2 annonces"
+      },
       {
         "version": "1.0041",
         "date": "2026-04-25T13:11:31.958Z",
@@ -363,6 +368,28 @@
     "type": "horaires"
   },
   "announcements": [
+    {
+      "id": "ann-20260425-4iw",
+      "type": "evenement",
+      "title": "Test",
+      "message": "",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    },
+    {
+      "id": "ann-20260425-o2r",
+      "type": "information",
+      "title": "Test",
+      "message": "",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    },
     {
       "id": "ann-20260425-5po",
       "type": "vacances",
