@@ -222,7 +222,102 @@
   @keyframes preLogo{to{opacity:1;transform:scale(1) rotate(0);}}
   .pre-count{position:absolute;bottom:-44px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.24em;color:#7a6f64;}
 
-  /* ============ TOP BANNER ============ */
+  /* ============ ANNOUNCEMENTS (calendrier auto) ============ */
+  #announcements{
+    position:fixed;top:0;left:0;right:0;z-index:60;display:flex;flex-direction:column;gap:.4rem;
+    padding:.5rem .5rem 0;
+    pointer-events:none; /* le container laisse passer, les cartes sont interactives */
+  }
+  .ann-card{
+    pointer-events:auto;position:relative;overflow:hidden;
+    border-radius:14px;padding:.75rem 3rem .75rem 1rem;
+    color:var(--paper);box-shadow:0 14px 36px -16px rgba(15,13,11,.35);
+    display:flex;align-items:center;gap:.85rem;font-size:.92rem;line-height:1.35;
+    animation:annSlideIn .55s cubic-bezier(.2,.85,.2,1) backwards;
+    backdrop-filter:blur(6px);
+  }
+  @keyframes annSlideIn{
+    from{transform:translateY(-110%);opacity:0;}
+    to{transform:translateY(0);opacity:1;}
+  }
+  .ann-kanji{
+    position:absolute;right:.5rem;top:50%;transform:translateY(-50%);
+    font-family:'Shippori Mincho',serif;font-weight:800;font-size:5.5rem;line-height:.85;
+    opacity:.07;pointer-events:none;letter-spacing:-.05em;user-select:none;
+  }
+  .ann-icon{
+    flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.12);
+  }
+  .ann-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;}
+  .ann-pill{
+    flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:.62rem;
+    letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+    background:rgba(255,255,255,.18);padding:.2rem .55rem;border-radius:6px;
+  }
+  .ann-body{flex:1 1 auto;min-width:0;}
+  .ann-title{font-weight:600;font-size:.97rem;}
+  .ann-meta{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;font-size:.78rem;opacity:.92;margin-top:.1rem;}
+  .ann-dates{font-family:'JetBrains Mono',monospace;letter-spacing:.04em;}
+  .ann-sep{opacity:.5;}
+  .ann-status{font-style:italic;}
+  .ann-status-imminent{
+    background:rgba(255,255,255,.22);padding:.05rem .45rem;border-radius:4px;font-style:normal;font-weight:700;
+    animation:annPulseStatus 2s ease-in-out infinite;
+  }
+  @keyframes annPulseStatus{
+    0%,100%{background:rgba(255,255,255,.22);}
+    50%{background:rgba(255,255,255,.42);}
+  }
+  .ann-message{font-size:.82rem;opacity:.85;margin-top:.2rem;}
+  .ann-progress{
+    position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.15);
+  }
+  .ann-progress::after{
+    content:'';display:block;height:100%;width:var(--p,0%);
+    background:linear-gradient(90deg,rgba(255,255,255,.6) 0%,rgba(255,255,255,.95) 100%);
+    transition:width .8s ease;
+  }
+  .ann-close{
+    position:absolute;top:50%;right:.45rem;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.3);
+    color:#fff;display:grid;place-items:center;
+    transition:background .25s,transform .25s;font-size:1rem;line-height:1;
+    background:rgba(255,255,255,.05);
+  }
+  .ann-close:hover{background:rgba(255,255,255,.18);transform:translateY(-50%) rotate(90deg);}
+
+  /* Variantes par catégorie */
+  .a-fermeture{ background:linear-gradient(95deg,#7A0F1E 0%,#9A1024 50%,#7A0F1E 100%);}
+  .a-vacances{
+    background:linear-gradient(95deg,#806127 0%,#A88037 50%,#806127 100%);
+    color:#FBF6E9;
+  }
+  .a-important{
+    background:linear-gradient(95deg,#A10D25 0%,#D41B33 50%,#A10D25 100%);
+    animation:annSlideIn .55s cubic-bezier(.2,.85,.2,1) backwards, annImportantPulse 3.5s ease-in-out 1s infinite;
+  }
+  @keyframes annImportantPulse{
+    0%,100%{box-shadow:0 14px 36px -16px rgba(212,27,51,.45),inset 0 0 0 0 rgba(255,255,255,0);}
+    50%{box-shadow:0 14px 50px -14px rgba(212,27,51,.7),inset 0 0 0 1px rgba(255,255,255,.15);}
+  }
+  .a-information{ background:linear-gradient(95deg,#2A2623 0%,#1D1916 50%,#2A2623 100%);}
+  .a-evenement{ background:linear-gradient(95deg,#432C5F 0%,#6E4C92 50%,#432C5F 100%);}
+
+  @media(max-width:640px){
+    #announcements{padding:.35rem .35rem 0;}
+    .ann-card{padding:.65rem 2.6rem .65rem .85rem;font-size:.85rem;gap:.6rem;}
+    .ann-icon{width:30px;height:30px;}
+    .ann-pill{font-size:.55rem;}
+    .ann-title{font-size:.92rem;}
+    .ann-kanji{font-size:4.5rem;right:.3rem;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .ann-card,.a-important{animation:none !important;}
+    .ann-status-imminent{animation:none !important;}
+  }
+
+  /* ============ LEGACY TOP BANNER (gardé pour rétrocompat, masqué si announcements actives) ============ */
   #top-banner{
     position:fixed;inset:0 0 auto 0;z-index:60;
     font-size:.95rem;padding:.75rem 3.5rem .75rem 1.25rem;
@@ -874,6 +969,9 @@
     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
 </div>
+
+<!-- ===== ANNOUNCEMENTS (calendrier auto) ===== -->
+<div id="announcements" role="region" aria-label="Annonces du club"></div>
 
 <!-- ===== NAV with BIG CENTRAL LOGO ===== -->
 <nav class="topnav" id="topnav">
@@ -1615,7 +1713,191 @@ async function loadContent(){
   console.warn('content.json unreachable — using defaults');
 }
 
-// ============ BANNER ============
+// ============ ANNOUNCEMENTS (calendrier auto) ============
+const ANN_TYPES = {
+  fermeture: {
+    label: 'Fermeture', cls: 'a-fermeture', kanji: '閉',
+    icon: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>'
+  },
+  vacances: {
+    label: 'Vacances', cls: 'a-vacances', kanji: '休',
+    icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>'
+  },
+  important: {
+    label: 'Important', cls: 'a-important', kanji: '注',
+    icon: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+  },
+  information: {
+    label: 'Information', cls: 'a-information', kanji: '報',
+    icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  },
+  evenement: {
+    label: 'Événement', cls: 'a-evenement', kanji: '行',
+    icon: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+  }
+};
+
+const ANN_PRIORITY = { important:0, fermeture:1, vacances:2, evenement:3, information:4 };
+
+function _annToday(){
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function _annDays(a, b){
+  // Nombre de jours entre deux ISO dates (b - a)
+  const ad = new Date(a + 'T00:00:00');
+  const bd = new Date(b + 'T00:00:00');
+  return Math.round((bd - ad) / 86400000);
+}
+function _annAddDays(iso, n){
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function _annFmt(iso, opts){
+  if(!iso) return '';
+  try{
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('fr-BE', opts || {day:'numeric',month:'long'});
+  }catch(_){ return iso; }
+}
+
+// Calcule l'état d'affichage d'une annonce (visible? texte auto? progress?)
+function computeAnnState(ann){
+  if(!ann || ann.active === false) return { visible: false };
+  if(!ann.startDate) return { visible: false };
+  const today = _annToday();
+  const showBefore = ann.showDaysBefore != null ? +ann.showDaysBefore : 7;
+  const showAfter  = ann.showDaysAfter  != null ? +ann.showDaysAfter  : 0;
+  const endDate    = ann.endDate || ann.startDate;
+  const daysToStart = _annDays(today, ann.startDate);
+  const daysToEnd   = _annDays(today, endDate);
+
+  if(daysToStart > showBefore)  return { visible: false };
+  if(daysToEnd   < -showAfter)  return { visible: false };
+
+  let status, text, progress = null, imminent = false;
+  const hasRange = ann.endDate && ann.endDate !== ann.startDate;
+
+  if(daysToStart > 0){
+    status = 'upcoming';
+    if(daysToStart === 1){ text = 'Demain'; imminent = true; }
+    else if(daysToStart <= 3){ text = 'Dans ' + daysToStart + ' jours'; imminent = true; }
+    else text = 'Dans ' + daysToStart + ' jours';
+  } else if(daysToEnd >= 0){
+    status = 'active';
+    if(hasRange){
+      if(daysToEnd === 0)      text = 'Dernier jour · reprise demain';
+      else if(daysToEnd === 1) text = 'Encore 1 jour · reprise après-demain';
+      else                     text = 'En cours · reprise le ' + _annFmt(_annAddDays(endDate, 1));
+      // Progress visuel
+      const total = _annDays(ann.startDate, endDate);
+      const done  = _annDays(ann.startDate, today);
+      if(total > 0) progress = Math.max(0, Math.min(1, done / total));
+    } else {
+      text = "Aujourd'hui";
+      imminent = true;
+    }
+  } else {
+    status = 'recent';
+    const since = -daysToEnd;
+    text = since === 1 ? 'Reprise effective hier' : 'Reprise il y a ' + since + ' jours';
+  }
+  return { visible: true, text, progress, status, imminent, daysToStart, daysToEnd };
+}
+
+function initAnnouncements(){
+  const host = document.getElementById('announcements');
+  if(!host) return;
+  host.innerHTML = '';
+  const items = (CFG.announcements || [])
+    .map(ann => ({ ann, st: computeAnnState(ann) }))
+    .filter(x => x.st.visible);
+
+  // Tri : priorité par type, puis par date d'événement (plus proche en haut)
+  items.sort((a, b) => {
+    const pa = ANN_PRIORITY[a.ann.type] ?? 9;
+    const pb = ANN_PRIORITY[b.ann.type] ?? 9;
+    if(pa !== pb) return pa - pb;
+    return _annDays(_annToday(), a.ann.startDate) - _annDays(_annToday(), b.ann.startDate);
+  });
+
+  // Limite à 3 cartes maximum (les autres queue-ront le lendemain)
+  items.slice(0, 3).forEach((item, idx) => {
+    const node = renderAnnCard(item.ann, item.st, idx);
+    if(node) host.appendChild(node);
+  });
+
+  // Recalcule la hauteur pour --bh (offset le contenu)
+  setTimeout(() => {
+    const h = host.offsetHeight || 0;
+    document.documentElement.style.setProperty('--bh', h + 'px');
+  }, 80);
+
+  // Mise à jour automatique chaque heure (au cas où la page reste ouverte longtemps)
+  if(!window._annTimer){
+    window._annTimer = setInterval(initAnnouncements, 3600000);
+  }
+}
+
+function renderAnnCard(ann, state, idx){
+  const meta = ANN_TYPES[ann.type] || ANN_TYPES.information;
+
+  // Dismiss persistance par état (upcoming/active/recent) pour réafficher si l'état change
+  const dismissKey = 'jca_ann_d_' + (ann.id || '') + '_' + state.status;
+  const last = +localStorage.getItem(dismissKey) || 0;
+  // important + fermeture ne peuvent pas être masqués
+  const dismissable = !['important','fermeture'].includes(ann.type);
+  if(dismissable && last && Date.now() - last < 12*3600*1000) return null;
+
+  const card = document.createElement('div');
+  card.className = 'ann-card ' + meta.cls;
+  card.style.animationDelay = (idx * 90) + 'ms';
+
+  const dateRange = (ann.endDate && ann.endDate !== ann.startDate)
+    ? `${_annFmt(ann.startDate)} → ${_annFmt(ann.endDate)}`
+    : _annFmt(ann.startDate, {weekday:'short', day:'numeric', month:'long'});
+
+  const statusHtml = state.imminent
+    ? `<span class="ann-status ann-status-imminent">${escapeHtml(state.text)}</span>`
+    : `<span class="ann-status">${escapeHtml(state.text)}</span>`;
+
+  card.innerHTML = `
+    <span class="ann-kanji" aria-hidden="true">${meta.kanji}</span>
+    <span class="ann-icon" aria-hidden="true">${meta.icon}</span>
+    <span class="ann-pill">${meta.label}</span>
+    <div class="ann-body">
+      <div class="ann-title">${escapeHtml(ann.title || meta.label)}</div>
+      <div class="ann-meta">
+        <span class="ann-dates">${escapeHtml(dateRange)}</span>
+        <span class="ann-sep">·</span>
+        ${statusHtml}
+      </div>
+      ${ann.message ? `<div class="ann-message">${escapeHtml(ann.message)}</div>` : ''}
+    </div>
+    ${state.progress !== null ? `<div class="ann-progress" style="--p:${(state.progress * 100).toFixed(1)}%"></div>` : ''}
+    ${dismissable ? '<button class="ann-close" aria-label="Fermer cette annonce">×</button>' : ''}
+  `;
+
+  if(dismissable){
+    card.querySelector('.ann-close').addEventListener('click', () => {
+      card.style.animation = 'annSlideIn .35s cubic-bezier(.2,.85,.2,1) reverse forwards';
+      localStorage.setItem(dismissKey, Date.now());
+      setTimeout(() => {
+        card.remove();
+        const host = document.getElementById('announcements');
+        document.documentElement.style.setProperty('--bh', (host?.offsetHeight || 0) + 'px');
+      }, 360);
+    });
+  }
+
+  return card;
+}
+
+// Mini escapeHtml local (au cas où le global serait déclaré plus bas dans le fichier)
+function _annEsc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// ============ LEGACY BANNER ============
 const BANNER_TYPES = {
   'info': {
     label: 'Information',
@@ -1651,6 +1933,10 @@ function initBanner(){
   const bi = document.getElementById('banner-icon');
   const bp = document.getElementById('banner-pill');
   const setBH = () => document.documentElement.style.setProperty('--bh',(b.offsetHeight||0)+'px');
+
+  // Si des announcements sont configurés et au moins une est active, on masque ce legacy banner
+  const hasActiveAnn = (CFG.announcements || []).some(a => a && a.active !== false && a.startDate && computeAnnState(a).visible);
+  if(hasActiveAnn){ b.classList.add('hidden'); return; }
 
   if(!CFG.banner || !CFG.banner.active){b.classList.add('hidden');setBH();return;}
 
@@ -2213,6 +2499,7 @@ function initMap(){
   applySectionVisibility();
   applyTexts();
   renderSocials();
+  initAnnouncements();
   initBanner();
   initGallery();
   initNews();

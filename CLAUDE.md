@@ -133,11 +133,24 @@ Schéma simplifié (les défauts dans index.html prennent le relais si une clé 
     "evenements": true, "galerie": true, "equipe": true,
     "temoignages": true, "faq": true, "preInscription": true, "sponsors": true
   },
-  "banner": {                       // bandeau haut du site
+  "banner": {                       // LEGACY — utilisé en fallback si announcements vide
     "active": false,
-    "category": "info",             // info | horaires | important
-    "message": "Texte du bandeau"
+    "type": "info",                 // info | horaires | important
+    "text": "Texte du bandeau"
   },
+  "announcements": [                // Calendrier de bandeaux automatiques (priorité sur banner)
+    {
+      "id": "ann-20261223-x9k",
+      "type": "vacances",           // fermeture | vacances | important | information | evenement
+      "title": "Congés de Noël",
+      "message": "Reprise normale des cours pour tous les groupes.",
+      "startDate": "2026-12-23",    // ISO YYYY-MM-DD
+      "endDate": "2027-01-06",      // optionnel — si absent, date unique
+      "showDaysBefore": 14,         // X jours avant startDate, l'annonce devient visible
+      "showDaysAfter": 1,           // X jours après endDate, l'annonce reste visible
+      "active": true                // toggle manuel
+    }
+  ],
   "texts": {                        // surcharge des textes par défaut (par section)
     "hero": { "title": "...", "stat1Label": "..." },
     "club": { "intro": "..." }
@@ -359,7 +372,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 
 ### ✅ En place
 - [x] Site responsive complet (hero, cours, tarifs, équipe, galerie albums, FAQ, sponsors, contact)
-- [x] Bandeau d'info catégorisé
+- [x] Système d'annonces date-driven (fermeture / vacances / important / information / événement) avec auto-display selon proximité, progress bar pour fermetures actives, kanji watermark, animations
 - [x] Galerie éditoriale Phase 2 (mosaïque + lightbox masonry + photo lightbox)
 - [x] SEO complet : meta, Open Graph, Twitter Card, Schema.org JSON-LD, robots.txt, sitemap.xml
 - [x] Favicon SVG + PNG + manifest PWA
@@ -373,7 +386,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 - [x] Onglet Guide intégré dans admin (pour secrétaire)
 
 ### 🚧 À faire (prioritaire)
-- [ ] **Calendrier des fermetures** (avec bandeau auto basé sur dates)
+- [x] **Calendrier des fermetures** (avec bandeau auto basé sur dates) — module Annonces
 - [ ] **Éditeur tarifs visuel** (similaire à l'éditeur de cours, par lignes de produits)
 - [ ] Schema.org Events (stages/tournois → onglet Events Google)
 - [ ] Pages dédiées par groupe d'âge (`/judo-enfants-4-5-ans`) pour SEO long-tail
