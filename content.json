@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0039",
-    "publishedAt": "2026-04-25T13:00:49.787Z",
+    "version": "1.0040",
+    "publishedAt": "2026-04-25T13:03:51.996Z",
     "history": [
+      {
+        "version": "1.0040",
+        "date": "2026-04-25T13:03:51.996Z",
+        "summary": "-2 annonces"
+      },
       {
         "version": "1.0039",
         "date": "2026-04-25T13:00:49.787Z",
@@ -354,31 +359,9 @@
   },
   "announcements": [
     {
-      "id": "ann-20260425-g1a",
-      "type": "important",
-      "title": "test",
-      "message": "",
-      "startDate": "2026-04-25",
-      "endDate": "",
-      "showDaysBefore": 7,
-      "showDaysAfter": 0,
-      "active": true
-    },
-    {
       "id": "ann-20260425-4iw",
       "type": "evenement",
       "title": "Test",
-      "message": "",
-      "startDate": "2026-04-25",
-      "endDate": "",
-      "showDaysBefore": 7,
-      "showDaysAfter": 0,
-      "active": true
-    },
-    {
-      "id": "ann-20260425-bpn",
-      "type": "fermeture",
-      "title": "test",
       "message": "",
       "startDate": "2026-04-25",
       "endDate": "",
