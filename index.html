@@ -190,6 +190,8 @@
     --sumi:#1D1916; --hinomaru:#C8102E; --royal:#6E4C92; --gold:#B99A5A;
   }
   html,body{background:var(--paper);color:var(--sumi);font-family:'Inter',sans-serif;}
+  /* Décale le contenu vers le bas en fonction de la hauteur des annonces / bandeau */
+  body{padding-top:var(--bh,0px);transition:padding-top .35s cubic-bezier(.2,.8,.2,1);}
 
   body::before{
     content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;
@@ -228,6 +230,7 @@
     padding:.5rem .5rem 0;
     pointer-events:none; /* le container laisse passer, les cartes sont interactives */
   }
+  #announcements:empty{padding:0;}  /* pas de hauteur résiduelle quand aucune annonce */
   .ann-card{
     pointer-events:auto;position:relative;overflow:hidden;
     border-radius:14px;padding:.75rem 3rem .75rem 1rem;
@@ -469,16 +472,15 @@
   @media(max-width:900px){
     #hero{grid-template-columns:1fr;grid-template-rows:auto auto;}
     /* Sur mobile le menu passe en colonne (logo + 2 lignes de liens) et
-       peut prendre jusqu'à ~200px de haut avec la bannière. On décale
-       donc le contenu du hero pour éviter que l'étiquette « Dojo depuis 1977 »
-       soit masquée au chargement. */
-    .hero-left{padding:calc(var(--bh, 40px) + 13rem) 1.25rem 3rem;}
+       peut prendre jusqu'à ~200px de haut. La hauteur des annonces est gérée
+       par body{padding-top:var(--bh)}, donc on n'a plus à la dupliquer ici. */
+    .hero-left{padding:13rem 1.25rem 3rem;}
     .hero-right{min-height:60vh;border-left:none;border-top:1px solid rgba(29,25,22,.06);}
     .hero-kanji{font-size:60vw;top:auto;bottom:10vh;right:-10vw;}
   }
   @media(max-width:520px){
     /* Écrans très étroits : prévoir un peu plus d'air pour la nav wrappée */
-    .hero-left{padding:calc(var(--bh, 40px) + 15rem) 1rem 3rem;}
+    .hero-left{padding:15rem 1rem 3rem;}
   }
 
   /* Display */
@@ -1822,8 +1824,13 @@ function initAnnouncements(){
     return _annDays(_annToday(), a.ann.startDate) - _annDays(_annToday(), b.ann.startDate);
   });
 
-  // Limite à 3 cartes maximum (les autres queue-ront le lendemain)
-  items.slice(0, 3).forEach((item, idx) => {
+  // Affichage : urgences (important/fermeture) toujours, autres limités à 6
+  const URGENT_TYPES = new Set(['important','fermeture']);
+  const urgent  = items.filter(x => URGENT_TYPES.has(x.ann.type));
+  const regular = items.filter(x => !URGENT_TYPES.has(x.ann.type)).slice(0, 6);
+  const toRender = [...urgent, ...regular];
+
+  toRender.forEach((item, idx) => {
     const node = renderAnnCard(item.ann, item.st, idx);
     if(node) host.appendChild(node);
   });
