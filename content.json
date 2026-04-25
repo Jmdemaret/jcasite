@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0036",
-    "publishedAt": "2026-04-24T19:26:48.434Z",
+    "version": "1.0037",
+    "publishedAt": "2026-04-25T12:52:35.446Z",
     "history": [
+      {
+        "version": "1.0037",
+        "date": "2026-04-25T12:52:35.446Z",
+        "summary": "+1 annonce"
+      },
       {
         "version": "1.0036",
         "date": "2026-04-24T19:26:48.434Z",
@@ -337,6 +342,19 @@
     "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai",
     "type": "horaires"
   },
+  "announcements": [
+    {
+      "id": "ann-20260425-knk",
+      "type": "information",
+      "title": "Vacances de printemps",
+      "message": "Fermeture les Samedi pendant les vacances",
+      "startDate": "2026-04-25",
+      "endDate": "",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    }
+  ],
   "texts": {
     "hero": {
       "title1": "Club de Judo",
