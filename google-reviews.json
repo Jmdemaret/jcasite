@@ -91,7 +91,7 @@
       "text": "",
       "time": 1662562213,
       "relative": "il y a 3 ans",
-      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocK7HkyIn8DdnqzK1L90Vzobt_2blKt66akUPjYS_TBd4ksHtg=s120-c-rp-mo-ba3-br100",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocK7HkyIn8DdnqzK1L90Vzobt_2blKt66akUPjYS_TBd4ksHtg=s120-c-rp-mo-ba12-br100",
       "language": "fr"
     },
     {
@@ -117,7 +117,7 @@
   "pages_fetched": 5,
   "returned_by_serpapi": 39,
   "kept_recent": 12,
-  "cutoff_iso": "2021-05-30",
-  "fetched_at": 1777882266,
+  "cutoff_iso": "2021-06-06",
+  "fetched_at": 1778489519,
   "source": "serpapi"
 }
