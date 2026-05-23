@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0047",
-    "publishedAt": "2026-05-23T11:11:20.544Z",
+    "version": "1.0048",
+    "publishedAt": "2026-05-23T11:16:25.143Z",
     "history": [
+      {
+        "version": "1.0048",
+        "date": "2026-05-23T11:16:25.143Z",
+        "summary": "-2 annonces"
+      },
       {
         "version": "1.0047",
         "date": "2026-05-23T11:11:20.544Z",
@@ -335,9 +340,28 @@
       "groupId": "11-15",
       "start": "11:45",
       "end": "13:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "4-5",
+      "start": "18:00",
+      "end": "19:00"
     }
   ],
-  "pricing": [],
+  "pricing": [
+    {
+      "category": "Nouvelle formule",
+      "amount": "0€",
+      "per": "/ an",
+      "note": "",
+      "highlighted": false,
+      "ribbon": "",
+      "features": [
+        "Avantage 1",
+        "Avantage 2"
+      ]
+    }
+  ],
   "team": [],
   "googleReviewsHidden": [],
   "googleReviewsPeriodMonths": 60,
@@ -427,17 +451,6 @@
       "active": true
     },
     {
-      "id": "ann-20260425-omt",
-      "type": "vacances",
-      "title": "Vacances de printemps",
-      "message": "Fermeture les Samedi pendant les vacances",
-      "startDate": "2026-05-09",
-      "endDate": "",
-      "showDaysBefore": 6,
-      "showDaysAfter": 0,
-      "active": true
-    },
-    {
       "id": "ann-20260425-8xi",
       "type": "vacances",
       "title": "Vacances de printemps",
@@ -445,17 +458,6 @@
       "startDate": "2026-04-25",
       "endDate": "",
       "showDaysBefore": 6,
-      "showDaysAfter": 0,
-      "active": true
-    },
-    {
-      "id": "ann-20260425-knk",
-      "type": "vacances",
-      "title": "Vacances de printemps",
-      "message": "Fermeture les Samedis pendant les vacances",
-      "startDate": "2026-05-02",
-      "endDate": "",
-      "showDaysBefore": 7,
       "showDaysAfter": 0,
       "active": true
     }
