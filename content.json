@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0051",
-    "publishedAt": "2026-06-18T17:47:07.107Z",
+    "version": "1.0052",
+    "publishedAt": "2026-06-18T17:49:02.226Z",
     "history": [
+      {
+        "version": "1.0052",
+        "date": "2026-06-18T17:49:02.226Z",
+        "summary": "Modifications diverses (champs non listés)"
+      },
       {
         "version": "1.0051",
         "date": "2026-06-18T17:47:07.107Z",
@@ -285,39 +290,27 @@
   "groups": [],
   "courses": [
     {
-      "day": "Samedi",
-      "groupId": "5-7",
-      "start": "09:45",
-      "end": "10:45"
-    },
-    {
-      "day": "Samedi",
-      "groupId": "7-10",
-      "start": "10:45",
-      "end": "11:45"
-    },
-    {
-      "day": "Samedi",
-      "groupId": "11-15",
-      "start": "11:45",
-      "end": "13:00"
-    },
-    {
       "day": "Mercredi",
       "groupId": "4-5",
-      "start": "15:00",
-      "end": "15:45"
-    },
-    {
-      "day": "Mercredi",
-      "groupId": "5-7",
-      "start": "15:45",
-      "end": "16:45"
+      "start": "14:15",
+      "end": "15:00"
     },
     {
       "day": "Mercredi",
       "groupId": "7-10",
-      "start": "16:45",
+      "start": "15:00",
+      "end": "16:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "5-7",
+      "start": "16:00",
+      "end": "17:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "7-10",
+      "start": "17:00",
       "end": "18:00"
     },
     {
@@ -349,6 +342,24 @@
       "groupId": "15+",
       "start": "19:15",
       "end": "20:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "5-7",
+      "start": "09:45",
+      "end": "10:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "7-10",
+      "start": "10:45",
+      "end": "11:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "11-15",
+      "start": "11:45",
+      "end": "13:00"
     }
   ],
   "pricing": [
