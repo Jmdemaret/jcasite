@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0049",
-    "publishedAt": "2026-06-18T17:34:58.709Z",
+    "version": "1.0050",
+    "publishedAt": "2026-06-18T17:45:47.681Z",
     "history": [
+      {
+        "version": "1.0050",
+        "date": "2026-06-18T17:45:47.681Z",
+        "summary": "+1 annonce"
+      },
       {
         "version": "1.0049",
         "date": "2026-06-18T17:34:58.709Z",
@@ -275,60 +280,6 @@
   "groups": [],
   "courses": [
     {
-      "day": "Mercredi",
-      "groupId": "4-5",
-      "start": "14:15",
-      "end": "15:00"
-    },
-    {
-      "day": "Mercredi",
-      "groupId": "7-10",
-      "start": "15:00",
-      "end": "16:00"
-    },
-    {
-      "day": "Mercredi",
-      "groupId": "5-7",
-      "start": "16:00",
-      "end": "17:00"
-    },
-    {
-      "day": "Mercredi",
-      "groupId": "7-10",
-      "start": "17:00",
-      "end": "18:00"
-    },
-    {
-      "day": "Mercredi",
-      "groupId": "11-15",
-      "start": "18:00",
-      "end": "19:15"
-    },
-    {
-      "day": "Mercredi",
-      "groupId": "15+",
-      "start": "19:15",
-      "end": "20:45"
-    },
-    {
-      "day": "Vendredi",
-      "groupId": "7-10",
-      "start": "17:00",
-      "end": "18:00"
-    },
-    {
-      "day": "Vendredi",
-      "groupId": "11-15",
-      "start": "18:00",
-      "end": "19:15"
-    },
-    {
-      "day": "Vendredi",
-      "groupId": "15+",
-      "start": "19:15",
-      "end": "20:45"
-    },
-    {
       "day": "Samedi",
       "groupId": "5-7",
       "start": "09:45",
@@ -349,8 +300,50 @@
     {
       "day": "Mercredi",
       "groupId": "4-5",
+      "start": "15:00",
+      "end": "15:45"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "5-7",
+      "start": "15:45",
+      "end": "16:45"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "7-10",
+      "start": "16:45",
+      "end": "18:00"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "11-15",
       "start": "18:00",
-      "end": "19:00"
+      "end": "19:15"
+    },
+    {
+      "day": "Mercredi",
+      "groupId": "15+",
+      "start": "19:15",
+      "end": "20:45"
+    },
+    {
+      "day": "Vendredi",
+      "groupId": "7-10",
+      "start": "17:00",
+      "end": "18:00"
+    },
+    {
+      "day": "Vendredi",
+      "groupId": "11-15",
+      "start": "18:00",
+      "end": "19:15"
+    },
+    {
+      "day": "Vendredi",
+      "groupId": "15+",
+      "start": "19:15",
+      "end": "20:45"
     }
   ],
   "pricing": [
@@ -421,7 +414,19 @@
     "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai",
     "type": "horaires"
   },
-  "announcements": [],
+  "announcements": [
+    {
+      "id": "ann-20260618-583",
+      "type": "vacances",
+      "title": "Congés d'été",
+      "message": "Nous serons fermé pendant la période de vacances d'été, la reprise des cours est prévue le 26 Aout 2026",
+      "startDate": "2026-07-01",
+      "endDate": "2026-08-25",
+      "showDaysBefore": 7,
+      "showDaysAfter": 0,
+      "active": true
+    }
+  ],
   "texts": {
     "hero": {
       "title1": "Club de Judo",
