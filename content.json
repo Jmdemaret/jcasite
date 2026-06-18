@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0050",
-    "publishedAt": "2026-06-18T17:45:47.681Z",
+    "version": "1.0051",
+    "publishedAt": "2026-06-18T17:47:07.107Z",
     "history": [
+      {
+        "version": "1.0051",
+        "date": "2026-06-18T17:47:07.107Z",
+        "summary": "Aucun changement détecté"
+      },
       {
         "version": "1.0050",
         "date": "2026-06-18T17:45:47.681Z",
