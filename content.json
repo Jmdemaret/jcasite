@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0053",
-    "publishedAt": "2026-06-18T17:51:25.252Z",
+    "version": "1.0054",
+    "publishedAt": "2026-06-18T17:54:41.634Z",
     "history": [
+      {
+        "version": "1.0054",
+        "date": "2026-06-18T17:54:41.634Z",
+        "summary": "Modifications diverses (champs non listés)"
+      },
       {
         "version": "1.0053",
         "date": "2026-06-18T17:51:25.252Z",
@@ -295,24 +300,6 @@
   "groups": [],
   "courses": [
     {
-      "day": "Samedi",
-      "groupId": "5-7",
-      "start": "09:45",
-      "end": "10:45"
-    },
-    {
-      "day": "Samedi",
-      "groupId": "7-10",
-      "start": "10:45",
-      "end": "11:45"
-    },
-    {
-      "day": "Samedi",
-      "groupId": "11-15",
-      "start": "11:45",
-      "end": "13:00"
-    },
-    {
       "day": "Mercredi",
       "groupId": "4-5",
       "start": "15:00",
@@ -359,6 +346,24 @@
       "groupId": "15+",
       "start": "19:15",
       "end": "20:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "5-7",
+      "start": "09:45",
+      "end": "10:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "7-10",
+      "start": "10:45",
+      "end": "11:45"
+    },
+    {
+      "day": "Samedi",
+      "groupId": "11-15",
+      "start": "11:45",
+      "end": "13:00"
     }
   ],
   "pricing": [
