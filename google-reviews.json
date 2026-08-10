@@ -36,12 +36,12 @@
       "rating": 5.0,
       "text": "Great accommodations for my 4 year old and my 6-year-old\nIf you end up missing your class you can retake it sometimes and I really appreciate that.\nThis is a gym so you need to understand that and I love it.",
       "time": 1759505181,
-      "relative": "il y a 9 mois",
+      "relative": "il y a 10 mois",
       "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocIzKLbUHUM6-JvPCDMs1HeA7G34X2EclNMCCL1ScWK4MrFPEQ=s120-c-rp-mo-br100",
       "language": "fr"
     },
     {
-      "author": "Ninon Monaville Bertrand",
+      "author": "Nils Monaville Bertrand",
       "rating": 5.0,
       "text": "Entraîneurs dévouer à transmettre leur passions. Très bonne ambiance, tout le monde peu importe son niveau peut trouver sa place au judo club Anderlecht. Bonne valeurs transmise. Enseignement adapté au besoin de chacun. Mais le dépassement de soi est également présent. Enseignement très diversifie. En y allant je n’est pas que trouver un sport mais une famille.",
       "time": 1749998654,
@@ -126,7 +126,7 @@
   "pages_fetched": 5,
   "returned_by_serpapi": 40,
   "kept_recent": 13,
-  "cutoff_iso": "2021-08-29",
-  "fetched_at": 1785747244,
+  "cutoff_iso": "2021-09-05",
+  "fetched_at": 1786345342,
   "source": "serpapi"
 }
