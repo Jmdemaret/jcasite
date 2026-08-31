@@ -2,8 +2,17 @@
   "place_name": "Judo Club Anderlecht asbl",
   "place_url": "https://www.google.com/maps/place/?q=place_id:ChIJ22u18afGw0cRHu7iNfdBoQ4",
   "rating": 4.6,
-  "total": 40,
+  "total": 41,
   "reviews": [
+    {
+      "author": "Fabielle Martins",
+      "rating": 5.0,
+      "text": "Super",
+      "time": 1787998783,
+      "relative": "il y a 2 jours",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjVwk1BQLo1GHs3gtzuIvNfYB_C529p3Gw27YDFrbzpCS5aemXXn6g=s120-c-rp-mo-ba12-br100",
+      "language": "fr"
+    },
     {
       "author": "olivier vv",
       "rating": 5.0,
@@ -66,13 +75,67 @@
       "relative": "il y a 2 ans",
       "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocIs8SnAvHzKD2jGV_xMmxzSBm-xgMyv7Le_hVykHB03_j_Efg=s120-c-rp-mo-ba12-br100",
       "language": "fr"
+    },
+    {
+      "author": "fanta pei",
+      "rating": 5.0,
+      "text": "",
+      "time": 1697054107,
+      "relative": "il y a 2 ans",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocKidkQkL5cIk9--o3WWCA6u9XHnblqAYk3yUyeuAmmlPva2Hw=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
+    {
+      "author": "Janna Meuwissen",
+      "rating": 5.0,
+      "text": "",
+      "time": 1695641757,
+      "relative": "il y a 2 ans",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocINb2kjNZX0jhJC2cZu9Mdf4MLd-KUkLLwugA9mxUV2P52_4w=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
+    {
+      "author": "sam Vanden Steene",
+      "rating": 5.0,
+      "text": "",
+      "time": 1681573302,
+      "relative": "il y a 3 ans",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjWIhNKRrDTUQxRu5bwmcsrn1ML6HRz54FBr5WhT_vRfoLboKNtc=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
+    {
+      "author": "Tania Vanden Steene",
+      "rating": 5.0,
+      "text": "",
+      "time": 1662562213,
+      "relative": "il y a 3 ans",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocK7HkyIn8DdnqzK1L90Vzobt_2blKt66akUPjYS_TBd4ksHtg=s120-c-rp-mo-ba12-br100",
+      "language": "fr"
+    },
+    {
+      "author": "Charlotte",
+      "rating": 5.0,
+      "text": "",
+      "time": 1643301236,
+      "relative": "il y a 4 ans",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocKkSdbnNegzg5-t2B45b8S7tZyE00via9Y8IQ4j8mf4Dz7UJ3mz=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
+    {
+      "author": "freeman adam",
+      "rating": 5.0,
+      "text": "",
+      "time": 1637839986,
+      "relative": "il y a 4 ans",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocJX6uUmxKAQPEgS32u9veBTCXwip6me931oLpYebnbMKPq0wIs=s120-c-rp-mo-br100",
+      "language": "fr"
     }
   ],
   "period_months": 60,
-  "pages_fetched": 1,
-  "returned_by_serpapi": 8,
-  "kept_recent": 7,
-  "cutoff_iso": "2021-09-19",
-  "fetched_at": 1787552985,
+  "pages_fetched": 5,
+  "returned_by_serpapi": 41,
+  "kept_recent": 14,
+  "cutoff_iso": "2021-09-26",
+  "fetched_at": 1788177364,
   "source": "serpapi"
 }
