@@ -9,7 +9,7 @@
       "rating": 5.0,
       "text": "Super",
       "time": 1787998783,
-      "relative": "il y a 2 jours",
+      "relative": "il y a une semaine",
       "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjVwk1BQLo1GHs3gtzuIvNfYB_C529p3Gw27YDFrbzpCS5aemXXn6g=s120-c-rp-mo-ba12-br100",
       "language": "fr"
     },
@@ -45,7 +45,7 @@
       "rating": 5.0,
       "text": "Great accommodations for my 4 year old and my 6-year-old\nIf you end up missing your class you can retake it sometimes and I really appreciate that.\nThis is a gym so you need to understand that and I love it.",
       "time": 1759505181,
-      "relative": "il y a 10 mois",
+      "relative": "il y a 11 mois",
       "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocIzKLbUHUM6-JvPCDMs1HeA7G34X2EclNMCCL1ScWK4MrFPEQ=s120-c-rp-mo-br100",
       "language": "fr"
     },
@@ -135,7 +135,7 @@
   "pages_fetched": 5,
   "returned_by_serpapi": 41,
   "kept_recent": 14,
-  "cutoff_iso": "2021-09-26",
-  "fetched_at": 1788177364,
+  "cutoff_iso": "2021-10-03",
+  "fetched_at": 1788778149,
   "source": "serpapi"
 }
