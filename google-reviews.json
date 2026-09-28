@@ -9,7 +9,7 @@
       "rating": 5.0,
       "text": "Super",
       "time": 1787998783,
-      "relative": "il y a 3 semaines",
+      "relative": "il y a 4 semaines",
       "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjVwk1BQLo1GHs3gtzuIvNfYB_C529p3Gw27YDFrbzpCS5aemXXn6g=s120-c-rp-mo-ba12-br100",
       "language": "fr"
     },
@@ -63,7 +63,7 @@
       "rating": 5.0,
       "text": "",
       "time": 1695641757,
-      "relative": "il y a 2 ans",
+      "relative": "il y a 3 ans",
       "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocINb2kjNZX0jhJC2cZu9Mdf4MLd-KUkLLwugA9mxUV2P52_4w=s120-c-rp-mo-br100",
       "language": "fr"
     },
@@ -106,9 +106,9 @@
   ],
   "period_months": 60,
   "pages_fetched": 5,
-  "returned_by_serpapi": 38,
+  "returned_by_serpapi": 35,
   "kept_recent": 11,
-  "cutoff_iso": "2021-10-17",
-  "fetched_at": 1789989114,
+  "cutoff_iso": "2021-10-24",
+  "fetched_at": 1790597158,
   "source": "serpapi"
 }
