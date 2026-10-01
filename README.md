@@ -15,7 +15,7 @@ Une fois publié via GitHub Pages : **https://jmdemaret.github.io/jcasite/**
 ├── admin.html                 # Admin : bannière, galerie, actu, événements, témoignages
 ├── logo2.png                  # Logo principal du club
 ├── dojo.jpeg                  # Photo du dojo (hero cinématique + galerie)
-├── judoclubanderlecht/        # Photos additionnelles (kids, training, dojo-hall)
+├── judoclubanderlecht/        # Ancien dossier d'images
 └── README.md
 ```
 

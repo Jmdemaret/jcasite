@@ -86,7 +86,7 @@ Le site est un **single-page** statique élégant (style éditorial japonisant) 
 | `hero.mp4` | Vidéo hero (cinematic mode) |
 | `/images/` | Photos uploadées via admin (auto-organisées) |
 | `/sponsors/` | Logos partenaires (`anderlecht.svg`, `cocof.png`) |
-| `/judoclubanderlecht/` | Photos additionnelles (kids, training) |
+| `/judoclubanderlecht/` | Ancien dossier (photos Getty supprimées le 2026-10-01, licence non trouvée) |
 
 ### Local-only (gitignored)
 | Fichier | Rôle |
