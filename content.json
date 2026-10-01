@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0055",
-    "publishedAt": "2026-06-18T17:56:54.383Z",
+    "version": "1.0056",
+    "publishedAt": "2026-10-01T20:43:09.069Z",
     "history": [
+      {
+        "version": "1.0056",
+        "date": "2026-10-01T20:43:09.069Z",
+        "summary": "1 texte modifié"
+      },
       {
         "version": "1.0055",
         "date": "2026-06-18T17:56:54.383Z",
@@ -455,7 +460,7 @@
   "texts": {
     "hero": {
       "title1": "Club de Judo",
-      "title2": "Traditionnel et Famillial"
+      "title2": "Traditionnel et Familial"
     },
     "club": {},
     "cours": {},
