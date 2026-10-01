@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0059",
-    "publishedAt": "2026-10-01T21:47:08.509Z",
+    "version": "1.0060",
+    "publishedAt": "2026-10-01T21:50:01.613Z",
     "history": [
+      {
+        "version": "1.0060",
+        "date": "2026-10-01T21:50:01.613Z",
+        "summary": "Événement « Rentrée saison 2026/2027 » supprimé"
+      },
       {
         "version": "1.0059",
         "date": "2026-10-01T21:47:08.509Z",
@@ -598,13 +603,6 @@
       "body": "Les cours ont repris le mercredi 26 août. Pensez à pré-inscrire votre enfant pour garantir sa place."
     }
   ],
-  "events": [
-    {
-      "date": "2026-09-01",
-      "title": "Rentrée saison 2026/2027",
-      "type": "Cours",
-      "loc": "Dojo"
-    }
-  ],
+  "events": [],
   "testimonials": []
 }
