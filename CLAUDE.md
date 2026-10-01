@@ -372,6 +372,9 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 ### Erreur "MissingBlobsEnvironmentError"
 → La fonction Netlify n'a pas `NETLIFY_BLOBS_TOKEN` configuré, ou il est expiré. Régénérer un PAT Netlify, mettre à jour env vars, **Clear cache and deploy**.
 
+### Un kanji s'affiche dans une autre police
+→ Shippori Mincho est chargée avec `&text=` (seulement les ~48 kanji du site, dans `index.html` `<head>`). Un nouveau kanji saisi dans l'admin doit être ajouté (encodé URL) à ce paramètre `text=`.
+
 ### Avis Google pas mis à jour
 → Vérifier le workflow GitHub Actions : Actions tab → "Sync Google Reviews" → dernière exécution. Si ✓ mais 0 avis, vérifier `googleReviewsPeriodMonths` (peut-être trop restrictif) et secrets `SERPAPI_KEY` / `GOOGLE_PLACE_ID`.
 
