@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0058",
-    "publishedAt": "2026-10-01T21:22:32.343Z",
+    "version": "1.0059",
+    "publishedAt": "2026-10-01T21:47:08.509Z",
     "history": [
+      {
+        "version": "1.0059",
+        "date": "2026-10-01T21:47:08.509Z",
+        "summary": "Actualité : reprise des cours le mercredi 26 août"
+      },
       {
         "version": "1.0058",
         "date": "2026-10-01T21:22:32.343Z",
@@ -590,7 +595,7 @@
       "date": "2026-09-05",
       "tag": "Rentrée",
       "title": "Reprise des cours — saison 2026/2027",
-      "body": "Les cours reprennent le lundi 1<sup>er</sup> septembre. Pensez à pré-inscrire votre enfant pour garantir sa place."
+      "body": "Les cours ont repris le mercredi 26 août. Pensez à pré-inscrire votre enfant pour garantir sa place."
     }
   ],
   "events": [
