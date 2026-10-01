@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0057",
-    "publishedAt": "2026-10-01T20:53:54.113Z",
+    "version": "1.0058",
+    "publishedAt": "2026-10-01T21:22:32.343Z",
     "history": [
+      {
+        "version": "1.0058",
+        "date": "2026-10-01T21:22:32.343Z",
+        "summary": "Corrections orthographiques (albums, photos, annonce), ancien bandeau désactivé"
+      },
       {
         "version": "1.0057",
         "date": "2026-10-01T20:53:54.113Z",
@@ -445,7 +450,7 @@
     }
   },
   "banner": {
-    "active": true,
+    "active": false,
     "text": "<strong>Info</strong> — Fermeture Vacances de printemps (Pâques) du <strong>25 Avril au 10 Mai</strong>. Pas de cours pour les samedi 25 Avril, 2 mai et 9 mai. Fermeture le Vendredi 1 mai",
     "type": "horaires"
   },
@@ -454,7 +459,7 @@
       "id": "ann-20260618-583",
       "type": "vacances",
       "title": "Congés d'été",
-      "message": "Nous serons fermé pendant la période de vacances d'été, la reprise des cours est prévue le 26 Aout 2026",
+      "message": "Nous serons fermés pendant la période de vacances d'été, la reprise des cours est prévue le 26 août 2026",
       "startDate": "2026-07-01",
       "endDate": "2026-08-25",
       "showDaysBefore": 7,
@@ -489,49 +494,49 @@
       "title": "Championnat Provincial 2026",
       "date": "2026-01-25",
       "kanji": "試合",
-      "description": "7 medailles",
+      "description": "7 médailles",
       "cover": null,
       "photos": [
         {
           "img": "images/20260424-203141-elior.jpg",
-          "title": "Elior ",
+          "title": "Elior",
           "caption": "1er"
         },
         {
           "img": "images/20260424-203143-1-lila.jpg",
-          "title": "Lila ",
+          "title": "Lila",
           "caption": "2ème"
         },
         {
           "img": "images/20260424-203144-2-kadiatou.jpg",
-          "title": "kadiatou ",
+          "title": "Kadiatou",
           "caption": "2ème"
         },
         {
           "img": "images/20260424-203145-3-sacha-2-provincial.jpg",
-          "title": "sacha 2 provincial",
+          "title": "Sacha",
           "caption": "2ème"
         },
         {
           "img": "images/20260424-203146-4-bilal.jpg",
-          "title": "Bilal ",
+          "title": "Bilal",
           "caption": "3ème"
         },
         {
           "img": "images/20260424-203147-5-israe.jpg",
-          "title": "Israe ",
+          "title": "Israe",
           "caption": "3ème"
         },
         {
           "img": "images/20260424-203148-6-jacopo.jpg",
-          "title": "jacopo ",
+          "title": "Jacopo",
           "caption": "3ème"
         }
       ]
     },
     {
       "id": "album-20260424-pta7",
-      "title": "Championnat Regional 2026",
+      "title": "Championnat Régional 2026",
       "date": "2026-02-07",
       "kanji": "試合",
       "description": "2 médailles",
@@ -539,12 +544,12 @@
       "photos": [
         {
           "img": "images/20260424-193813-kadiatou-regional.jpg",
-          "title": "Kadiatou Regional",
+          "title": "Kadiatou",
           "caption": ""
         },
         {
           "img": "images/20260424-193814-1-lila-regional.jpg",
-          "title": "lila regional",
+          "title": "Lila",
           "caption": ""
         }
       ]
@@ -560,7 +565,7 @@
         {
           "img": "images/20260424-192034-lila-3eme.jpg",
           "title": "Lila 3ème",
-          "caption": "Podium -78 KG"
+          "caption": "Podium -78 kg"
         }
       ]
     },
