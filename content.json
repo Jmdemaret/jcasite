@@ -1,8 +1,13 @@
 {
   "_meta": {
-    "version": "1.0056",
-    "publishedAt": "2026-10-01T20:43:09.069Z",
+    "version": "1.0057",
+    "publishedAt": "2026-10-01T20:53:54.113Z",
     "history": [
+      {
+        "version": "1.0057",
+        "date": "2026-10-01T20:53:54.113Z",
+        "summary": "albums modifiés"
+      },
       {
         "version": "1.0056",
         "date": "2026-10-01T20:43:09.069Z",
@@ -526,7 +531,7 @@
     },
     {
       "id": "album-20260424-pta7",
-      "title": "Championnat Regionnal 2026",
+      "title": "Championnat Regional 2026",
       "date": "2026-02-07",
       "kanji": "試合",
       "description": "2 médailles",
