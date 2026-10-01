@@ -242,6 +242,12 @@ Schéma simplifié (les défauts dans index.html prennent le relais si une clé 
 - Filename via `makeImageFilename()` : timestamp + slug du titre
 - Plus de base64 dans content.json après publication ✓
 
+### 5.6 Points de restauration du site (code)
+- **Avant chaque publication du code** (index.html, images de base, vidéo…), créer un tag annoté `sauvegarde-AAAA-MM-JJ-<sujet>` sur `origin/main` et le pousser
+- Admin → onglet Sécurité → **Restaurer le site** : liste ces tags (clé requise) et restaure en **un seul commit** via l'API Git Data (trees/commits/refs, `force:false`)
+- Jamais touchés : `content.json`, `rss.xml`, `google-reviews.json`, `hello-test.txt`, `images/`, `.github/`, `.claude/`, `CLAUDE.md`, `README.md`, et les 3 photos Getty retirées pour licence
+- Un tag `…-avant-restauration` de l'état actuel est créé avant (supprimé si la restauration échoue) ; un point qui supprimerait CNAME/index.html/robots.txt/sitemap.xml ou remettrait un `admin*.html` est refusé
+
 ---
 
 ## 6. Secrets & services externes
