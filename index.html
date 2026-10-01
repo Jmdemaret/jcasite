@@ -420,6 +420,8 @@
   }
   .nav-side.left{padding-right:calc(60px + .75rem);margin-right:-60px;}
   .nav-side.right{padding-left:calc(60px + .75rem);margin-left:-60px;}
+  .nav-burger{display:none;width:44px;height:44px;place-items:center;border:0;border-radius:50%;background:transparent;color:var(--sumi);cursor:pointer;}
+  .nav-burger svg{width:22px;height:22px;}
 
   .social-float{position:fixed;right:2rem;top:calc(var(--bh,40px) + 1.2rem);z-index:55;display:flex;gap:.5rem;}
   .social-btn{width:38px;height:38px;border-radius:50%;background:rgba(251,246,233,.85);backdrop-filter:blur(10px);border:1px solid rgba(29,25,22,.08);display:grid;place-items:center;color:var(--sumi);transition:all .3s cubic-bezier(.2,.8,.2,1);}
@@ -471,16 +473,14 @@
 
   @media(max-width:900px){
     #hero{grid-template-columns:1fr;grid-template-rows:auto auto;}
-    /* Sur mobile le menu passe en colonne (logo + 2 lignes de liens) et
-       peut prendre jusqu'à ~200px de haut. La hauteur des annonces est gérée
+    /* Sur mobile le menu est une barre compacte (~60px). La hauteur des annonces est gérée
        par body{padding-top:var(--bh)}, donc on n'a plus à la dupliquer ici. */
-    .hero-left{padding:13rem 1.25rem 3rem;}
+    .hero-left{padding:6.5rem 1.25rem 3rem;}
     .hero-right{min-height:60vh;border-left:none;border-top:1px solid rgba(29,25,22,.06);}
     .hero-kanji{font-size:60vw;top:auto;bottom:10vh;right:-10vw;}
   }
   @media(max-width:520px){
-    /* Écrans très étroits : prévoir un peu plus d'air pour la nav wrappée */
-    .hero-left{padding:15rem 1rem 3rem;}
+    .hero-left{padding:6.5rem 1rem 3rem;}
   }
 
   /* Display */
@@ -935,10 +935,21 @@
 
   /* Mobile */
   @media(max-width:900px){
-    .topnav{flex-direction:column;gap:.5rem;}
-    .nav-side{border-radius:999px !important;padding:.4rem !important;margin:0 !important;}
-    .topnav .logo-c{width:80px;height:80px;order:-1;}
-    .topnav .logo-c img{width:130px;height:130px;}
+    /* Barre compacte : logo + « Essai gratuit » + bouton menu ; les liens s'ouvrent en panneau (.open) */
+    .topnav{left:.75rem;right:.75rem;transform:none;top:calc(var(--bh,0px) + .5rem);flex-wrap:wrap;gap:.25rem;
+      padding:.35rem .4rem .35rem .75rem;border-radius:28px;background:rgba(251,246,233,.94);
+      backdrop-filter:blur(20px) saturate(130%);border:1px solid rgba(29,25,22,.06);box-shadow:0 8px 24px -10px rgba(29,25,22,.15);}
+    .nav-side{background:none;border:0;box-shadow:none;backdrop-filter:none;border-radius:0 !important;padding:0 !important;margin:0 !important;}
+    .nav-side.left,.nav-side.right a:not(.cta){display:none;}
+    .topnav .logo-c{width:48px;height:48px;order:-1;margin-right:auto;}
+    .topnav .logo-c img{width:78px;height:78px;}
+    .nav-burger{display:grid;}
+    .topnav.open{max-height:calc(100dvh - var(--bh,0px) - 1rem);overflow-y:auto;overscroll-behavior:contain;}
+    .topnav.open .nav-side{display:flex;flex-direction:column;align-items:stretch;width:100%;order:2;}
+    .topnav.open .nav-side.right a:not(.cta){display:block;}
+    .topnav.open .nav-side a{padding:.8rem 1rem;font-size:1rem;}
+    .topnav a.cta{padding:.7rem 1.1rem;}
+    .topnav.open .nav-side a.cta{text-align:center;margin:.35rem 0 .4rem;}
     .social-float{display:none;}
     .hero-disc{width:60vw;right:-10vw;opacity:.4;}
     .sched-head,.sched-body{grid-template-columns:48px repeat(4,1fr);}
@@ -993,6 +1004,9 @@
     <a href="#contact">Contact</a>
     <a href="#contact" class="cta">Essai gratuit</a>
   </div>
+  <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
 </nav>
 
 <!-- ===== SOCIAL FLOAT (rendered by JS) ===== -->
@@ -1029,7 +1043,7 @@
 
     <div class="reveal grid grid-cols-3 gap-6 lg:gap-10 mt-16 max-w-2xl">
       <div>
-        <div class="stat-num" data-count="47">0</div>
+        <div class="stat-num" data-count="years">0</div>
         <div class="text-xs text-[#7a6f64] uppercase tracking-[.2em] mt-2 font-mono" data-text="hero.stat1Label">années</div>
       </div>
       <div>
@@ -1037,7 +1051,7 @@
         <div class="text-xs text-[#7a6f64] uppercase tracking-[.2em] mt-2 font-mono" data-text="hero.stat2Label">groupes d'âge</div>
       </div>
       <div>
-        <div class="stat-num" data-count="12">0</div>
+        <div class="stat-num" data-count="courses">0</div>
         <div class="text-xs text-[#7a6f64] uppercase tracking-[.2em] mt-2 font-mono" data-text="hero.stat3Label">cours / semaine</div>
       </div>
     </div>
@@ -1387,9 +1401,9 @@
         <div class="field"><input type="email" id="pi-email" name="email" required placeholder=" "/><label for="pi-email">Email parent / contact</label></div>
         <div class="field"><input type="tel" id="pi-tel" name="tel" required placeholder=" "/><label for="pi-tel">Téléphone</label></div>
       </div>
-      <div class="field"><textarea rows="3" id="pi-msg" name="message" placeholder=" "></textarea><label for="pi-msg">Remarques (allergies, fratrie, etc.)</label></div>
+      <div class="field"><textarea rows="3" id="pi-msg" name="message" placeholder=" "></textarea><label for="pi-msg">Remarques (fratrie, questions, etc.)</label></div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
-        <p class="text-xs text-[#9a8f83] max-w-xs">Réponse sous 48h. Vos données ne sortent pas du club.</p>
+        <p class="text-xs text-[#9a8f83] max-w-xs">Réponse sous 48h.</p>
         <button type="submit" class="btn btn-primary">Envoyer la pré-inscription
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -1569,6 +1583,9 @@
       <div>© <span id="year"></span> · 道</div>
     </div>
   </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pb-8 relative text-[11px] leading-relaxed opacity-70">
+    Judo Club Anderlecht ASBL · Siège : Rue du Serment 54, 1070 Anderlecht · N° d'entreprise 0423.545.946 · RPM Bruxelles
+  </div>
 </footer>
 
 <!-- ==================================================================
@@ -1578,7 +1595,7 @@
 // ============ CONFIG — loaded from content.json (fallback: defaults) ============
 const DEFAULT_CONFIG = {
   sections:{
-    club:true,cours:true,tarifs:true,actu:true,evenements:true,
+    club:true,cours:true,tarifs:false,actu:true,evenements:true,
     galerie:true,equipe:true,temoignages:true,faq:true,preInscription:true,sponsors:true
   },
   banner:{active:true,type:'info',text:'Bienvenue au Judo Club Anderlecht.'},
@@ -1832,10 +1849,7 @@ function initAnnouncements(){
   });
 
   // Recalcule la hauteur pour --bh (offset le contenu)
-  setTimeout(() => {
-    const h = host.offsetHeight || 0;
-    document.documentElement.style.setProperty('--bh', h + 'px');
-  }, 80);
+  setTimeout(updateBH, 80);
 
   // Mise à jour automatique chaque heure (au cas où la page reste ouverte longtemps)
   if(!window._annTimer){
@@ -1888,8 +1902,7 @@ function renderAnnCard(ann, state, idx){
       localStorage.setItem(dismissKey, Date.now());
       setTimeout(() => {
         card.remove();
-        const host = document.getElementById('announcements');
-        document.documentElement.style.setProperty('--bh', (host?.offsetHeight || 0) + 'px');
+        updateBH();
       }, 360);
     });
   }
@@ -1899,6 +1912,15 @@ function renderAnnCard(ann, state, idx){
 
 // Mini escapeHtml local (au cas où le global serait déclaré plus bas dans le fichier)
 function _annEsc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// Seul endroit qui écrit --bh : hauteur du bandeau legacy ou des annonces (tous deux fixés en haut, ils se superposent)
+function updateBH(){
+  const b = document.getElementById('top-banner');
+  const a = document.getElementById('announcements');
+  const hb = b && !b.classList.contains('hidden') ? b.offsetHeight : 0;
+  document.documentElement.style.setProperty('--bh', Math.max(hb, a ? a.offsetHeight : 0) + 'px');
+}
+addEventListener('resize', updateBH);
 
 // ============ LEGACY BANNER ============
 const BANNER_TYPES = {
@@ -1935,11 +1957,10 @@ function initBanner(){
   const bc = document.getElementById('banner-close');
   const bi = document.getElementById('banner-icon');
   const bp = document.getElementById('banner-pill');
-  const setBH = () => document.documentElement.style.setProperty('--bh',(b.offsetHeight||0)+'px');
+  const setBH = updateBH;
 
-  // Si des announcements sont configurés et au moins une est active, on masque ce legacy banner
-  const hasActiveAnn = (CFG.announcements || []).some(a => a && a.active !== false && a.startDate && computeAnnState(a).visible);
-  if(hasActiveAnn){ b.classList.add('hidden'); return; }
+  // Fallback uniquement si aucun calendrier d'annonces n'existe (même expirées), sinon un vieux bandeau ressort entre deux annonces
+  if((CFG.announcements || []).length){ b.classList.add('hidden'); setBH(); return; }
 
   if(!CFG.banner || !CFG.banner.active){b.classList.add('hidden');setBH();return;}
 
@@ -1967,7 +1988,6 @@ function initBanner(){
     localStorage.setItem(dismissKey, Date.now());
     setTimeout(setBH,400);
   });
-  addEventListener('resize', setBH);
 }
 
 // ============ REVEALS OBSERVER (needed early) ============
@@ -2501,6 +2521,7 @@ function initMap(){
   await Promise.all([loadContent(), loadGoogleReviews()]);
   applySectionVisibility();
   applyTexts();
+  initCounters();     // tôt : ne dépend que de CFG, ne doit pas rester à 0 si un init plus bas plante
   renderSocials();
   initAnnouncements();
   initBanner();
@@ -2537,17 +2558,32 @@ function initMap(){
   setTimeout(tick,200);
 })();
 
+// ============ NAV MOBILE (menu ☰) ============
+(()=>{
+  const nav = document.getElementById('topnav');
+  const btn = nav.querySelector('.nav-burger');
+  const set = open => { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); };
+  btn.addEventListener('click', () => set(!nav.classList.contains('open')));
+  nav.addEventListener('click', e => { if(e.target.closest('a')) set(false); });
+  document.addEventListener('pointerdown', e => { if(!nav.contains(e.target)) set(false); }); // pointerdown : iOS n'émet pas de click sur du texte
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && nav.classList.contains('open')){ set(false); btn.focus(); } });
+})();
+
 // ============ REVEALS ============
 document.querySelectorAll('.reveal, .reveal-img').forEach(el=>io.observe(el));
 document.querySelectorAll('.word').forEach(w=>io.observe(w));
 
 // ============ COUNT UP ============
+// Lancé après le chargement de content.json : années depuis 1977 et nombre réel de créneaux
+function initCounters(){
+const stats={years:new Date().getFullYear()-1977, courses:COURSES_SOURCE().length};
 document.querySelectorAll('[data-count]').forEach(el=>{
-  const t=+el.dataset.count;let c=0;const s=Math.max(1,Math.ceil(t/50));
+  const t=stats[el.dataset.count]??+el.dataset.count;let c=0;const s=Math.max(1,Math.ceil(t/50));
   const io2=new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){(function inc(){c+=s;if(c>=t){el.textContent=t;}else{el.textContent=c;requestAnimationFrame(inc);}})();io2.disconnect();}
   }));io2.observe(el);
 });
+}
 
 // ============ SCHEDULE TILES BY DAY ============
 // Chaque groupe : {id, label, short, color, order}
