@@ -2,14 +2,23 @@
   "place_name": "Judo Club Anderlecht asbl",
   "place_url": "https://www.google.com/maps/place/?q=place_id:ChIJ22u18afGw0cRHu7iNfdBoQ4",
   "rating": 4.6,
-  "total": 41,
+  "total": 42,
   "reviews": [
+    {
+      "author": "Famille Hepp-Dupriez",
+      "rating": 5.0,
+      "text": "Super :-) Nos 3 enfants adorent les profs qui sont gentils et sympas et nous on est contents parce que les apprentissages sont sérieux.",
+      "time": 1790945394,
+      "relative": "il y a 2 jours",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjWiEumDpru3y8LGhEwNnev2X0cZGWKNLM2L02qnLEEV_s3LkNGI=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
     {
       "author": "Fabielle Martins",
       "rating": 5.0,
       "text": "Super",
       "time": 1787998783,
-      "relative": "il y a 4 semaines",
+      "relative": "il y a un mois",
       "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjVwk1BQLo1GHs3gtzuIvNfYB_C529p3Gw27YDFrbzpCS5aemXXn6g=s120-c-rp-mo-ba12-br100",
       "language": "fr"
     },
@@ -32,12 +41,12 @@
       "language": "fr"
     },
     {
-      "author": "Sarah Dupriez",
+      "author": "Lila",
       "rating": 5.0,
-      "text": "Magnifique travail dans ce club bien caché derrière une vieille porte.",
-      "time": 1771430135,
-      "relative": "il y a 7 mois",
-      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjUtO5J_bfIkBzJJZmm1fLaHDvKaEyde5DGSNMNdz25vOzyeMdRS=s120-c-rp-mo-ba12-br100",
+      "text": "Club familial a l'écoute de ces élèves, les coach sont passionnés, bonne ambiance, les élèves d'entraident en un seul mot SUPER!!!",
+      "time": 1749998449,
+      "relative": "il y a un an",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjW6Utij9ay_AbvMPuYzzrIGPrU1DKH7eBkUwdmiFLgezrx7pH8A=s120-c-rp-mo-br100",
       "language": "fr"
     },
     {
@@ -106,9 +115,9 @@
   ],
   "period_months": 60,
   "pages_fetched": 5,
-  "returned_by_serpapi": 35,
-  "kept_recent": 11,
-  "cutoff_iso": "2021-10-24",
-  "fetched_at": 1790597158,
+  "returned_by_serpapi": 39,
+  "kept_recent": 12,
+  "cutoff_iso": "2021-10-31",
+  "fetched_at": 1791204404,
   "source": "serpapi"
 }
