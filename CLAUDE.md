@@ -12,7 +12,7 @@
 **Repo GitHub** : https://github.com/Jmdemaret/jcasite (branche `main`)
 **Site Netlify** : https://lovely-clafoutis-91f16b.netlify.app (uniquement les fonctions)
 **Hébergement public** : GitHub Pages (statique)
-**Owner** : Jean-Marc Demaret, trésorier du club
+**Owner** : Jean-Michel Demaret (« JM »), trésorier du club
 
 Le site est un **single-page** statique élégant (style éditorial japonisant) avec :
 - Mosaïque éditoriale d'albums photo (lightbox masonry + photo)
@@ -488,11 +488,12 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 
 ## 13. Contacts & responsables
 
-- **Trésorier (administrateur du site)** : Jean-Marc Demaret — jmdemaret@gmail.com
+- **Trésorier (administrateur du site)** : Jean-Michel Demaret (« JM ») — jmdemaret@gmail.com, également professeur le samedi
+- **Méthode du club** : celle de Jean-Marc Demaret, père de Jean-Michel. ⚠️ L'auteur git de ce PC s'appelle « Jean-Marc Demaret » : ce n'est pas l'administrateur du site, ne pas confondre.
 - **Email club** : `send@judoclubanderlecht.be` (boîte Combell, sender SMTP)
 - **GitHub** : @Jmdemaret
 - **Adresse club** : Rue du Serment 54, 1070 Anderlecht (lat 50.838389, lon 4.306456)
 
 ---
 
-*Dernière mise à jour : 2026-04-25*
+*Dernière mise à jour : 2026-10-05*
