@@ -9,7 +9,7 @@
       "rating": 5.0,
       "text": "Super :-) Nos 3 enfants adorent les profs qui sont gentils et sympas et nous on est contents parce que les apprentissages sont sérieux.",
       "time": 1790945394,
-      "relative": "il y a 2 semaines",
+      "relative": "il y a 3 semaines",
       "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjWiEumDpru3y8LGhEwNnev2X0cZGWKNLM2L02qnLEEV_s3LkNGI=s120-c-rp-mo-br100",
       "language": "fr"
     },
@@ -38,6 +38,33 @@
       "time": 1773516495,
       "relative": "il y a 7 mois",
       "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocLx69GbM2bV_RlmHQTInb1bB3Vcrbs7YaqABEJ5BH0OGvFcUA=s120-c-rp-mo-br100",
+      "language": "fr"
+    },
+    {
+      "author": "Sarah Dupriez",
+      "rating": 5.0,
+      "text": "Magnifique travail dans ce club bien caché derrière une vieille porte.",
+      "time": 1771430135,
+      "relative": "il y a 8 mois",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjUtO5J_bfIkBzJJZmm1fLaHDvKaEyde5DGSNMNdz25vOzyeMdRS=s120-c-rp-mo-ba12-br100",
+      "language": "fr"
+    },
+    {
+      "author": "forrest gilsdorf",
+      "rating": 5.0,
+      "text": "Great accommodations for my 4 year old and my 6-year-old\nIf you end up missing your class you can retake it sometimes and I really appreciate that.\nThis is a gym so you need to understand that and I love it.",
+      "time": 1759505181,
+      "relative": "il y a un an",
+      "profile_photo": "https://lh3.googleusercontent.com/a/ACg8ocIzKLbUHUM6-JvPCDMs1HeA7G34X2EclNMCCL1ScWK4MrFPEQ=s120-c-rp-mo-ba12-br100",
+      "language": "fr"
+    },
+    {
+      "author": "Nils Monaville Bertrand",
+      "rating": 5.0,
+      "text": "Entraîneurs dévouer à transmettre leur passions. Très bonne ambiance, tout le monde peu importe son niveau peut trouver sa place au judo club Anderlecht. Bonne valeurs transmise. Enseignement adapté au besoin de chacun. Mais le dépassement de soi est également présent. Enseignement très diversifie. En y allant je n’est pas que trouver un sport mais une famille.",
+      "time": 1749998654,
+      "relative": "il y a un an",
+      "profile_photo": "https://lh3.googleusercontent.com/a-/ALV-UjXI6sO2ZGP1X1Jaul_IjshwnlvrIjNWtJLsAk2kOK6czGwqhEQ=s120-c-rp-mo-br100",
       "language": "fr"
     },
     {
@@ -115,9 +142,9 @@
   ],
   "period_months": 60,
   "pages_fetched": 5,
-  "returned_by_serpapi": 39,
-  "kept_recent": 12,
-  "cutoff_iso": "2021-11-14",
-  "fetched_at": 1792408853,
+  "returned_by_serpapi": 42,
+  "kept_recent": 15,
+  "cutoff_iso": "2021-11-21",
+  "fetched_at": 1793014671,
   "source": "serpapi"
 }
